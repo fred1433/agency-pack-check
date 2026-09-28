@@ -63,7 +63,7 @@ function renderSheet() {
   c.classList.toggle('commentary--editing', state.editing);
 
   $('legend').innerHTML = reviewer
-    ? `<span>${TICK} every figure in the sentence agrees to the snapshot</span><span>${CROSS} this figure does not agree</span><span>${circled(1)} for the reviewer, see note</span>`
+    ? `<span>${TICK} ticked: every figure checked, nothing unread</span><span>${CROSS} this figure does not agree</span><span>${circled(1)} for the reviewer, see note</span>`
     : '';
 
   const rows = tableCells(ev.ms);
@@ -139,7 +139,7 @@ function renderReview() {
   });
   for (const o of ev.result.omissions) notes.push(`<div class="note note--${o.severity}"><p class="note__h">${o.severity === 'fail' ? 'Missing' : 'Not mentioned'}</p><p>${esc(o.message)}</p></div>`);
   const editBtn = `<button type="button" class="btn btn--quiet" data-act="edit">${state.editing ? 'Done editing' : 'Edit the text'}</button>`;
-  const header = `<div class="notes__head"><p><span class="count">${ev.result.counts.verified}</span> of ${ev.result.sentences.length} sentences agree to the snapshot${state.edited ? ', text edited by the reviewer' : ''}.</p>${editBtn}</div>`;
+  const header = `<div class="notes__head"><p><span class="count">${ev.result.counts.verified}</span> of ${ev.result.sentences.length} sentences ticked${state.edited ? ', text edited by the reviewer' : ''}.</p>${editBtn}</div>`;
   $('notes').innerHTML = header + notes.join('') + `<p class="provenance">${esc(state.draft.label)}. Paragraph breaks are layout; the words are as Claude wrote them.</p>`;
 
   $('gates').innerHTML = `<p class="gates__h">Release</p><ul>${ev.gates.map((g) => `<li class="${g.ok ? 'ok' : 'no'}">${g.ok ? TICK : '<span class="box"></span>'}<span>${esc(g.label)}</span></li>`).join('')}</ul>
