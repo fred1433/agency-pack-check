@@ -37,31 +37,38 @@ test('after approval, the old draft is stale and fails its margin claim', () => 
   assert.equal(canSignOff(st), false);
 });
 
-test('the draft written for the approved snapshot can be signed off and released', () => {
+const acceptAll = (st: ReleaseState): ReleaseState => ({ ...st, reviewed: new Set(st.draft.sentences.map((x, i) => (x.status === 'review' ? i : -1)).filter((i) => i >= 0)) });
+
+test('no sentence is signable until the reviewer has accepted every one', () => {
   const st = state({ accrual: 'approved' }, GOOD_APPROVED, { accrual: 'approved' });
+  assert.equal(canSignOff(st), false);
+  assert.ok(st.draft.sentences.every((x) => x.status !== 'verified'));
+});
+
+test('the draft written for the approved snapshot can be signed off and released', () => {
+  const st = acceptAll(state({ accrual: 'approved' }, GOOD_APPROVED, { accrual: 'approved' }));
   assert.equal(canSignOff(st), true, JSON.stringify(releaseGates(st)));
   assert.equal(canRelease(st), false);
   assert.equal(canRelease(sign(st)), true);
 });
 
 test('editing the text after sign-off voids it', () => {
-  const signed = sign(state({ accrual: 'approved' }, GOOD_APPROVED, { accrual: 'approved' }));
+  const signed = sign(acceptAll(state({ accrual: 'approved' }, GOOD_APPROVED, { accrual: 'approved' })));
   const edited = state({ accrual: 'approved' }, GOOD_APPROVED.replace('ahead of budget', 'above budget'), { accrual: 'approved' });
   assert.equal(canRelease({ ...edited, signoff: signed.signoff }), false);
 });
 
 test('changing the snapshot after sign-off voids it', () => {
-  const signed = sign(state({ accrual: 'approved' }, GOOD_APPROVED, { accrual: 'approved' }));
+  const signed = sign(acceptAll(state({ accrual: 'approved' }, GOOD_APPROVED, { accrual: 'approved' })));
   const back = state({ accrual: 'open' }, GOOD_APPROVED, { accrual: 'approved' });
   assert.equal(canRelease({ ...back, signoff: signed.signoff }), false);
 });
 
-test('a statement the checker cannot verify needs the reviewer before sign-off', () => {
-  const txt = GOOD_APPROVED + ' The team had a strong month.';
-  const st = state({ accrual: 'approved' }, txt, { accrual: 'approved' });
-  assert.equal(canSignOff(st), false);
-  const idx = st.draft.sentences.findIndex((x) => x.status === 'review');
-  assert.equal(canSignOff({ ...st, reviewed: new Set([idx]) }), true);
+test('unchecking one accepted sentence closes the gate again', () => {
+  const st = acceptAll(state({ accrual: 'approved' }, GOOD_APPROVED + ' The team had a strong month.', { accrual: 'approved' }));
+  assert.equal(canSignOff(st), true);
+  const less = new Set(st.reviewed); less.delete([...less][0]);
+  assert.equal(canSignOff({ ...st, reviewed: less }), false);
 });
 
 test('a failing claim blocks sign-off even if everything else holds', () => {

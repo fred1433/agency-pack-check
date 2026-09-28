@@ -1,6 +1,6 @@
 import PptxGenJS from 'pptxgenjs';
 import { ASSUMPTIONS, accrualEvidence, type Sources, type Metric } from '../src/engine.ts';
-import { evaluate, tableCells, sentencesOf, buildPptx, paragraphGroups, formatDateTime, type Review, type Draft } from '../src/pack.ts';
+import { evaluate, tableCells, sentencesOf, buildPptx, paragraphGroups, formatDateTime, applyReviewerEdits, type Review, type Draft } from '../src/pack.ts';
 import { displayValue } from '../src/format.ts';
 import { fingerprint } from '../src/hash.ts';
 import sources from './generated/sources.json';
@@ -12,7 +12,7 @@ const A = pinned.A as Draft;
 const B = pinned.B as Draft;
 
 const state: Review & { view: 'client' | 'reviewer'; editing: boolean } = {
-  decisions: { accrual: 'open' }, markup: A.markup, draft: A, edited: false, reviewed: new Set(), signoff: null, view: 'reviewer', editing: false,
+  decisions: { accrual: 'open' }, markup: A.markup, draft: A, edited: false, authored: [], reviewed: new Set(), signoff: null, view: 'reviewer', editing: false,
 };
 
 const $ = (id: string) => document.getElementById(id)!;
@@ -39,20 +39,20 @@ function renderSheet() {
   const reviewer = state.view === 'reviewer';
   document.body.dataset.view = state.view;
   const sents = sentencesOf(state.markup);
-  let noteNo = 0;
+  const authored = new Set(state.authored ?? []);
   const html = sents.map((sent, i) => {
     const r = ev.result.sentences[i];
     const failRefs = new Set(r.findings.filter((f) => f.severity === 'fail' && f.ref).map((f) => f.ref));
     const body = esc(sent).replace(REF, (_, id) => {
       const m = ev.ms.metrics.get(id);
       const shown = m ? m.display : `[unknown ${id}]`;
-      const mark = reviewer && failRefs.has(id) ? CROSS : '';
+      // Each figure keeps its own mark: right number for its measure, client, period and comparator, or not.
+      const mark = !reviewer ? '' : failRefs.has(id) ? CROSS : TICK;
       return `<span class="fig${failRefs.has(id) ? ' fig--bad' : ''}" data-ref="${id}" contenteditable="false" tabindex="${reviewer ? 0 : -1}">${esc(shown)}${mark}</span>`;
     });
-    let tail = '';
-    if (reviewer && r.status === 'verified') tail = TICK;
-    if (reviewer && r.status !== 'verified') tail = circled(++noteNo);
-    return `<span class="sent sent--${r.status}" data-i="${i}">${body}${tail}</span>`;
+    const tail = reviewer ? circled(i + 1) + (state.reviewed.has(i) ? '<span class="acc" contenteditable="false">accepted</span>' : '') : '';
+    const who = reviewer && authored.has(sent) ? '<span class="who" contenteditable="false">reviewer edit</span> ' : '';
+    return `<span class="sent sent--${r.status}${authored.has(sent) ? ' sent--authored' : ''}" data-i="${i}">${who}${body}${tail}</span>`;
   });
   const groups = paragraphGroups(state.markup);
   const paras: string[][] = [];
@@ -63,7 +63,7 @@ function renderSheet() {
   c.classList.toggle('commentary--editing', state.editing);
 
   $('legend').innerHTML = reviewer
-    ? `<span>${TICK} ticked: every figure checked, nothing unread</span><span>${CROSS} this figure does not agree</span><span>${circled(1)} for the reviewer, see note</span>`
+    ? `<span>${TICK} right figure for its measure, client, period and comparator</span><span>${CROSS} figure or its words do not agree</span><span>${circled(1)} every sentence is read and accepted by the reviewer</span>`
     : '';
 
   const rows = tableCells(ev.ms);
@@ -76,11 +76,19 @@ function renderSheet() {
   // Other questions, not blocking: next to the commentary, where a finance director looks for them.
   const others = ev.questions.filter((q) => !q.blocksRelease && q.id !== 'accrual-aug-payroll');
   $('otherq').innerHTML = reviewer && others.length ? `<p class="otherq__h">Other questions, not blocking</p><ul>${others.map((q) => `<li><strong>${esc(q.title)}${/[?.]$/.test(q.title) ? '' : '.'}</strong> ${esc(q.detail)} ${esc(q.effect)}${q.hypotheses ? ` Possible reasons, not established: ${q.hypotheses.map((h) => esc(h.toLowerCase())).join('; ')}.` : ''}</li>`).join('')}</ul>` : '';
+  renderStamp();
+  $('sheetFoot').textContent = `From the Xero snapshot of ${formatDateTime('2026-09-02T09:14:00Z')} and the payroll input approved on 1 September 2026. Figures fingerprint ${ev.ms.snapshotFingerprint} (it binds the figures shown, not the source files)${ev.ms.decisions.accrual === 'approved' ? '; one approved reporting adjustment' : ''}. Fictional agency. Prototype layout.`;
+}
+
+// The document's status is redrawn whenever anything that could revoke approval changes.
+function renderStamp() {
   const released = ev.releasable;
   const stamp = $('stamp');
   stamp.textContent = released ? `Released ${formatDateTime(state.signoff!.at)}` : 'Draft, not for release';
   stamp.classList.toggle('stamp--released', released);
-  $('sheetFoot').textContent = `From the Xero snapshot of ${formatDateTime('2026-09-02T09:14:00Z')} and the payroll input approved on 1 September 2026. Figures fingerprint ${ev.ms.snapshotFingerprint}${ev.ms.decisions.accrual === 'approved' ? ', with one approved reporting adjustment' : ''}. Fictional agency. Prototype layout.`;
+  $('headline').textContent = released
+    ? 'The August pack is released, with the accrual in it.'
+    : 'The August pack is right, and it cannot go yet.';
 }
 
 // ---------- The review column ----------
@@ -101,7 +109,7 @@ function renderReview() {
   slip.innerHTML = `
     <p class="slip__kind">Close question${d === 'approved' ? ', resolved' : d === 'held' ? ', on hold' : ''}</p>
     <h3 class="slip__q">${esc(q.title)}</h3>
-    <p>The payroll input approved on 1 September 2026 for the September run holds ${acc.lines.length} lines earned in August. None is in the August ledger.</p>
+    <p>In this fictional case, the payroll workpaper (approved 1 September 2026) identifies ${fmt(acc.total)} of August pay not included in the posted figures.</p>
     <table class="mini">
       <thead><tr><th>Earned in August</th><th>Gross</th><th>Employer NIC</th><th>Pension</th></tr></thead>
       <tbody>${acc.lines.map((l) => `<tr><td>${l.employee_ref}</td><td>${fmt(l.gross)}</td><td>${fmt(l.employer_nic)}</td><td>${fmt(l.employer_pension)}</td></tr>`).join('')}
@@ -128,19 +136,22 @@ function renderReview() {
     notes.push(`<div class="note note--stale"><p><strong>${esc(state.draft.key === 'A' ? 'Draft A' : 'This draft')} was written for the posted figures.</strong> Read against the snapshot with the accrual, its references now print different numbers and the words no longer fit them.</p>
       <button type="button" class="btn" data-act="useB">Use draft B, written for this snapshot</button></div>`);
   }
-  let n = 0;
   ev.result.sentences.forEach((s, i) => {
-    if (s.status === 'verified') return;
-    n++;
     const accepted = state.reviewed.has(i);
-    notes.push(`<div class="note note--${s.status}"><p class="note__h">${circled(n)} ${s.status === 'fail' ? 'Does not agree' : 'For the reviewer'}</p>
-      <ul>${s.findings.map((f) => `<li>${esc(f.message)}</li>`).join('')}</ul>
+    const who = (state.authored ?? []).includes(s.markup) ? ' (reviewer edit)' : '';
+    const body = s.findings.length ? `<ul>${s.findings.map((f) => `<li>${esc(f.message)}</li>`).join('')}</ul>` : '<p class="note__none">Nothing flagged. The words are still unverified prose.</p>';
+    notes.push(`<div class="note note--${s.status}"><p class="note__h">${circled(i + 1)} ${s.status === 'fail' ? 'Error flagged: edit before accepting' : 'Read and accept'}${who}</p>${body}
       ${s.status === 'review' ? `<label class="accept"><input type="checkbox" data-accept="${i}"${accepted ? ' checked' : ''}> Accept as written</label>` : ''}</div>`);
   });
   for (const o of ev.result.omissions) notes.push(`<div class="note note--${o.severity}"><p class="note__h">${o.severity === 'fail' ? 'Missing' : 'Not mentioned'}</p><p>${esc(o.message)}</p></div>`);
+  if (state.draft.key === 'B' && !ev.result.stale && !(state.authored ?? []).length) {
+    notes.unshift(`<div class="note note--stale"><p><strong>Two edits a finance director would make.</strong> Add the operating-profit bridge, and carry the ${fmt(ev.ms.metrics.get('client.marlow-finch.credit_notes.month.actual')?.value ?? 0)} credit note on July work into the Marlow & Finch sentence. They are labelled as reviewer edits, here and in the export.</p>
+      <button type="button" class="btn" data-act="edits">Apply the two reviewer edits</button></div>`);
+  }
   const editBtn = `<button type="button" class="btn btn--quiet" data-act="edit">${state.editing ? 'Done editing' : 'Edit the text'}</button>`;
-  const header = `<div class="notes__head"><p><span class="count">${ev.result.counts.verified}</span> of ${ev.result.sentences.length} sentences ticked${state.edited ? ', text edited by the reviewer' : ''}.</p>${editBtn}</div>`;
-  $('notes').innerHTML = header + notes.join('') + `<p class="provenance">${esc(state.draft.label)}. Paragraph breaks are layout; the words are as Claude wrote them.</p>`;
+  const nAcc = ev.result.sentences.filter((x, i) => x.status === 'review' && state.reviewed.has(i)).length;
+  const header = `<div class="notes__head"><p><span class="count">${nAcc}</span> of ${ev.result.sentences.length} sentences accepted${ev.result.counts.fail ? `, ${ev.result.counts.fail} with an error flagged` : ''}${state.edited ? '; text edited by the reviewer' : ''}.</p>${editBtn}</div>`;
+  $('notes').innerHTML = header + notes.join('') + `<p class="provenance">${esc(state.draft.label)}. Paragraph breaks are layout; sentences not marked as reviewer edits are as Claude wrote them.</p>`;
 
   $('gates').innerHTML = `<p class="gates__h">Release</p><ul>${ev.gates.map((g) => `<li class="${g.ok ? 'ok' : 'no'}">${g.ok ? TICK : '<span class="box"></span>'}<span>${esc(g.label)}</span></li>`).join('')}</ul>
     <div class="gates__act">
@@ -169,8 +180,8 @@ function showPop(el: HTMLElement) {
   const i = Number((el.closest('.sent') as HTMLElement)?.dataset.i);
   const findings = ev.result.sentences[i]?.findings.filter((f) => f.ref === m.id) ?? [];
   pop.innerHTML = `<p class="pop__v">${esc(m.display)}</p><p>${esc(m.label)}</p>
-    <dl><dt>Calculation</dt><dd>${esc(m.calc)}</dd><dt>Source</dt><dd>${m.sources.map(esc).join('<br>')}</dd><dt>Status</dt><dd>${m.status === 'adjusted' ? 'Includes the approved accrual' : m.status === 'proposed' ? 'Includes an adjustment not yet approved' : 'As posted in Xero'}</dd><dt>Reference</dt><dd><code>${esc(m.id)}</code></dd></dl>
-    ${findings.length ? `<ul class="pop__f">${findings.map((f) => `<li>${esc(f.message)}</li>`).join('')}</ul>` : `<p class="pop__ok">${TICK} Words and figure agree.</p>`}
+    <dl><dt>Calculation</dt><dd>${esc(m.calc)}</dd><dt>Source</dt><dd>${m.sources.map(esc).join('<br>')}</dd><dt>Status</dt><dd>${m.status === 'adjusted' ? 'Includes the approved accrual' : m.status === 'proposed' ? 'Includes an adjustment not yet approved' : (m.drafting === false ? 'Available to reviewer edits; not given to Claude' : 'As posted in Xero')}</dd><dt>Reference</dt><dd><code>${esc(m.id)}</code></dd></dl>
+    ${findings.length ? `<ul class="pop__f">${findings.map((f) => `<li>${esc(f.message)}</li>`).join('')}</ul>` : `<p class="pop__ok">${TICK} Right figure for its measure, client, period and comparator. The sentence still goes to the reviewer.</p>`}
     <button type="button" class="pop__x" data-act="closepop" aria-label="Close">Close</button>`;
   pop.hidden = false;
   const r = el.getBoundingClientRect();
@@ -191,7 +202,7 @@ function serialise(root: HTMLElement): string {
     if (n.nodeType === Node.TEXT_NODE) { out += n.textContent; return; }
     const el = n as HTMLElement;
     if (el.classList?.contains('fig')) { out += `[[${el.dataset.ref}]]`; return; }
-    if (el.classList?.contains('mk-n') || el.tagName === 'svg') return;
+    if (el.classList?.contains('mk-n') || el.classList?.contains('who') || el.classList?.contains('acc') || el.tagName === 'svg') return;
     el.childNodes.forEach(walk);
     if (el.tagName === 'P') out += ' ';
   };
@@ -210,6 +221,7 @@ $('commentary').addEventListener('input', () => {
     state.reviewed = new Set();
     ev = evaluate(S, state);
     renderReview();
+    renderStamp();
   }, 250);
 });
 
@@ -233,13 +245,14 @@ document.addEventListener('click', (e) => {
   if (act === 'approve') { state.decisions = { accrual: 'approved' }; state.signoff = null; }
   if (act === 'hold') { state.decisions = { accrual: 'held' }; state.signoff = null; }
   if (act === 'reopen') { state.decisions = { accrual: 'open' }; state.signoff = null; }
-  if (act === 'useB') { state.draft = B; state.markup = B.markup; state.edited = false; state.reviewed = new Set(); state.signoff = null; }
+  if (act === 'useB') { state.draft = B; state.markup = B.markup; state.edited = false; state.authored = []; state.reviewed = new Set(); state.signoff = null; }
+  if (act === 'edits') { const e = applyReviewerEdits(state.markup); state.markup = e.markup; state.authored = e.authored; state.edited = true; state.reviewed = new Set(); state.signoff = null; }
   if (act === 'edit') { state.editing = !state.editing; }
   if (act === 'signoff') {
     state.signoff = { by: 'Reviewer (demo)', at: new Date().toISOString(), snapshotFingerprint: ev.ms.snapshotFingerprint, draftFingerprint: fingerprint(state.markup) };
   }
   if (act === 'export') {
-    const pres = buildPptx(PptxGenJS, ev.ms, state.markup, { agency: ASSUMPTIONS.agency, released: `Released by ${state.signoff!.by}, ${formatDateTime(state.signoff!.at)}, text ${ev.result.draftFingerprint}.`, draftLabel: state.draft.label + (state.edited ? ', edited by the reviewer' : '') });
+    const pres = buildPptx(PptxGenJS, ev.ms, state.markup, { agency: ASSUMPTIONS.agency, released: `Released by ${state.signoff!.by}, ${formatDateTime(state.signoff!.at)}, text ${ev.result.draftFingerprint}.`, draftLabel: state.draft.label + (state.edited ? ', edited by the reviewer' : ''), authored: state.authored });
     pres.writeFile({ fileName: 'lowther-august-2026-commentary.pptx' });
     return;
   }
@@ -253,6 +266,7 @@ document.addEventListener('change', (e) => {
   state.signoff = null;
   ev = evaluate(S, state);
   renderReview();
+  renderSheet();
 });
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') pop.hidden = true;
@@ -267,9 +281,9 @@ function renderHow() {
   void checks;
   const basis: [string, string][] = [
     ['Period', 'August 2026; year to date 1 April to 31 August 2026, from the year end in Organisation (31 March, a fictional assumption).'],
-    ['Snapshot', 'Pulled 1 and 2 September 2026, frozen and fingerprinted. August is not closed until the accrual question is answered.'],
+    ['Snapshot', 'Pulled 1 and 2 September 2026 and frozen. The fingerprint binds the figures shown (a figures version), not the source files. August is not closed until the accrual question is answered.'],
     ['Revenue', 'Recognised when invoiced (illustrative policy), excluding VAT; credit notes reduce revenue in the month issued. No recharged costs in the period. GBP only.'],
-    ['Budget', 'Xero Budgets endpoint, "FY2026-27 budget v2", approved by the board on 12 March 2026 (as its description states).'],
+    ['Budget', 'Xero Budgets endpoint, "FY2026-27 budget v2"; its description says the board approved it on 12 March 2026. This demo does not validate board approval through the API.'],
     ['Client margin', 'Not calculated: £96,000 of £120,000 August direct costs carry no client tracking. Needs time-based allocation from the timesheet tool.'],
     ['Utilisation, revenue per head', 'Not available: no timesheet or headcount source is connected.'],
     ['Adjustments', 'Posted, proposed and approved figures are kept apart; only approved ones reach the commentary.'],
@@ -278,23 +292,24 @@ function renderHow() {
   $('basis').innerHTML = basis.map(([k, v]) => `<dt>${k}</dt><dd>${esc(v)}</dd>`).join('');
 
   const r = results as any;
-  const bt = r.corrupted.byType as Record<string, { cases: number; failed: number; toReviewer: number; passed: number }>;
+  const bt = r.mutations.byType as Record<string, { cases: number; detected: number; finding: number; nofinding: number }>;
   $('results').innerHTML = `
     <h4>Test results, checker ${r.checker}</h4>
-    <p>Twenty drafts written by Claude, ten per snapshot, as written:</p>
+    <p>An existing batch of twenty drafts written by Claude (ten per snapshot), rerun under ${r.checker}; the reviewers had read some of its sentences, so this is not a fresh validation.</p>
     <table class="res"><tbody>
-      <tr><th>Sentences</th><td>${r.natural.sentences}</td></tr>
-      <tr><th>Ticked: every figure checked, nothing outside the checked list</th><td>${r.natural.verified}</td></tr>
-      <tr><th>To the reviewer (a cause, a judgement, a ranking, a negation, a figure without its measure)</th><td>${r.natural.review}</td></tr>
-      <tr><th>Rejected</th><td>${r.natural.fail}</td></tr>
+      <tr><th>Sentences, all sent to the reviewer</th><td>${r.natural.sentences}</td></tr>
+      <tr><th>With an error flagged</th><td>${r.natural.rejected}</td></tr>
+      <tr><th>With another finding (a cause, a judgement, words it does not read)</th><td>${r.natural.withFinding}</td></tr>
+      <tr><th>Nothing flagged</th><td>${r.natural.noFinding}</td></tr>
+      <tr><th>Figures cited / figures flagged</th><td>${r.natural.figures} / ${r.natural.figuresFlagged}</td></tr>
     </tbody></table>
-    <p>Of the ${r.natural.fail} rejected, ${r.adjudication.realErrors} are real errors in what Claude wrote (${esc(r.adjudication.realSummary)}) and ${r.natural.fail - r.adjudication.realErrors} are the checker being wrong (${esc(r.adjudication.falseSummary)}). The previous version, ${r.previous.checker}, ticked ${r.previous.verified} of these sentences; a fresh review found wrong sentences it ticked, so ${r.checker} ticks fewer and asks the reviewer more. Both results are in the repository.</p>
-    <p>The same sentences, corrupted on purpose, one change at a time:</p>
-    <table class="res res--wide"><thead><tr><th>Change</th><th>Cases</th><th>Rejected</th><th>To the reviewer</th><th>Ticked</th></tr></thead><tbody>
-      ${Object.entries(bt).map(([k, v]) => `<tr><th>${esc(k[0].toUpperCase() + k.slice(1))}</th><td>${v.cases}</td><td>${v.failed}</td><td>${v.toReviewer}</td><td>${v.passed}</td></tr>`).join('')}
-      <tr class="tot"><th>All</th><td>${r.corrupted.cases}</td><td>${r.corrupted.failed}</td><td>${r.corrupted.toReviewer}</td><td>${r.corrupted.passed}</td></tr>
+    <p>Of the ${r.natural.rejected} flagged, ${r.adjudication.realErrors} are real errors in what Claude wrote (${esc(r.adjudication.realSummary)}) and ${r.natural.rejected - r.adjudication.realErrors} are the checker being wrong (${esc(r.adjudication.falseSummary)}). Earlier versions ticked whole sentences (${r.previous.checker}: ${r.previous.verified} of these); a review showed a tick could cover a false sentence, so no sentence is ticked now.</p>
+    <p>Generated mutations of the sentences where nothing was flagged, one change at a time:</p>
+    <table class="res res--wide"><thead><tr><th>Change</th><th>Cases</th><th>Error flagged</th><th>Other finding</th><th>Nothing flagged</th></tr></thead><tbody>
+      ${Object.entries(bt).map(([k, v]) => `<tr><th>${esc(k[0].toUpperCase() + k.slice(1))}</th><td>${v.cases}</td><td>${v.detected}</td><td>${v.finding}</td><td>${v.nofinding}</td></tr>`).join('')}
+      <tr class="tot"><th>All</th><td>${r.mutations.cases}</td><td>${r.mutations.detected}</td><td>${r.mutations.finding}</td><td>${r.mutations.nofinding}</td></tr>
     </tbody></table>
-    <p>Counts on one synthetic month, not an accuracy rate. Every case is listed in the repository.</p>`;
+    <p>Mutations are generated, not individually adjudicated; one may occasionally produce a true sentence. Counts on one synthetic month, not an accuracy rate and not a measure of review time saved. Every case is in the repository.</p>`;
   $('modelLine').textContent = `${A.model} through Claude Code, on ${A.started.slice(0, 10)}`;
   $('links').innerHTML = `<a href="${r.repo}">Code, data and tests</a><a href="${r.repo}/blob/main/REFERENCE.md">The reference case, calculated by hand</a><a href="lowther-august-2026-commentary.pptx">The exported page (.pptx)</a>`;
 }

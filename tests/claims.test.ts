@@ -61,7 +61,9 @@ export const WRONG: [string, string, 'open' | 'approved'][] = [
 for (const [txt, st] of LEGIT) {
   test(`passes: ${txt.slice(0, 70)}`, () => {
     const r = one(txt, st === 'open' ? open : approved);
-    assert.equal(r.status, 'verified', JSON.stringify(r.findings));
+    // Correct sentences: no error flagged. Still read by the reviewer (status 'review', never ticked).
+    assert.equal(r.status, 'review', JSON.stringify(r.findings));
+    assert.ok(!r.findings.some((f) => f.severity === 'fail'), JSON.stringify(r.findings));
   });
 }
 for (const [name, txt, st] of WRONG) {
@@ -113,3 +115,37 @@ for (const [name, txt, st, want] of NOT_TICKED) {
     if (want !== 'either') assert.equal(r.status, want, `${r.rendered} ${JSON.stringify(r.findings)}`);
   });
 }
+
+// Counterexamples from the ChatGPT 6 Pro verdict on the finished page (28/09): the first four are errors the checker
+// must now reject; the last two are unsupported facts it cannot know, which must reach the reviewer with a finding.
+const JUDGE: [string, string, 'fail' | 'finding'][] = [
+  ['level used as a difference', 'August revenue was above budget by [[revenue.month.actual]].', 'fail'],
+  ['direction across a comma', 'August revenue was below budget, at [[revenue.month.actual]].', 'fail'],
+  ['year outside the snapshot', 'In August 2024, revenue was [[revenue.month.actual]].', 'fail'],
+  ['relation between two figures reversed', "Marlow & Finch's August share of agency revenue was [[client.marlow-finch.share.month.actual]], above its year-to-date share of [[client.marlow-finch.share.ytd.actual]].", 'fail'],
+  ['unsupported cause', 'August revenue of [[revenue.month.actual]] resulted from higher prices.', 'finding'],
+  ['unsupported fact', 'Marlow & Finch had August revenue of [[client.marlow-finch.revenue.month.actual]] and has terminated its contract.', 'finding'],
+];
+for (const [name, txt, want] of JUDGE) {
+  test(`judge counterexample: ${name}`, () => {
+    const r = one(txt, approved);
+    assert.notEqual(r.status, 'verified');
+    if (want === 'fail') assert.equal(r.status, 'fail', JSON.stringify(r.findings));
+    else assert.ok(r.status === 'review' && r.findings.length > 0, JSON.stringify(r.findings));
+  });
+}
+
+test("judge's omission draft: citing the budget or the average does not cover an adverse movement", () => {
+  const om = "August revenue was [[revenue.month.actual]], above budget by [[revenue.month.vs_budget]]. August gross margin budget was [[gross_margin.month.budget]]. Orchard Lane Foods accounted for [[client.orchard-lane.share.month.actual]] of August revenue. Marlow & Finch's August revenue comparator is its May to July average of [[client.marlow-finch.revenue.month.avg3m]].";
+  const r = checkDraft(om, approved, approved.snapshotFingerprint);
+  assert.equal(r.omissions.filter((o) => o.severity === 'fail').length, 2, JSON.stringify(r.omissions));
+});
+
+test('a year-to-date share does not cover the August concentration requirement', () => {
+  const r = checkDraft('Year to date, Orchard Lane Foods accounts for [[client.orchard-lane.share.ytd.actual]] of revenue.', open, open.snapshotFingerprint);
+  assert.ok(r.omissions.some((o) => /Orchard Lane Foods share of August revenue/.test(o.message)));
+});
+
+test('no sentence is ever marked verified', () => {
+  for (const [txt, st] of LEGIT) assert.notEqual(one(txt, st === 'open' ? open : approved).status, 'verified');
+});

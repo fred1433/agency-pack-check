@@ -13,7 +13,7 @@ export type Sources = {
 
 export type Decisions = { accrual: 'open' | 'approved' | 'held' };
 
-export type Measure = 'revenue' | 'direct_costs' | 'gross_profit' | 'gross_margin' | 'overheads' | 'operating_profit' | 'share';
+export type Measure = 'revenue' | 'direct_costs' | 'gross_profit' | 'gross_margin' | 'overheads' | 'operating_profit' | 'share' | 'credit_notes';
 export type Period = 'month' | 'ytd';
 export type Scenario = 'actual' | 'budget' | 'py' | 'avg3m';
 export type Comparator = 'budget' | 'py' | 'avg3m';
@@ -34,6 +34,7 @@ export type Metric = {
   status: 'posted' | 'adjusted' | 'proposed';
   calc: string;
   sources: string[];
+  drafting?: false; // false: not given to Claude (available to reviewer edits only)
 };
 
 export type CheckResult = { id: string; title: string; status: 'pass' | 'fail' | 'note'; detail: string; evidence: string[] };
@@ -125,7 +126,7 @@ const fromPl = (r: ParsedReport): Base => ({
 const MEASURE_LABEL: Record<Exclude<Measure, 'share'>, string> = {
   revenue: 'Revenue', direct_costs: 'Direct costs', gross_profit: 'Gross profit', gross_margin: 'Gross margin', overheads: 'Overheads', operating_profit: 'Operating profit',
 };
-const POLARITY: Record<Measure, 1 | -1> = { revenue: 1, direct_costs: -1, gross_profit: 1, gross_margin: 1, overheads: -1, operating_profit: 1, share: 1 };
+const POLARITY: Record<Measure, 1 | -1> = { revenue: 1, direct_costs: -1, gross_profit: 1, gross_margin: 1, overheads: -1, operating_profit: 1, share: 1, credit_notes: -1 };
 const AFFECTED_BY_ACCRUAL = new Set<Measure>(['direct_costs', 'gross_profit', 'gross_margin', 'operating_profit']);
 
 export function pctChange(actual: number | null, base: number | null): number | null {
@@ -231,13 +232,27 @@ export function computeMetrics(s: Sources, decisions: Decisions): MetricSet {
     mkc('revenue.month.vs_avg3m', 'revenue', 'month', 'variance', 'actual', 'avg3m', 'gbp', aug === null ? null : aug - avg, 'August minus three-month average', 'revenue, August 2026 against its May to July average, difference', ['xero_pl_by_client_2026-08.json']);
     mkc('revenue.month.vs_avg3m_pct', 'revenue', 'month', 'variance', 'actual', 'avg3m', 'pct', pctChange(aug, avg), '(August - average) / average', 'revenue, August 2026 against its May to July average, % change', ['xero_pl_by_client_2026-08.json']);
   }
+  // Credit notes by client (for reviewer edits; not given to Claude, whose prompt is frozen with the drafts).
+  for (const c of CLIENTS) {
+    const cn = s.creditNotes.CreditNotes.filter((x: any) => x.Contact.Name === c.name && x.DateString.slice(0, 7) === '2026-08');
+    if (!cn.length) continue;
+    const total = cn.reduce((a: number, x: any) => a + x.SubTotal, 0);
+    const aug = augByClient.get(c.name) ?? 0;
+    const avg = prior.reduce((a, m) => a + (m.get(c.name) ?? 0), 0) / prior.length;
+    const ex = aug + total;
+    const base = { entity: c.name, period: 'month' as Period, polarity: 1 as const, status: 'posted' as const, drafting: false as const, sources: ['xero_credit_notes_2026-08.json', 'xero_pl_by_client_2026-08.json'] };
+    add({ ...base, id: `client.${c.slug}.credit_notes.month.actual`, label: `${c.name}: credit notes issued in August 2026 (${cn.map((x: any) => x.CreditNoteNumber).join(', ')})`, measure: 'credit_notes', kind: 'level', scenario: 'actual', comparator: null, unit: 'gbp', value: total, display: displayValue(total, 'gbp', false), polarity: -1, calc: 'sum of SubTotal of August credit notes' });
+    add({ ...base, id: `client.${c.slug}.revenue_ex_credit.month.actual`, label: `${c.name}: revenue, August 2026, excluding its credit notes`, measure: 'revenue', kind: 'level', scenario: 'actual', comparator: null, unit: 'gbp', value: ex, display: displayValue(ex, 'gbp', false), calc: 'client revenue + credit notes' });
+    add({ ...base, id: `client.${c.slug}.revenue_ex_credit.month.vs_avg3m`, label: `${c.name}: revenue excluding credit notes, August 2026, against its May to July average, difference`, measure: 'revenue', kind: 'variance', scenario: 'actual', comparator: 'avg3m', unit: 'gbp', value: ex - avg, display: displayValue(ex - avg, 'gbp', true), calc: 'revenue excluding credit notes minus three-month average' });
+    add({ ...base, id: `client.${c.slug}.revenue_ex_credit.month.vs_avg3m_pct`, label: `${c.name}: revenue excluding credit notes, August 2026, against its May to July average, % change`, measure: 'revenue', kind: 'variance', scenario: 'actual', comparator: 'avg3m', unit: 'pct', value: pctChange(ex, avg), display: displayValue(pctChange(ex, avg), 'pct', true), calc: '(revenue excluding credit notes - average) / average' });
+  }
   return { metrics, decisions, snapshotFingerprint: fingerprint(factsText(metrics)) };
 }
 
 // The approved figures of a snapshot, exactly as the drafting prompt lists them. A draft belongs to the figures it
 // was given: its fingerprint is this text's, so a draft is stale as soon as any approved figure changes.
 export function factsText(metrics: Map<string, Metric>): string {
-  return [...metrics.values()].filter((m) => m.status !== 'proposed')
+  return [...metrics.values()].filter((m) => m.status !== 'proposed' && m.drafting !== false)
     .map((m) => `[[${m.id}]] | ${m.label}${m.kind === 'variance' ? ` (prints as a magnitude; it is ${m.value === null ? 'not meaningful' : m.value > 0 ? 'higher' : m.value < 0 ? 'lower' : 'nil'})` : ''} | ${m.display}`).join('\n');
 }
 export function factsFromPrompt(prompt: string): string {
@@ -420,22 +435,22 @@ export function requiredCoverage(ms: MetricSet): Coverage[] {
   const gm = g('gross_margin.month.vs_budget_pp');
   if (gm.value !== null && Math.abs(gm.value) >= ASSUMPTIONS.materialityMarginPp) {
     out.push({ key: 'gm-budget', description: `gross margin against budget for August (${gm.display} ${gm.value < 0 ? 'below' : 'above'})`, adverse: gm.value < 0,
-      matches: (m) => m.measure === 'gross_margin' && m.period === 'month' && m.comparator === 'budget' && m.status !== 'proposed' });
+      matches: (m) => m.measure === 'gross_margin' && m.period === 'month' && m.comparator === 'budget' && m.kind === 'variance' && m.status !== 'proposed' });
   }
   const rev = g('revenue.month.vs_budget_pct');
   if (rev.value !== null && Math.abs(rev.value) >= 5) {
     out.push({ key: 'rev-budget', description: `revenue against budget for August (${rev.display} ${rev.value < 0 ? 'below' : 'above'})`, adverse: rev.value < 0,
-      matches: (m) => m.measure === 'revenue' && m.entity === 'agency' && m.period === 'month' && m.comparator === 'budget' });
+      matches: (m) => m.measure === 'revenue' && m.entity === 'agency' && m.period === 'month' && m.comparator === 'budget' && m.kind === 'variance' });
   }
   for (const c of CLIENTS) {
     const share = g(`client.${c.slug}.share.month.actual`);
     if ((share.value ?? 0) >= ASSUMPTIONS.concentrationPct) {
-      out.push({ key: `conc-${c.slug}`, description: `${c.name} share of August revenue (${share.display})`, adverse: false, matches: (m) => m.entity === c.name && m.measure === 'share' });
+      out.push({ key: `conc-${c.slug}`, description: `${c.name} share of August revenue (${share.display})`, adverse: false, matches: (m) => m.entity === c.name && m.measure === 'share' && m.period === 'month' });
     }
     const slip = g(`client.${c.slug}.revenue.month.vs_avg3m_pct`);
     if (slip.value !== null && -slip.value >= ASSUMPTIONS.clientSlipPct && (share.value ?? 0) >= ASSUMPTIONS.clientSlipMinShare) {
       out.push({ key: `slip-${c.slug}`, description: `${c.name} revenue against its three-month average (${slip.display} below)`, adverse: true,
-        matches: (m) => m.entity === c.name && m.comparator === 'avg3m' });
+        matches: (m) => m.entity === c.name && m.measure === 'revenue' && m.comparator === 'avg3m' && m.kind === 'variance' });
     }
   }
   return out;

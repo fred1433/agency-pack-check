@@ -14,13 +14,13 @@ writeFileSync(p('web/generated/sources.json'), JSON.stringify(s));
 writeFileSync(p('web/generated/pinned.json'), JSON.stringify(pinnedDrafts(s)));
 const ev = JSON.parse(readFileSync(p(`data/results/eval_checker-${CHECKER_VERSION}_${BATCH}.json`), 'utf8'));
 const adj = JSON.parse(readFileSync(p(`data/results/adjudication_checker-${CHECKER_VERSION}_${BATCH}.json`), 'utf8'));
-const prev = JSON.parse(readFileSync(p(`data/results/eval_checker-v2_${BATCH}.json`), 'utf8'));
+const prev = JSON.parse(readFileSync(p(`data/results/eval_checker-v3_${BATCH}.json`), 'utf8'));
 writeFileSync(p('web/generated/results.json'), JSON.stringify({
   natural: { ...ev.natural, perDraft: undefined },
-  corrupted: { cases: ev.corrupted.cases, failed: ev.corrupted.failed, toReviewer: ev.corrupted.toReviewer, passed: ev.corrupted.passed, byType: ev.corrupted.byType },
+  mutations: { cases: ev.mutations.cases, detected: ev.mutations.detected, finding: ev.mutations.finding, nofinding: ev.mutations.nofinding, byType: ev.mutations.byType },
   adjudication: { realErrors: adj.realErrors, realSummary: adj.realSummary, falseSummary: adj.falseSummary },
   checker: CHECKER_VERSION,
-  previous: { checker: 'v2', verified: prev.natural.verified, review: prev.natural.review, fail: prev.natural.fail, passed: prev.corrupted.passed },
+  previous: { checker: 'v3', verified: prev.natural.verified },
   repo: process.env.REPO_URL ?? 'https://github.com/fred1433/agency-pack-check',
 }));
 await build({

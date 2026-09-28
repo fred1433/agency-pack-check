@@ -8,15 +8,19 @@ import { roundsToZero } from './format.ts';
 import { fingerprint } from './hash.ts';
 
 // v1 frozen before held-out batch 1; v2 after it, before batch 2; v3 after the fresh review of 28/09 (rankings,
-// relations, judgements, negations, other months, measures not calculated, two clients around one figure).
-export const CHECKER_VERSION = 'v3';
+// relations, judgements, negations, other months, measures not calculated, two clients around one figure); v4 after
+// the ChatGPT 6 Pro verdict: no sentence is ticked, each figure is marked, and the checker flags a level used as a
+// difference, a reversed relation between two figures, years outside the snapshot and words it does not read.
+export const CHECKER_VERSION = 'v4';
 
 export type Severity = 'fail' | 'review';
 export type Finding = { severity: Severity; rule: string; message: string; ref?: string };
-export type SentenceResult = { markup: string; rendered: string; refs: string[]; status: 'verified' | 'review' | 'fail'; findings: Finding[] };
+// status: 'fail' when the checker recognises an error; otherwise 'review'. No sentence is ever ticked: all prose goes
+// to the reviewer. 'clean' only means the checker found nothing to flag.
+export type SentenceResult = { markup: string; rendered: string; refs: string[]; status: 'verified' | 'review' | 'fail'; findings: Finding[]; clean: boolean };
 export type DraftResult = {
   draftFingerprint: string; stale: boolean; sentences: SentenceResult[]; omissions: Finding[];
-  counts: { verified: number; review: number; fail: number };
+  counts: { verified: number; review: number; fail: number; clean: number };
 };
 
 // ---------- The supported language (published on the page and in the README) ----------
@@ -34,6 +38,7 @@ export const LEXICON: Lex[] = [
   { cls: 'pol', value: 'good', phrases: ['favourable', 'favourably', 'better', 'improved', 'improvement'] },
   { cls: 'pol', value: 'bad', phrases: ['adverse', 'adversely', 'worse', 'deteriorated'] },
   { cls: 'measure', value: 'share', phrases: ['share', 'concentration'] },
+  { cls: 'measure', value: 'credit_notes', phrases: ['credit note', 'credit notes', 'credit'] },
   { cls: 'measure', value: 'gross_margin', phrases: ['gross margin', 'margin'] },
   { cls: 'measure', value: 'gross_profit', phrases: ['gross profit'] },
   { cls: 'measure', value: 'operating_profit', phrases: ['operating profit', 'net profit', 'bottom line', 'profit'] },
@@ -43,7 +48,7 @@ export const LEXICON: Lex[] = [
   ...CLIENTS.map((c) => ({ cls: 'entity', value: c.name, phrases: aliases(c.name) })),
   { cls: 'entity', value: 'agency', phrases: ['the agency', 'agency', 'the business', 'overall', 'total', 'in total', 'lowther studio', 'lowther'] },
   { cls: 'cond', value: 'cond', phrases: ['subject to', 'if approved', 'once approved', 'pending', 'would', 'if the', 'if it'] },
-  { cls: 'causal', value: 'causal', phrases: ['because', 'due to', 'driven by', 'drove', 'reflecting', 'reflects', 'reflected', 'reflect', 'as a result', 'owing to', 'thanks to', 'demonstrates', 'shows that', 'suggests', 'indicates', 'led by', 'driving', 'drive', 'on the back of', 'result of', 'attributable', 'explained by', 'caused', 'contributed to', 'helped', 'boosted', 'weighed on', 'offset by', 'offsetting'] },
+  { cls: 'causal', value: 'causal', phrases: ['because', 'due to', 'driven by', 'drove', 'reflecting', 'reflects', 'reflected', 'reflect', 'as a result', 'owing to', 'thanks to', 'demonstrates', 'shows that', 'suggests', 'indicates', 'led by', 'resulted from', 'result from', 'resulting from', 'driving', 'drive', 'on the back of', 'result of', 'attributable', 'explained by', 'caused', 'contributed to', 'helped', 'boosted', 'weighed on', 'offset by', 'offsetting'] },
   { cls: 'forward', value: 'forward', phrases: ['should', 'recommend', 'we expect', 'expected to', 'likely', 'will', 'may need', 'might', 'could', 'forecast', 'outlook', 'going forward', 'next month', 'worth watching', 'keep an eye', 'monitor'] },
   // Read but not checked: these send the sentence to the reviewer, never to a tick.
   { cls: 'rank', value: 'rank', phrases: ['largest', 'biggest', 'highest', 'lowest', 'smallest', 'first', 'best', 'worst', 'top', 'leading', 'remained', 'remains', 'remain', 'still', 'only', 'most', 'least', 'again', 'second', 'third', 'last'] },
@@ -122,6 +127,7 @@ export function checkDraft(markup: string, ms: MetricSet, draftSnapshotFingerpri
   const sentences = splitSentences(markup.replace(/\s+/g, ' ').trim());
   const results: SentenceResult[] = [];
   const cited: Metric[] = [];
+  const relations: { a: Metric; b: Metric }[] = [];
   let ctxPeriod: Period | null = null;
   let ctxEntity: string | null = null;
 
@@ -214,6 +220,7 @@ export function checkDraft(markup: string, ms: MetricSet, draftSnapshotFingerpri
     const covered = (a: number, b: number) => rawHits.some((h) => (h.cls === 'comp' || h.cls === 'period') && h.start <= a && h.end >= b);
     for (const mo of masked.matchAll(/\b(January|February|March|April|May|June|July|September|October|November|December)\b/g)) {
       if (mo.index === 0 && mo[1] === 'May') continue;
+      if (/^\s+(work|invoices?)\b/i.test(masked.slice(mo.index! + mo[0].length))) continue; // "July work": the work, not the period
       if (!covered(mo.index!, mo.index! + mo[0].length)) findings.push({ severity: 'fail', rule: 'period-outside', message: `Names ${mo[1]}; this pack covers August 2026, the year to date and the May to July average only.` });
     }
     // Two different clients in the clause of a client figure, without "respectively": pairing not read.
@@ -262,7 +269,6 @@ export function checkDraft(markup: string, ms: MetricSet, draftSnapshotFingerpri
         findings.push({ severity: 'fail', rule: 'unknown-figure', ref: r.id, message: `[[${r.id}]] is not a figure in this snapshot.` });
         continue;
       }
-      cited.push(m);
       // Approval status.
       if (m.status === 'proposed') {
         const cond = hits.some((h) => h.cls === 'cond' && h.clause === r.clause);
@@ -328,7 +334,7 @@ export function checkDraft(markup: string, ms: MetricSet, draftSnapshotFingerpri
         // "Revenue rose to £X against budget", "revenue of £X, below budget": the implied variance must agree.
         // Adjacent: "rose to [[x]]", "[[x]], below budget", "ran lower than budget at [[x]]".
         const gapB = bound.gapBefore === null ? null : bound.gapBefore.replace(new RegExp(bound.comp.phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'), ' ');
-        const adjacent = (bound.gapAfter !== null && /^[\s,]*$/.test(bound.gapAfter)) || (gapB !== null && /^\s*(?:(?:than|against|on|versus|compared with)\s+)?(?:the\s+)?\s*(?:to|at|of)?\s*$/i.test(gapB));
+        const adjacent = (bound.gapAfter !== null && /^[\s,]*$/.test(bound.gapAfter)) || (gapB !== null && /^[\s,]*(?:(?:than|against|on|versus|compared with)\s+)?(?:the\s+)?[\s,]*(?:to|at|of)?\s*$/i.test(gapB));
         const comp = bound.comp.value as Comparator;
         const twin = ms.metrics.get(m.id.replace(/\.actual(@proposed)?$/, `.vs_${comp}${m.unit === 'pct' ? '_pp' : ''}$1`));
         if (adjacent && twin && twin.value !== null) {
@@ -337,6 +343,41 @@ export function checkDraft(markup: string, ms: MetricSet, draftSnapshotFingerpri
         }
       }
     }
+    // A level used as the size of a difference: "above budget by [[revenue.month.actual]]".
+    for (const r of refs) {
+      const m = ms.metrics.get(r.id);
+      if (!m || m.kind !== 'level') continue;
+      if (/\bby\s*$/i.test(masked.slice(Math.max(0, r.start - 8), r.start)) && dirHits.some((h) => h.clause === r.clause && h.end <= r.start)) {
+        findings.push({ severity: 'fail', rule: 'level-as-difference', ref: r.id, message: `${m.display} is ${describe(m)} itself, used as the size of a difference.` });
+      }
+    }
+    // Two figures compared directly: "9.0%, above its year-to-date share of 14.4%". The relation must hold.
+    for (let k = 0; k + 1 < refs.length; k++) {
+      const a = refs[k], b = refs[k + 1];
+      const ma = ms.metrics.get(a.id), mb = ms.metrics.get(b.id);
+      if (!ma || !mb || a.clause !== b.clause || ma.kind !== 'level' || mb.kind !== 'level' || ma.unit !== mb.unit || ma.value === null || mb.value === null) continue;
+      const between = masked.slice(a.end, b.start);
+      if (/\bby\b/i.test(between)) continue;
+      const d = dirHits.find((h) => h.start >= a.end && h.end <= b.start);
+      if (!d) continue;
+      const diff = ma.value - mb.value;
+      const is = roundsToZero(diff, ma.unit === 'gbp' ? 'gbp' : 'pp') ? 0 : Math.sign(diff);
+      if (sayOf(d, ma.polarity) !== is) findings.push({ severity: 'fail', rule: 'relation', ref: a.id, message: `Says ${ma.display} is "${d.phrase}" ${mb.display}; it is ${is > 0 ? 'higher' : is < 0 ? 'lower' : 'level'}.` });
+      else relations.push({ a: ma, b: mb });
+    }
+    // Years other than the snapshot's (2026) and its prior year (2025).
+    for (const y of masked.matchAll(/\b(19|20)\d{2}\b/g)) {
+      if (y[0] !== '2026' && y[0] !== '2025') findings.push({ severity: 'fail', rule: 'period-outside', message: `Names ${y[0]}; this pack covers 2026, with 2025 as the prior year.` });
+    }
+    // Words the checker does not read. Shown to the reviewer so nothing disappears silently.
+    const read = (i: number) => rawHits.some((h) => h.start <= i && h.end > i);
+    const unread: string[] = [];
+    for (const w of masked.matchAll(/[A-Za-z][A-Za-z'’-]*/g)) {
+      const lw = w[0].toLowerCase().replace(/['’]s$/, '');
+      if (read(w.index!) || FUNCTION_WORDS.has(lw) || /^(august|may|july|june|april|year|month|months)$/.test(lw)) continue;
+      if (!unread.includes(lw)) unread.push(lw);
+    }
+    if (unread.length) findings.push({ severity: 'review', rule: 'unread-words', message: `Words the checker does not read: ${unread.slice(0, 8).join(', ')}${unread.length > 8 ? '…' : ''}.` });
     if (!refs.length && !findings.length) findings.push({ severity: 'review', rule: 'narrative', message: 'No figure in this sentence: reviewer to confirm the statement.' });
 
     // Context carried to the next sentence.
@@ -345,16 +386,23 @@ export function checkDraft(markup: string, ms: MetricSet, draftSnapshotFingerpri
     const lastEntity = hits.filter((h) => h.cls === 'entity' && h.value !== 'agency').pop();
     if (lastEntity) ctxEntity = lastEntity.value;
 
-    const status = findings.some((f) => f.severity === 'fail') ? 'fail' : findings.length ? 'review' : 'verified';
-    results.push({ markup: s, rendered: render(s, ms), refs: refs.map((r) => r.id), status, findings: dedupe(findings) });
+    const status = findings.some((f) => f.severity === 'fail') ? 'fail' : 'review';
+    // Coverage counts only figures the checker did not reject.
+    for (const r of refs) {
+      const m = ms.metrics.get(r.id);
+      if (m && !findings.some((f) => f.severity === 'fail' && f.ref === r.id)) cited.push(m);
+    }
+    results.push({ markup: s, rendered: render(s, ms), refs: refs.map((r) => r.id), status, findings: dedupe(findings), clean: findings.length === 0 });
   }
 
+  // A relation between an actual and its comparator counts like the variance it states.
+  for (const { a, b } of relations) if (a.scenario === 'actual' && b.comparator) cited.push({ ...a, kind: 'variance', comparator: b.comparator });
   const omissions: Finding[] = [];
   for (const c of requiredCoverage(ms)) {
     if (!cited.some(c.matches)) omissions.push({ severity: c.adverse ? 'fail' : 'review', rule: 'omission', message: `Does not mention ${c.description}.` });
   }
-  const counts = { verified: 0, review: 0, fail: 0 };
-  for (const r of results) counts[r.status]++;
+  const counts = { verified: 0, review: 0, fail: 0, clean: 0 };
+  for (const r of results) { counts[r.status]++; if (r.clean && r.status !== 'fail') counts.clean++; }
   return { draftFingerprint: fingerprint(markup), stale: draftSnapshotFingerprint !== ms.snapshotFingerprint, sentences: results, omissions, counts };
 }
 
@@ -362,6 +410,13 @@ function dedupe(f: Finding[]): Finding[] {
   const seen = new Set<string>();
   return f.filter((x) => (seen.has(x.message) ? false : (seen.add(x.message), true)));
 }
+
+const FUNCTION_WORDS = new Set(('a an the and or of in on at by to for from with its their it this that these those which who was were is are be been being has had have as while also both each ' +
+  'came come comes coming reached reach stood stands stand ended end finished finishing closed close came in compared against than then so ' +
+  'respectively respective clients client account accounts on figure figures amount amounts level total overall per its their our we ' +
+  'for when after before during over under into within across alongside including includes included excluding exclude excluded ' +
+  'billed contributing contributed ran run running came landed moved moving came at taking took bringing brought leaving left meaning meant ' +
+  'what where there here other another rest part share but work').split(/\s+/));
 
 function describe(m: Metric): string {
   const when = m.period === 'ytd' ? 'year-to-date' : 'August';

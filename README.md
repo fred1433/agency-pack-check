@@ -10,13 +10,14 @@ Live page: https://theaipipe.com/agency-pack/
 
 ## The case
 
-The posted August figures are right, and the draft Claude wrote from them agrees with every one. The payroll
-input approved on 1 September for the September run holds £12,000 of overtime, bonuses, employer NIC and pension earned in August, and nothing for it is in the
-August ledger. Approving the accrual moves August gross margin from 40.0% (2.0 points above budget) to 34.0% (4.0 points
-below). The draft written for the posted figures, re-read against the approved snapshot, now makes false claims, and
-the release control will not let it through. A draft written for the approved snapshot passes, the reviewer accepts
-what the checker cannot verify, signs off, and the page exports. Editing the text or changing the snapshot voids the
-sign-off.
+The posted August figures are right, and the figures in the draft Claude wrote from them agree. In this fictional
+case, the payroll workpaper (approved 1 September) identifies £12,000 of August overtime, bonuses, employer NIC and
+pension not included in the posted figures; the adapter does not discover this in Xero. Approving the accrual moves
+August gross margin from 40.0% (2.0 points above budget) to 34.0% (4.0 points below). The draft written for the posted
+figures, re-read against the approved figures, now makes false claims, and the release control will not let it
+through. A draft written for the approved figures passes, the reviewer applies two labelled edits, accepts every
+sentence, signs off, and the page exports. Editing the text or changing the approved figures voids the sign-off. The
+figures fingerprint binds the figures shown, not the source files.
 
 `REFERENCE.md` has every figure calculated by hand, and `tests/expected.json` holds them for the tests.
 
@@ -40,35 +41,46 @@ sign-off.
 
 ```
 npm install
-npm test                               # 86 tests: reference case, calculation edge cases, claims, release
+npm test                               # 96 tests: reference case, calculation edge cases, claims, release
 node scripts/evaluate.ts heldout2      # natural drafts and corrupted copies
 node scripts/build-site.ts && node scripts/export-pptx.ts && npx wrangler deploy
 ```
 
 Node 22.18 or later (TypeScript runs natively).
 
-## Results (checker v3, held-out batch 2)
+## Results (checker v4, held-out batch 2 rerun)
 
-Twenty drafts by `claude-sonnet-5` through Claude Code, ten per snapshot, as written: 99 sentences; 38 ticked (every
-figure checked, nothing outside the checked list), 54 sent to the reviewer (causes, judgements, rankings, negations,
-advice, a figure without its measure), 7 rejected. Of the 7, 3 are real errors in the draft (a unit written twice, two
-figures typed instead of cited) and 4 are the checker being wrong (`data/results/adjudication_checker-v3_heldout2.json`).
+No sentence is ever ticked. The code supplies every figure; each figure is marked when the words around it name its
+measure, client or agency, period, comparator (for a variance or budget figure) and direction. The checker flags the
+errors it recognises (a typed figure or unit, an unapproved figure stated as fact, a level used as the size of a
+difference, two figures whose stated relation is reversed, a month or year outside the snapshot, a measure the pack does
+not calculate, an adverse material movement left out) and lists the words it does not read. Every sentence then goes to
+the reviewer, and release needs each one accepted.
 
-Corrupted copies of the same sentences, one change at a time: 2,257 cases; 2,230 rejected, 27 sent to the reviewer,
-0 ticked.
+Batch 2 is an existing batch of twenty `claude-sonnet-5` drafts rerun under v4, not a fresh validation: reviewers had
+read some of its sentences. 99 sentences, all to the reviewer: 8 with an error flagged, 62 with another finding, 29
+with nothing flagged; 665 figures cited, 6 flagged. Of the 8, 4 are real errors in the drafts (a unit written twice, two
+figures typed instead of cited, a 14.4% share said to be below a 9.0% one) and 4 are the checker being wrong
+(`data/results/adjudication_checker-v4_heldout2.json`).
 
-History, all kept in `data/results/`: v1 was frozen before held-out batch 1; v2 fixed what batch 1 showed and was
-frozen before batch 2 (on batch 2 it ticked 79 sentences and let 10 corrupted cases through); a fresh review then wrote
-sentences v2 ticked although they were wrong (rankings, "the same amount", "unlike", negations, "September", "revenue
-per head"). v3 sends those to the reviewer or rejects them (`NOT_TICKED` in `tests/claims.test.ts`). Batch 2 was not
-used to tune v3, but the reviewer had read two of its sentences.
+Generated mutations of the 29 sentences with nothing flagged, one change at a time: 992 cases; 984 with an error
+flagged, 8 with another finding (period not stated), 0 with nothing flagged. They are generated, not individually
+adjudicated. Mutating only sentences with no finding keeps a mutation from repairing an error (v3 counted a flipped
+"14.4% below 9.0%" as a corruption, though it made the sentence true).
 
-What the checker verifies, for each figure: the measure, the client or agency, the period, the comparator (for a
-variance or a budget figure) and the direction word against the sign. It also rejects typed figures, hand-written
-units, unapproved figures stated as fact, months outside the snapshot and measures this pack does not calculate.
-Everything else it does not read, and sends to the reviewer.
+History in `data/results/`: v1 and v2 (held-out batches 1 and 2), v3 after a fresh review (ticked 38 of 99), v4 after
+the ChatGPT 6 Pro verdict, which showed a ticked sentence could be false and reach release ("August revenue was above
+budget by £200,000"). Its six counterexamples and its omission draft are in `tests/claims.test.ts`.
 
-These are counts on one synthetic month, not an accuracy rate.
+These are counts on one synthetic month: not an accuracy rate, not a measure of review time saved.
+
+## Reviewer edits
+
+Draft B plus two edits a finance director would make, labelled as hers on the page and in the export: the
+operating-profit bridge (revenue £10,000 above budget, direct costs £14,200 above, overheads £1,500 below, operating profit
+£2,700 below) and the Marlow & Finch credit note (£6,000 of its £12,000 fall is a credit on July work; excluding it,
+August revenue was £24,000, 20.0% below its May to July average). The credit-note figures are metrics the reviewer can
+cite; they were not in Claude's prompt.
 
 ## Not wired, or approximated
 

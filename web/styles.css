@@ -196,3 +196,16 @@ body[data-view="reviewer"] .fig:hover { background: var(--pen-soft); }
   .figures--ytd { display: table !important; margin-top: 18px; }
   .figures th, .figures td { white-space: normal; }
 }
+
+.lede--short { display: none; }
+.who { font: 600 11px/1 var(--sans); color: var(--pen); border: 1px solid var(--pen); border-radius: 2px; padding: 1px 4px; vertical-align: .2em; }
+.sent--authored { background: linear-gradient(transparent 60%, var(--pen-soft) 60%); }
+body[data-view="client"] .sent--authored { background: none; }
+.acc { font: 500 10.5px/1 var(--sans); color: var(--pen); margin-left: .25em; vertical-align: .5em; }
+.note__none { color: var(--ink-3); }
+@media (max-width: 720px) {
+  .lede--long { display: none; }
+  .lede--short { display: block; }
+  .intro { padding: 8px 0 18px; }
+  .intro h1 { font-size: 28px; margin-bottom: 10px; }
+}

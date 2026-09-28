@@ -26,8 +26,9 @@
   <section class="desk" aria-label="The pack page and its review">
     <div class="left">
   <div class="intro">
-    <h1>The August pack is right, and it cannot go yet.</h1>
-    <p class="lede">A fictional agency's management commentary. Claude wrote the words; the code supplied every figure and checked the words around each one. The draft agrees with the ledger. The ledger is missing £12,000 of August pay.</p>
+    <h1 id="headline">The August pack is right, and it cannot go yet.</h1>
+    <p class="lede lede--long">A fictional agency's management commentary. Claude wrote the words; the code supplied every figure and checked the words around each one, and a reviewer reads every sentence. The draft agrees with the ledger. The ledger is missing £12,000 of August pay.</p>
+    <p class="lede lede--short">£12,000 of August pay is missing from the ledger: margin 40.0% becomes 34.0%.</p>
   </div>
 
     <article class="sheet" id="sheet" aria-label="Management pack page">
@@ -66,16 +67,16 @@
       </div>
       <div>
         <h3>From the figures to the words</h3>
-        <p>Claude receives the approved figures of one snapshot, each with a reference, and writes with references instead of numbers. The code prints the values. Then, for each figure, the checker reads the words in its clause and verifies five things:</p>
+        <p>Claude receives the approved figures of one snapshot, each with a reference, and writes with references instead of numbers. The code prints the values. For each figure, the checker reads the words in its clause and marks the figure when five things hold:</p>
         <ul class="plain">
-          <li>the measure named is the figure's measure (revenue, gross profit, margin, overheads, operating profit, a client's share);</li>
+          <li>the measure named is the figure's (revenue, gross profit, margin, overheads, operating profit, a client's share);</li>
           <li>the client named, or the agency total, is the figure's;</li>
-          <li>the period named (August or year to date) is the figure's;</li>
+          <li>the period named (August 2026 or year to date) is the figure's;</li>
           <li>for a variance or a budget figure, the comparator named (budget, last year, the May to July average) is the figure's;</li>
-          <li>for a variance, the direction word (above, below, up, down, in line, favourable, adverse) matches its sign at the precision printed.</li>
+          <li>for a variance, the direction word matches its sign at the precision printed.</li>
         </ul>
-        <p>It also rejects figures typed instead of cited, units typed by hand, a figure that includes an unapproved adjustment, months outside this snapshot and measures this pack does not calculate (such as revenue per head). A sentence gets a tick only when every figure in it passes and nothing in it is outside that list.</p>
-        <p>It does not read, and sends to the reviewer instead: causes ("driven by"), advice and judgements ("may wish to review", "the picture is stronger", "slightly", "well above"), rankings ("largest", "remained", "first"), relations ("the same amount", "unlike"), negations, two clients around one figure, and comparisons between two figures in one sentence. It checks nothing about whether the commentary says what matters, beyond the material movements it requires to be mentioned.</p>
+        <p>It flags the errors it recognises: a figure typed instead of cited, a unit typed by hand, an unapproved figure stated as fact, a level used as the size of a difference, two figures whose stated relation is reversed, a month or year outside the snapshot, a measure this pack does not calculate, and a material adverse movement left out. It lists the words it does not read.</p>
+        <p>It does not verify prose. Every sentence, flagged or not, goes to the reviewer, and the pack cannot be released until each one is accepted. Causes, judgements, rankings, negations and anything else in the words are hers to confirm.</p>
         <div class="results" id="results"></div>
       </div>
     </div>
@@ -89,8 +90,9 @@
         <p>It is a synthetic prototype: the Xero adapter reads responses in the shapes Xero documents (<code>Reports/ProfitAndLoss</code>, <code>Reports/TrialBalance</code>, <code>Budgets</code>, <code>Invoices</code>, <code>CreditNotes</code>, <code>ManualJournals</code>, <code>Organisation</code>, <code>TrackingCategories</code>, <code>Accounts</code>), but it has not been run against a Xero organisation. No journal stream is needed: Journals is a premium endpoint from Xero's Advanced tier.</p>
       </div>
       <div>
-        <p>Read-only scopes for a new app: <code>accounting.reports.profitandloss.read</code>, <code>accounting.reports.trialbalance.read</code>, <code>accounting.invoices.read</code>, <code>accounting.budgets.read</code>, <code>accounting.settings.read</code>. A Custom Connection serves one organisation, which can be a client's. Xero's terms forbid training models on API data.</p>
-        <p>Only figures, labels and client names reach the model, never transactions, staff or bank details. Anthropic does not train on API content; standard API retention is up to 30 days, zero retention by agreement. The drafts here were produced on <span id="modelLine"></span> and frozen: this page replays them and calls no model.</p>
+        <p>Read-only scopes for a new app: <code>accounting.reports.profitandloss.read</code>, <code>accounting.reports.trialbalance.read</code>, <code>accounting.invoices.read</code>, <code>accounting.budgets.read</code>, <code>accounting.manualjournals.read</code>, <code>accounting.settings.read</code>. A Custom Connection serves one organisation, which can be a client's. Xero data: client-authorised processing; no model training.</p>
+        <p>This demo: entirely synthetic data; the drafts were produced on <span id="modelLine"></span> and frozen, and no model is called when you use this page. Only figures, labels and client names were in the prompt.</p>
+        <p>In production: client-authorised processing through Anthropic's commercial API, with training settings, retention and model eligibility confirmed before any client data is connected. Standard API retention is up to 30 days, with documented exceptions; zero retention needs an eligible arrangement.</p>
       </div>
     </div>
     <p class="links" id="links"></p>

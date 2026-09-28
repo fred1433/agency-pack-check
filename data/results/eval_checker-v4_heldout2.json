@@ -1,0 +1,1598 @@
+{
+  "generated": "2026-09-28T14:43:04.706Z",
+  "batch": "heldout2",
+  "checker": "v4",
+  "natural": {
+    "drafts": 20,
+    "sentences": 99,
+    "rejected": 8,
+    "withFinding": 62,
+    "noFinding": 29,
+    "figures": 665,
+    "figuresFlagged": 6,
+    "omissions": 5,
+    "draftsWithAFailingSentence": 7,
+    "perDraft": [
+      {
+        "file": "approved_run1.json",
+        "snapshot": "approved",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 4,
+          "fail": 1,
+          "clean": 3
+        },
+        "omissions": [],
+        "figures": 37,
+        "figuresFlagged": 1,
+        "flagged": [
+          {
+            "status": "fail",
+            "rendered": "On clients, Orchard Lane Foods contributed £62,000 in August, 31.0% of agency revenue and above its May to July average by £4,333 (7.5%), while Marlow & Finch fell to £18,000 in August, below its May to July average by £12,000 (40.0%) and down to 9.0% of agency revenue against 14.4% year to date.",
+            "findings": [
+              {
+                "severity": "fail",
+                "rule": "measure",
+                "ref": "client.marlow-finch.share.ytd.actual",
+                "message": "14.4% is share; the words say revenue."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "The owner may wish to confirm the reason for the August direct cost overrun and the drop in Marlow & Finch billings with the account teams.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"may wish\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: owner, confirm, reason, direct, cost, overrun, teams."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "approved_run2.json",
+        "snapshot": "approved",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 5,
+          "fail": 0,
+          "clean": 0
+        },
+        "omissions": [],
+        "figures": 33,
+        "figuresFlagged": 0,
+        "flagged": [
+          {
+            "status": "review",
+            "rendered": "Revenue for August came in at £200,000, above budget by £10,000 (5.3%) and up on last year by £30,000 (17.6%), while gross profit of £68,000 was below budget by £4,200 (5.8%) as gross margin slipped to 34.0%, down 4.0 percentage points against budget.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: slipped."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Operating profit for August was £17,500, below budget by £2,700 (13.4%) and slightly down on last year by £250 (1.4%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"slightly\"): reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Year to date the picture is stronger, with revenue of £960,000 above budget by £10,000 (1.1%) and up on last year by £115,000 (13.6%), and operating profit of £111,000 above budget by £10,000 (9.9%) and up on last year by £34,125 (44.4%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"the picture\", \"stronger\"): reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "On clients, Orchard Lane Foods remained the largest account at 31.0% of August revenue, with its month's revenue of £62,000 above its May to July average by £4,333 (7.5%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "ranking",
+                "message": "Ranks or compares over time (\"remained\", \"largest\"): not checked, reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Marlow & Finch's August revenue of £18,000 was notably below its May to July average by £12,000 (40.0%), and its share of year-to-date revenue at 14.4% is worth watching alongside the other client movements this month.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"notably\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "forward-looking",
+                "message": "Forward-looking or advisory (\"worth watching\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: movements."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "approved_run3.json",
+        "snapshot": "approved",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 5,
+          "fail": 0,
+          "clean": 2
+        },
+        "omissions": [],
+        "figures": 34,
+        "figuresFlagged": 0,
+        "flagged": [
+          {
+            "status": "review",
+            "rendered": "Operating profit for August was £17,500, below budget by £2,700 (13.4%) and slightly down on last year by £250 (1.4%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"slightly\"): reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "On clients, Orchard Lane Foods contributed £62,000 in August, 31.0% of agency revenue and above its May to July average by £4,333 (7.5%), while Marlow & Finch's August revenue of £18,000 was below its May to July average by £12,000 (40.0%), reducing its year-to-date share of agency revenue to 14.4%.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: reducing."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "The owner may wish to ask about the reasons for the Marlow & Finch drop and for the higher-than-budget direct costs in August.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"may wish\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: owner, ask, about, reasons."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "approved_run4.json",
+        "snapshot": "approved",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 4,
+          "fail": 1,
+          "clean": 1
+        },
+        "omissions": [],
+        "figures": 34,
+        "figuresFlagged": 1,
+        "flagged": [
+          {
+            "status": "review",
+            "rendered": "Operating profit for August was £17,500, below budget by £2,700 (13.4%) and slightly below last year by £250 (1.4%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"slightly\"): reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Year to date, the picture is stronger: revenue of £960,000 is above budget by £10,000 (1.1%) and up on last year by £115,000 (13.6%), with operating profit of £111,000 above budget by £10,000 (9.9%) and up on last year by £34,125 (44.4%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"the picture\", \"stronger\"): reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "fail",
+            "rendered": "On clients, Orchard Lane Foods contributed £62,000 in August, 31.0% of agency revenue and above its May to July average by £4,333 (7.5%), while Marlow & Finch fell to £18,000 in August, below its May to July average by £12,000 (40.0%) and now 9.0% of agency revenue in the month against 14.4% year to date.",
+            "findings": [
+              {
+                "severity": "fail",
+                "rule": "measure",
+                "ref": "client.marlow-finch.share.ytd.actual",
+                "message": "14.4% is share; the words say revenue."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: now."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "The owner may wish to review the Marlow & Finch drop given the size of the monthly decline relative to its recent run rate.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"may wish\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: owner, review, given, size, relative, recent, rate."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "approved_run5.json",
+        "snapshot": "approved",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 5,
+          "fail": 0,
+          "clean": 0
+        },
+        "omissions": [],
+        "figures": 32,
+        "figuresFlagged": 0,
+        "flagged": [
+          {
+            "status": "review",
+            "rendered": "Revenue in August came in at £200,000, above budget by £10,000 (5.3%) and up on last year by £30,000 (17.6%), while gross profit of £68,000 was below budget by £4,200 (5.8%) as gross margin slipped to 34.0%, down 4.0 percentage points against budget.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: slipped."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Operating profit for August was £17,500, below budget by £2,700 (13.4%) and slightly down on last year by £250 (1.4%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"slightly\"): reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Year to date, the picture is stronger: revenue of £960,000 is above budget by £10,000 (1.1%) and up on last year by £115,000 (13.6%), with operating profit of £111,000 above budget by £10,000 (9.9%) and up on last year by £34,125 (44.4%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"the picture\", \"stronger\"): reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "On clients, Orchard Lane Foods remained the largest contributor at 31.0% of August revenue, with its August revenue of £62,000 above its May to July average by £4,333 (7.5%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "ranking",
+                "message": "Ranks or compares over time (\"remained\", \"largest\"): not checked, reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: contributor."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Marlow & Finch's August revenue of £18,000 was below its May to July average by £12,000 (40.0%), a fall a reviewer should look into.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "forward-looking",
+                "message": "Forward-looking or advisory (\"should\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: reviewer, look."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "approved_run6.json",
+        "snapshot": "approved",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 5,
+          "fail": 0,
+          "clean": 1
+        },
+        "omissions": [],
+        "figures": 41,
+        "figuresFlagged": 0,
+        "flagged": [
+          {
+            "status": "review",
+            "rendered": "August revenue of £200,000 came in above budget by £10,000 (5.3%) and up on last year by £30,000 (17.6%), though gross profit of £68,000 was below budget by £4,200 (5.8%) as direct costs of £132,000 ran above budget by £14,200 (12.1%), leaving gross margin at 34.0%, below budget by 4.0 percentage points and down on last year by 3.5 percentage points.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: though."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Operating profit for August of £17,500 was below budget by £2,700 (13.4%) and slightly down on last year by £250 (1.4%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"slightly\"): reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "On clients, Orchard Lane Foods contributed £62,000 in August, 31.0% of agency revenue, above its May to July average by £4,333 (7.5%), while Kestrel Mobility and Brightwater Housing also each ran above their May to July averages, by £3,000 (6.7%) and £1,500 (4.3%) respectively.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "entity-pairing",
+                "ref": "client.kestrel.revenue.month.vs_avg3m",
+                "message": "Cannot pair £3,000 with one of the clients named \"respectively\": reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "entity-pairing",
+                "ref": "client.kestrel.revenue.month.vs_avg3m_pct",
+                "message": "Cannot pair 6.7% with one of the clients named \"respectively\": reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "entity-pairing",
+                "ref": "client.brightwater.revenue.month.vs_avg3m",
+                "message": "Cannot pair £1,500 with one of the clients named \"respectively\": reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "entity-pairing",
+                "ref": "client.brightwater.revenue.month.vs_avg3m_pct",
+                "message": "Cannot pair 4.3% with one of the clients named \"respectively\": reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: averages."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "By contrast, Marlow & Finch billed £18,000 in August, below its May to July average by £12,000 (40.0%), and its share of year-to-date agency revenue at 14.4% is worth flagging to the owner.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "relation",
+                "message": "Relates two figures or entities (\"by contrast\"): not checked, reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"worth\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: flagging, owner."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "approved_run7.json",
+        "snapshot": "approved",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 5,
+          "fail": 0,
+          "clean": 1
+        },
+        "omissions": [],
+        "figures": 35,
+        "figuresFlagged": 0,
+        "flagged": [
+          {
+            "status": "review",
+            "rendered": "Revenue for August came in at £200,000, above budget by £10,000 (5.3%) and up on last year by £30,000 (17.6%), but gross margin slipped to 34.0%, below budget by 4.0 percentage points and down on last year by 3.5 percentage points, leaving operating profit of £17,500 below budget by £2,700 (13.4%) and roughly level with last year.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: slipped, roughly."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Year to date, revenue of £960,000 is above budget by £10,000 and up on last year by £115,000 (13.6%), while operating profit of £111,000 is above budget by £10,000 (9.9%) and up on last year by £34,125 (44.4%), so the year-to-date position remains ahead of both comparators despite the softer month for margin.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "ranking",
+                "message": "Ranks or compares over time (\"remains\"): not checked, reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"softer\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: position, comparators, despite."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Marlow & Finch is one to watch: August revenue of £18,000 was below its May to July average by £12,000 (40.0%), taking its share of agency revenue down to 9.0% for the month against 14.4% year to date.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"one to watch\"): reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Brightwater Housing held steady, with August revenue of £36,000 above its May to July average by £1,500 (4.3%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"steady\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: held."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "approved_run8.json",
+        "snapshot": "approved",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 5,
+          "fail": 0,
+          "clean": 1
+        },
+        "omissions": [],
+        "figures": 29,
+        "figuresFlagged": 0,
+        "flagged": [
+          {
+            "status": "review",
+            "rendered": "Overheads of £50,500 were 2.9% below budget, which partly offset the margin shortfall, leaving operating profit at £17,500, 13.4% below budget and 1.4% below last year.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: partly, offset."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Year to date, the picture is stronger: revenue of £960,000 is 1.1% above budget and 13.6% up on last year, gross margin of 38.0% is in line with budget, and operating profit of £111,000 is 9.9% above budget and 44.4% up on last year.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"the picture\", \"stronger\"): reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Among clients, Orchard Lane Foods contributed £62,000 in August, 31.0% of agency revenue and 7.5% above its May to July average, while Kestrel Mobility delivered £48,000, also 6.7% above its May to July average.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: among, delivered."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Marlow & Finch is the one to watch: August revenue of £18,000 was 40.0% below its May to July average, taking its share of agency revenue down to 9.0% for the month against 14.4% year to date.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"one to watch\"): reviewer to confirm."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "approved_run9.json",
+        "snapshot": "approved",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 4,
+          "fail": 1,
+          "clean": 1
+        },
+        "omissions": [
+          {
+            "severity": "fail",
+            "rule": "omission",
+            "message": "Does not mention gross margin against budget for August (4.0 percentage points below)."
+          }
+        ],
+        "figures": 35,
+        "figuresFlagged": 1,
+        "flagged": [
+          {
+            "status": "fail",
+            "rendered": "Revenue for August came in at £200,000, above budget by £10,000 (5.3%) and up on last year by £30,000 (17.6%), while direct costs ran higher than budget at £132,000, leaving gross profit of £68,000 below budget by £4,200 (5.8%), with gross margin of 34.0% below budget by 4.0 percentage points percentage points.",
+            "findings": [
+              {
+                "severity": "fail",
+                "rule": "unit-by-hand",
+                "ref": "gross_margin.month.vs_budget_pp",
+                "message": "A unit is written next to [[gross_margin.month.vs_budget_pp]]; the code renders units."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: percentage, points."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Operating profit of £17,500 was below budget by £2,700 (13.4%) and slightly below last year by £250 (1.4%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"slightly\"): reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Among clients, Orchard Lane Foods contributed £62,000 in August, above its May to July average by £4,333 (7.5%) and remains the largest client at 31.0% of August revenue.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "ranking",
+                "message": "Ranks or compares over time (\"remains\", \"largest\"): not checked, reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: among."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Marlow & Finch's August revenue of £18,000 was below its May to July average by £12,000 (40.0%), and its share of agency revenue fell to 9.0% in August from 14.4% year to date, which the owner may wish to review.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"may wish\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: owner, review."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "approved_run10.json",
+        "snapshot": "approved",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 4,
+          "fail": 1,
+          "clean": 1
+        },
+        "omissions": [
+          {
+            "severity": "fail",
+            "rule": "omission",
+            "message": "Does not mention gross margin against budget for August (4.0 percentage points below)."
+          }
+        ],
+        "figures": 33,
+        "figuresFlagged": 1,
+        "flagged": [
+          {
+            "status": "fail",
+            "rendered": "August revenue of £200,000 came in above budget by £10,000 (5.3%) and up on last year by £30,000 (17.6%), but higher direct costs meant gross profit of £68,000 was below budget by £4,200 (5.8%), with gross margin down on budget by 4.0 percentage points to 34.0%.",
+            "findings": [
+              {
+                "severity": "fail",
+                "rule": "direction",
+                "ref": "gross_margin.month.vs_budget_pp",
+                "message": "Says \"on budget\", but August gross margin is below budget."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Operating profit of £17,500 was below budget by £2,700 (13.4%) and slightly below last year by £250 (1.4%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"slightly\"): reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Year to date, revenue of £960,000 remains above budget by £10,000 (1.1%) and up on last year by £115,000 (13.6%), while operating profit of £111,000 is above budget by £10,000 (9.9%) and up on last year by £34,125 (44.4%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "ranking",
+                "message": "Ranks or compares over time (\"remains\"): not checked, reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Marlow & Finch billed £18,000 in August, 9.0% of agency revenue, which was below its May to July average by £12,000 (40.0%) and worth flagging to the owner.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"worth\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: flagging, owner."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "open_run1.json",
+        "snapshot": "open",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 4,
+          "fail": 0,
+          "clean": 2
+        },
+        "omissions": [
+          {
+            "severity": "review",
+            "rule": "omission",
+            "message": "Does not mention gross margin against budget for August (2.0 percentage points above)."
+          }
+        ],
+        "figures": 32,
+        "figuresFlagged": 0,
+        "flagged": [
+          {
+            "status": "review",
+            "rendered": "August revenue of £200,000 came in above budget by £10,000 (5.3%) and up on last year by £30,000 (17.6%), driving operating profit of £29,500, well above budget by £9,300 (46.0%) and up on last year by £11,750 (66.2%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "interpretation",
+                "message": "States a cause (\"driving\"). Nothing in the snapshot proves causes: reviewer to confirm or cut."
+              },
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement (\"well\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: well."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Marlow & Finch billed £18,000 in August, below its May to July average by £12,000 (40.0%), and its share of year-to-date agency revenue stands at 14.4% against 9.0% for August alone, which the owner may wish to review.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"may wish\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: alone, owner, review."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "open_run2.json",
+        "snapshot": "open",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 4,
+          "fail": 1,
+          "clean": 1
+        },
+        "omissions": [],
+        "figures": 34,
+        "figuresFlagged": 1,
+        "flagged": [
+          {
+            "status": "review",
+            "rendered": "August revenue of £200,000 came in above budget by £10,000 (5.3%) and up on last year by £30,000 (17.6%), with gross margin of 40.0% running above budget by 2.0 percentage points and operating profit of £29,500 well above budget by £9,300 (46.0%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement (\"well\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: well."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "On clients, Orchard Lane Foods contributed £62,000 in August, 31.0% of agency revenue, up on its May to July average by £4,333 (7.5%), and Kestrel Mobility contributed £48,000, also up on its May to July average by £3,000 (6.7%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "two-entities",
+                "message": "Names Orchard Lane Foods and Kestrel Mobility around one client figure: pairing not checked, reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "fail",
+            "rendered": "Marlow & Finch is one to watch: August revenue of £18,000 was down on its May to July average by £12,000 (40.0%), and its share of year-to-date agency revenue at 14.4% is notably below its August share of 9.0%.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"one to watch\", \"notably\"): reviewer to confirm."
+              },
+              {
+                "severity": "fail",
+                "rule": "relation",
+                "ref": "client.marlow-finch.share.ytd.actual",
+                "message": "Says 14.4% is \"below\" 9.0%; it is higher."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Brightwater Housing remained broadly stable, up on its May to July average by £1,500 (4.3%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "ranking",
+                "message": "Ranks or compares over time (\"remained\"): not checked, reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"broadly\", \"stable\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "measure-unstated",
+                "ref": "client.brightwater.revenue.month.vs_avg3m",
+                "message": "The sentence does not name the measure for £1,500."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "open_run3.json",
+        "snapshot": "open",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 5,
+          "fail": 0,
+          "clean": 3
+        },
+        "omissions": [],
+        "figures": 32,
+        "figuresFlagged": 0,
+        "flagged": [
+          {
+            "status": "review",
+            "rendered": "Orchard Lane Foods remains the largest client at 31.0% of August revenue, with its August revenue of £62,000 above its May to July average by £4,333 (7.5%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "ranking",
+                "message": "Ranks or compares over time (\"remains\", \"largest\"): not checked, reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Marlow & Finch's August revenue of £18,000 was below its May to July average by £12,000 (40.0%), and its share of agency revenue fell to 9.0% in August against 14.4% year to date, which the owner may wish to review.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"may wish\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: owner, review."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "open_run4.json",
+        "snapshot": "open",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 6,
+          "fail": 0,
+          "clean": 2
+        },
+        "omissions": [
+          {
+            "severity": "review",
+            "rule": "omission",
+            "message": "Does not mention gross margin against budget for August (2.0 percentage points above)."
+          }
+        ],
+        "figures": 30,
+        "figuresFlagged": 0,
+        "flagged": [
+          {
+            "status": "review",
+            "rendered": "August revenue of £200,000 came in above budget by £10,000 (5.3%) and up on last year by £30,000 (17.6%), driving operating profit of £29,500, well above budget by £9,300 (46.0%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "interpretation",
+                "message": "States a cause (\"driving\"). Nothing in the snapshot proves causes: reviewer to confirm or cut."
+              },
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement (\"well\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: well."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Orchard Lane Foods remains the largest client, contributing 31.0% of August revenue at £62,000, above its May to July average by £4,333 (7.5%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "ranking",
+                "message": "Ranks or compares over time (\"remains\", \"largest\"): not checked, reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Marlow & Finch's August revenue of £18,000 was below its May to July average by £12,000 (40.0%), worth flagging for the owner's attention.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"worth\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: flagging, owner, attention."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Kestrel Mobility and Brightwater Housing both tracked above their respective May to July averages in August, at £48,000 and £36,000 respectively.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "measure-unstated",
+                "ref": "client.kestrel.revenue.month.actual",
+                "message": "The sentence does not name the measure for £48,000."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: tracked, averages."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "open_run5.json",
+        "snapshot": "open",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 5,
+          "fail": 0,
+          "clean": 2
+        },
+        "omissions": [],
+        "figures": 35,
+        "figuresFlagged": 0,
+        "flagged": [
+          {
+            "status": "review",
+            "rendered": "August revenue came in at £200,000, above budget by £10,000 (5.3%) and up on last year by £30,000 (17.6%), with gross margin of 40.0% running above budget by 2.0 percentage points and operating profit of £29,500 well above budget by £9,300 (46.0%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement (\"well\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: well."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Marlow & Finch billed £18,000 in August, below its May to July average by £12,000 (40.0%), and its share of year-to-date agency revenue has fallen to 14.4% against a August share of only 9.0%, worth a conversation with the client.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "ranking",
+                "message": "Ranks or compares over time (\"only\"): not checked, reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"worth\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: conversation."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Brightwater Housing remained steady, billing £36,000 in August, above its May to July average by £1,500 (4.3%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "ranking",
+                "message": "Ranks or compares over time (\"remained\"): not checked, reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"steady\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "measure-unstated",
+                "ref": "client.brightwater.revenue.month.actual",
+                "message": "The sentence does not name the measure for £36,000."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: billing."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "open_run6.json",
+        "snapshot": "open",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 5,
+          "fail": 0,
+          "clean": 3
+        },
+        "omissions": [],
+        "figures": 37,
+        "figuresFlagged": 0,
+        "flagged": [
+          {
+            "status": "review",
+            "rendered": "August revenue of £200,000 came in above budget by £10,000 (5.3%) and up on last year by £30,000 (17.6%), driving gross profit of £80,000 and a gross margin of 40.0%, above budget by 2.0 percentage points.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "interpretation",
+                "message": "States a cause (\"driving\"). Nothing in the snapshot proves causes: reviewer to confirm or cut."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Marlow & Finch's August revenue of £18,000 was below its May to July average by £12,000 (40.0%), worth flagging to the owner as its share of year-to-date agency revenue sits at 14.4% against 9.0% in August alone.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"worth\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: flagging, owner, sits, alone."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "open_run7.json",
+        "snapshot": "open",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 4,
+          "fail": 1,
+          "clean": 1
+        },
+        "omissions": [],
+        "figures": 26,
+        "figuresFlagged": 0,
+        "flagged": [
+          {
+            "status": "fail",
+            "rendered": "August revenue of £200,000 came in above budget by £10,000 (£190,000 budget) and up on last year by £30,000, with gross margin at 40.0%, above budget by 2.0 percentage points and up on last year by 2.5 percentage points, taking operating profit to £29,500, above budget by £9,300.",
+            "findings": [
+              {
+                "severity": "fail",
+                "rule": "typed-figure",
+                "message": "\"£190,000\" is typed, not referenced: the checker cannot tie it to a figure."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "On clients, Orchard Lane Foods remains the largest account at 31.0% of August revenue, with its August revenue of £62,000 above its May to July average by £4,333; Kestrel Mobility also rose above its May to July average, by £3,000.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "ranking",
+                "message": "Ranks or compares over time (\"remains\", \"largest\"): not checked, reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Marlow & Finch's August revenue of £18,000 was below its May to July average by £12,000, a fall of 40.0%, and its share of year-to-date revenue at 14.4% is worth watching against its August share of 9.0%.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "forward-looking",
+                "message": "Forward-looking or advisory (\"worth watching\"): reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Overheads for the month of £50,500 were below budget by £1,500, though up on last year by £4,500.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: though."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "open_run8.json",
+        "snapshot": "open",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 3,
+          "fail": 2,
+          "clean": 1
+        },
+        "omissions": [
+          {
+            "severity": "review",
+            "rule": "omission",
+            "message": "Does not mention gross margin against budget for August (2.0 percentage points above)."
+          }
+        ],
+        "figures": 32,
+        "figuresFlagged": 1,
+        "flagged": [
+          {
+            "status": "fail",
+            "rendered": "August revenue of £200,000 came in above budget by £10,000 (5.3%) and up on last year by £30,000 (17.6%), with gross margin of 40.0% running 2.0 percentage points above budget, driving operating profit of £29,500, well above budget by £9,300 (46.0%).",
+            "findings": [
+              {
+                "severity": "fail",
+                "rule": "typed-figure",
+                "message": "\"2.0\" is typed, not referenced: the checker cannot tie it to a figure."
+              },
+              {
+                "severity": "review",
+                "rule": "interpretation",
+                "message": "States a cause (\"driving\"). Nothing in the snapshot proves causes: reviewer to confirm or cut."
+              },
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement (\"well\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: percentage, points, well."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Orchard Lane Foods remains the largest client, contributing 31.0% of August revenue, with its August revenue of £62,000 above its May to July average by £4,333 (7.5%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "ranking",
+                "message": "Ranks or compares over time (\"remains\", \"largest\"): not checked, reviewer to confirm."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Kestrel Mobility and Brightwater Housing also each posted August revenue above their May to July averages, by £3,000 (6.7%) and £1,500 (4.3%) respectively.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: posted, averages."
+              }
+            ]
+          },
+          {
+            "status": "fail",
+            "rendered": "Marlow & Finch's August revenue of £18,000 fell below its May to July average by £12,000 (40.0%), and its share of year-to-date revenue has narrowed to 14.4% against a month share of 9.0%; this is worth a conversation with the client team.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"worth\"): reviewer to confirm."
+              },
+              {
+                "severity": "fail",
+                "rule": "period",
+                "ref": "client.marlow-finch.share.month.actual",
+                "message": "9.0% is an August figure; the sentence reads as year to date."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: narrowed, conversation, team."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "open_run9.json",
+        "snapshot": "open",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 4,
+          "fail": 0,
+          "clean": 1
+        },
+        "omissions": [],
+        "figures": 31,
+        "figuresFlagged": 0,
+        "flagged": [
+          {
+            "status": "review",
+            "rendered": "August revenue of £200,000 came in above budget by £10,000 (5.3%) and up on last year by £30,000 (17.6%), with gross margin of 40.0% running above budget by 2.0 percentage points and operating profit of £29,500 well above budget by £9,300 (46.0%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement (\"well\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: well."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "On clients, Orchard Lane Foods remained the largest contributor at 31.0% of August revenue, with its August revenue of £62,000 above its May to July average by £4,333 (7.5%); Kestrel Mobility also rose above its May to July average by £3,000 (6.7%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "ranking",
+                "message": "Ranks or compares over time (\"remained\", \"largest\"): not checked, reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: contributor."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "Marlow & Finch's August revenue of £18,000 was below its May to July average by £12,000 (40.0%), and its share of agency revenue fell to 9.0% in August against 14.4% year to date, which the owner may wish to review with the client team.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"may wish\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: owner, review, team."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "open_run10.json",
+        "snapshot": "open",
+        "model": [
+          "claude-sonnet-5"
+        ],
+        "counts": {
+          "verified": 0,
+          "review": 5,
+          "fail": 0,
+          "clean": 2
+        },
+        "omissions": [],
+        "figures": 33,
+        "figuresFlagged": 0,
+        "flagged": [
+          {
+            "status": "review",
+            "rendered": "Operating profit for the month reached £29,500, well above budget by £9,300 (46.0%) and up on last year by £11,750 (66.2%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement (\"well\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: well."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "On clients, Orchard Lane Foods remained the largest contributor at 31.0% of August revenue, with its August revenue of £62,000 above its May to July average by £4,333 (7.5%); Kestrel Mobility's August revenue of £48,000 was similarly above its May to July average by £3,000 (6.7%).",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "ranking",
+                "message": "Ranks or compares over time (\"remained\", \"largest\"): not checked, reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "relation",
+                "message": "Relates two figures or entities (\"similarly\"): not checked, reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: contributor."
+              }
+            ]
+          },
+          {
+            "status": "review",
+            "rendered": "By contrast, Marlow & Finch's August revenue of £18,000 fell below its May to July average by £12,000 (40.0%), and its share of year-to-date revenue at 14.4% is worth a closer look.",
+            "findings": [
+              {
+                "severity": "review",
+                "rule": "relation",
+                "message": "Relates two figures or entities (\"by contrast\"): not checked, reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "judgement",
+                "message": "Makes a judgement or recommends (\"worth\"): reviewer to confirm."
+              },
+              {
+                "severity": "review",
+                "rule": "unread-words",
+                "message": "Words the checker does not read: closer, look."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "mutations": {
+    "note": "Generated mutations of sentences with no finding. Not individually adjudicated: a mutation may, rarely, produce a true sentence.",
+    "cases": 992,
+    "detected": 984,
+    "finding": 8,
+    "nofinding": 0,
+    "byType": {
+      "period swapped": {
+        "cases": 227,
+        "detected": 219,
+        "finding": 8,
+        "nofinding": 0
+      },
+      "measure swapped": {
+        "cases": 195,
+        "detected": 195,
+        "finding": 0,
+        "nofinding": 0
+      },
+      "figure typed instead of referenced": {
+        "cases": 245,
+        "detected": 245,
+        "finding": 0,
+        "nofinding": 0
+      },
+      "comparator swapped": {
+        "cases": 165,
+        "detected": 165,
+        "finding": 0,
+        "nofinding": 0
+      },
+      "direction word flipped": {
+        "cases": 63,
+        "detected": 63,
+        "finding": 0,
+        "nofinding": 0
+      },
+      "client swapped": {
+        "cases": 31,
+        "detected": 31,
+        "finding": 0,
+        "nofinding": 0
+      },
+      "unapproved figure stated as fact": {
+        "cases": 66,
+        "detected": 66,
+        "finding": 0,
+        "nofinding": 0
+      }
+    },
+    "noFindingCases": [],
+    "findingCases": [
+      {
+        "type": "period swapped",
+        "draft": "open_run6",
+        "original": "Operating profit of £29,500 was above budget by £9,300 (46.0%) and up on last year by £11,750 (66.2%), with overheads of £50,500 below budget by £1,500 (2.9%).",
+        "corrupted": "Operating profit of £123,000 was above budget by £9,300 (46.0%) and up on last year by £11,750 (66.2%), with overheads of £50,500 below budget by £1,500 (2.9%).",
+        "caught": false,
+        "outcome": "finding",
+        "findings": [
+          "£123,000 is a year-to-date figure; this sentence states no period and the one before is about August."
+        ]
+      },
+      {
+        "type": "period swapped",
+        "draft": "open_run6",
+        "original": "Operating profit of £29,500 was above budget by £9,300 (46.0%) and up on last year by £11,750 (66.2%), with overheads of £50,500 below budget by £1,500 (2.9%).",
+        "corrupted": "Operating profit of £29,500 was above budget by £22,000 (46.0%) and up on last year by £11,750 (66.2%), with overheads of £50,500 below budget by £1,500 (2.9%).",
+        "caught": false,
+        "outcome": "finding",
+        "findings": [
+          "£22,000 is a year-to-date figure; this sentence states no period and the one before is about August."
+        ]
+      },
+      {
+        "type": "period swapped",
+        "draft": "open_run6",
+        "original": "Operating profit of £29,500 was above budget by £9,300 (46.0%) and up on last year by £11,750 (66.2%), with overheads of £50,500 below budget by £1,500 (2.9%).",
+        "corrupted": "Operating profit of £29,500 was above budget by £9,300 (21.8%) and up on last year by £11,750 (66.2%), with overheads of £50,500 below budget by £1,500 (2.9%).",
+        "caught": false,
+        "outcome": "finding",
+        "findings": [
+          "21.8% is a year-to-date figure; this sentence states no period and the one before is about August."
+        ]
+      },
+      {
+        "type": "period swapped",
+        "draft": "open_run6",
+        "original": "Operating profit of £29,500 was above budget by £9,300 (46.0%) and up on last year by £11,750 (66.2%), with overheads of £50,500 below budget by £1,500 (2.9%).",
+        "corrupted": "Operating profit of £29,500 was above budget by £9,300 (46.0%) and up on last year by £46,125 (66.2%), with overheads of £50,500 below budget by £1,500 (2.9%).",
+        "caught": false,
+        "outcome": "finding",
+        "findings": [
+          "£46,125 is a year-to-date figure; this sentence states no period and the one before is about August."
+        ]
+      },
+      {
+        "type": "period swapped",
+        "draft": "open_run6",
+        "original": "Operating profit of £29,500 was above budget by £9,300 (46.0%) and up on last year by £11,750 (66.2%), with overheads of £50,500 below budget by £1,500 (2.9%).",
+        "corrupted": "Operating profit of £29,500 was above budget by £9,300 (46.0%) and up on last year by £11,750 (60.0%), with overheads of £50,500 below budget by £1,500 (2.9%).",
+        "caught": false,
+        "outcome": "finding",
+        "findings": [
+          "60.0% is a year-to-date figure; this sentence states no period and the one before is about August."
+        ]
+      },
+      {
+        "type": "period swapped",
+        "draft": "open_run6",
+        "original": "Operating profit of £29,500 was above budget by £9,300 (46.0%) and up on last year by £11,750 (66.2%), with overheads of £50,500 below budget by £1,500 (2.9%).",
+        "corrupted": "Operating profit of £29,500 was above budget by £9,300 (46.0%) and up on last year by £11,750 (66.2%), with overheads of £254,000 below budget by £1,500 (2.9%).",
+        "caught": false,
+        "outcome": "finding",
+        "findings": [
+          "£254,000 is a year-to-date figure; this sentence states no period and the one before is about August."
+        ]
+      },
+      {
+        "type": "period swapped",
+        "draft": "open_run6",
+        "original": "Operating profit of £29,500 was above budget by £9,300 (46.0%) and up on last year by £11,750 (66.2%), with overheads of £50,500 below budget by £1,500 (2.9%).",
+        "corrupted": "Operating profit of £29,500 was above budget by £9,300 (46.0%) and up on last year by £11,750 (66.2%), with overheads of £50,500 below budget by £6,000 (2.9%).",
+        "caught": false,
+        "outcome": "finding",
+        "findings": [
+          "£6,000 is a year-to-date figure; this sentence states no period and the one before is about August."
+        ]
+      },
+      {
+        "type": "period swapped",
+        "draft": "open_run6",
+        "original": "Operating profit of £29,500 was above budget by £9,300 (46.0%) and up on last year by £11,750 (66.2%), with overheads of £50,500 below budget by £1,500 (2.9%).",
+        "corrupted": "Operating profit of £29,500 was above budget by £9,300 (46.0%) and up on last year by £11,750 (66.2%), with overheads of £50,500 below budget by £1,500 (2.3%).",
+        "caught": false,
+        "outcome": "finding",
+        "findings": [
+          "2.3% is a year-to-date figure; this sentence states no period and the one before is about August."
+        ]
+      }
+    ]
+  }
+}

@@ -18,7 +18,8 @@ const natural = drafts.map((d) => {
   const r = checkDraft(d.commentary, ms, d.snapshotFingerprint);
   return {
     file: `${d.snapshot}_run${d.run}.json`, snapshot: d.snapshot, model: d.model, counts: r.counts, omissions: r.omissions,
-    flagged: r.sentences.filter((x) => x.status !== 'verified').map((x) => ({ status: x.status, rendered: x.rendered, findings: x.findings })),
+    figures: r.sentences.reduce((a, x) => a + x.refs.length, 0), figuresFlagged: r.sentences.reduce((a, x) => a + new Set(x.findings.filter((f) => f.severity === 'fail' && f.ref).map((f) => f.ref)).size, 0),
+    flagged: r.sentences.filter((x) => !x.clean).map((x) => ({ status: x.status, rendered: x.rendered, findings: x.findings })),
   };
 });
 
@@ -51,14 +52,16 @@ const FLIPS: [RegExp, string][] = [
   [/\bincreased\b/, 'decreased'], [/\bdecreased\b/, 'increased'], [/\bfavourable\b/, 'adverse'], [/\badverse\b/, 'favourable'], [/\bin line with\b/, 'above'],
 ];
 
-type Case = { type: string; draft: string; original: string; corrupted: string; caught: boolean; outcome: 'fail' | 'review' | 'verified'; findings: string[] };
+type Case = { type: string; draft: string; original: string; corrupted: string; caught: boolean; outcome: 'detected' | 'finding' | 'nofinding'; findings: string[] };
 const cases: Case[] = [];
 for (const d of drafts) {
   const ms = sets[d.snapshot];
   const base = checkDraft(d.commentary, ms, d.snapshotFingerprint);
   const sentences = splitSentences(d.commentary.replace(/\s+/g, ' ').trim());
   sentences.forEach((sent, si) => {
-    if (base.sentences[si].status === 'fail') return; // only corrupt sentences that did not already fail
+    // Mutate only sentences with no finding at all, so a change the checker notices is attributable to the mutation,
+    // and so a mutation cannot 'repair' an error it was meant to introduce (the v3 case: 14.4% said to be below 9.0%).
+    if (!base.sentences[si].clean) return;
     const variants: { type: string; text: string }[] = [];
     const seen = new Set<string>();
     for (const m of sent.matchAll(REF)) {
@@ -80,34 +83,37 @@ for (const d of drafts) {
       all[si] = v.text;
       const r = checkDraft(all.join(' '), ms, d.snapshotFingerprint);
       const target = r.sentences[si];
-      cases.push({ type: v.type, draft: `${d.snapshot}_run${d.run}`, original: base.sentences[si].rendered, corrupted: target.rendered, caught: target.status === 'fail', outcome: target.status, findings: target.findings.map((f) => f.message) });
+      cases.push({ type: v.type, draft: `${d.snapshot}_run${d.run}`, original: base.sentences[si].rendered, corrupted: target.rendered, caught: target.status === 'fail', outcome: target.status === 'fail' ? 'detected' : target.findings.length ? 'finding' : 'nofinding', findings: target.findings.map((f) => f.message) });
     }
   });
 }
-const byType: Record<string, { cases: number; failed: number; toReviewer: number; passed: number }> = {};
+const byType: Record<string, { cases: number; detected: number; finding: number; nofinding: number }> = {};
 for (const c of cases) {
-  byType[c.type] ??= { cases: 0, failed: 0, toReviewer: 0, passed: 0 };
+  byType[c.type] ??= { cases: 0, detected: 0, finding: 0, nofinding: 0 };
   byType[c.type].cases++;
-  byType[c.type][c.outcome === 'fail' ? 'failed' : c.outcome === 'review' ? 'toReviewer' : 'passed']++;
+  byType[c.type][c.outcome]++;
 }
 const sum = (f: (x: (typeof natural)[number]) => number) => natural.reduce((a, x) => a + f(x), 0);
 const result = {
   generated: new Date().toISOString(), batch, checker: CHECKER_VERSION,
   natural: {
     drafts: natural.length,
-    sentences: sum((x) => x.counts.verified + x.counts.review + x.counts.fail),
-    verified: sum((x) => x.counts.verified), review: sum((x) => x.counts.review), fail: sum((x) => x.counts.fail),
+    sentences: sum((x) => x.counts.review + x.counts.fail),
+    rejected: sum((x) => x.counts.fail), withFinding: sum((x) => x.counts.review - x.counts.clean), noFinding: sum((x) => x.counts.clean),
+    figures: sum((x) => x.figures), figuresFlagged: sum((x) => x.figuresFlagged),
     omissions: sum((x) => x.omissions.length),
     draftsWithAFailingSentence: natural.filter((x) => x.counts.fail > 0).length,
     perDraft: natural,
   },
-  corrupted: {
-    cases: cases.length, failed: cases.filter((c) => c.outcome === 'fail').length, toReviewer: cases.filter((c) => c.outcome === 'review').length,
-    passed: cases.filter((c) => c.outcome === 'verified').length, byType, passedSilently: cases.filter((c) => c.outcome === 'verified'), sentToReviewer: cases.filter((c) => c.outcome === 'review'),
+  mutations: {
+    note: 'Generated mutations of sentences with no finding. Not individually adjudicated: a mutation may, rarely, produce a true sentence.',
+    cases: cases.length, detected: cases.filter((c) => c.outcome === 'detected').length, finding: cases.filter((c) => c.outcome === 'finding').length,
+    nofinding: cases.filter((c) => c.outcome === 'nofinding').length, byType, noFindingCases: cases.filter((c) => c.outcome === 'nofinding'), findingCases: cases.filter((c) => c.outcome === 'finding'),
   },
 };
 mkdirSync(new URL('../data/results/', import.meta.url), { recursive: true });
 writeFileSync(new URL(`../data/results/eval_checker-${CHECKER_VERSION}_${batch}.json`, import.meta.url), JSON.stringify(result, null, 2) + '\n');
 console.log('natural', JSON.stringify({ ...result.natural, perDraft: undefined }));
-console.log('corrupted', result.corrupted.cases, 'failed', result.corrupted.failed, 'review', result.corrupted.toReviewer, 'passed', result.corrupted.passed, JSON.stringify(byType));
-for (const m of result.corrupted.passedSilently) console.log('PASSED', m.type, '|', m.corrupted);
+console.log('mutations', result.mutations.cases, 'detected', result.mutations.detected, 'finding', result.mutations.finding, 'nofinding', result.mutations.nofinding, JSON.stringify(byType));
+for (const m of result.mutations.noFindingCases) console.log('NOFINDING', m.type, '|', m.corrupted);
+for (const m of result.mutations.findingCases) console.log('FINDING', m.type, '|', m.corrupted.slice(0, 120), '|', m.findings.join(' / ').slice(0, 160));
