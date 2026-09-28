@@ -285,7 +285,7 @@ export function checkDraft(markup: string, ms: MetricSet, draftSnapshotFingerpri
       if (m.kind === 'variance' && m.value !== null) {
         const is = roundsToZero(m.value, m.unit) ? 0 : Math.sign(m.value);
         if (!bound.dir) findings.push({ severity: 'fail', rule: 'direction-unstated', ref: r.id, message: `${m.display} prints without a sign; the sentence must say which way.` });
-        else if (sayOf(bound.dir, m.polarity) !== is) findings.push({ severity: 'fail', rule: 'direction', ref: r.id, message: `"${bound.dir.phrase}" but ${m.label} is ${is === 0 ? 'nil at the precision shown' : is > 0 ? 'higher' : 'lower'}.` });
+        else if (sayOf(bound.dir, m.polarity) !== is) findings.push({ severity: 'fail', rule: 'direction', ref: r.id, message: `Says "${bound.dir.phrase}", but ${describe(m)} is ${is === 0 ? 'level with' : is > 0 ? 'above' : 'below'} ${compName(m.comparator)}.` });
       } else if (m.kind === 'level' && m.scenario === 'actual' && bound.dir && bound.comp) {
         // "Revenue rose to £X against budget", "revenue of £X, below budget": the implied variance must agree.
         // Adjacent: "rose to [[x]]", "[[x]], below budget", "ran lower than budget at [[x]]".
@@ -295,7 +295,7 @@ export function checkDraft(markup: string, ms: MetricSet, draftSnapshotFingerpri
         const twin = ms.metrics.get(m.id.replace(/\.actual(@proposed)?$/, `.vs_${comp}${m.unit === 'pct' ? '_pp' : ''}$1`));
         if (adjacent && twin && twin.value !== null) {
           const is = roundsToZero(twin.value, twin.unit) ? 0 : Math.sign(twin.value);
-          if (sayOf(bound.dir, m.polarity) !== is) findings.push({ severity: 'fail', rule: 'direction', ref: r.id, message: `"${bound.dir.phrase}" ${compName(comp)}, but ${m.label} is ${is > 0 ? 'above' : is < 0 ? 'below' : 'level with'} it.` });
+          if (sayOf(bound.dir, m.polarity) !== is) findings.push({ severity: 'fail', rule: 'direction', ref: r.id, message: `Says "${bound.dir.phrase}", but ${describe(m)} is ${is > 0 ? 'above' : is < 0 ? 'below' : 'level with'} ${compName(comp)}.` });
         }
       }
     }
@@ -323,6 +323,12 @@ export function checkDraft(markup: string, ms: MetricSet, draftSnapshotFingerpri
 function dedupe(f: Finding[]): Finding[] {
   const seen = new Set<string>();
   return f.filter((x) => (seen.has(x.message) ? false : (seen.add(x.message), true)));
+}
+
+function describe(m: Metric): string {
+  const when = m.period === 'ytd' ? 'year-to-date' : 'August';
+  const what = m.measure === 'share' ? 'share of revenue' : m.measure.replace('_', ' ');
+  return m.entity === 'agency' ? `${when} ${what}` : `${m.entity}'s ${when} ${what}`;
 }
 
 function compName(c: Comparator | null | string): string {

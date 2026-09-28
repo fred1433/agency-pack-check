@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>August pack review</title>
+<meta name="description" content="A fictional agency's August management pack: Claude writes the commentary, code supplies and checks every figure, and a close question holds the release.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="top">
+  <p class="top__name">Pack review</p>
+  <div class="viewswitch" role="group" aria-label="View">
+    <button type="button" data-view="client" aria-pressed="false">Client page</button>
+    <button type="button" data-view="reviewer" aria-pressed="true">Reviewer</button>
+  </div>
+</header>
+
+<main>
+  <section class="intro">
+    <h1>The August pack is right, and it cannot go yet.</h1>
+    <p class="lede">A fictional agency's management commentary. Claude wrote the words; the code supplied every figure and checked each claim against them. The draft agrees with the ledger. The ledger is missing £12,000 of August pay.</p>
+  </section>
+
+  <section class="desk" aria-label="The pack page and its review">
+    <article class="sheet" id="sheet" aria-label="Management pack page">
+      <div class="stamp" id="stamp"></div>
+      <header class="sheet__head">
+        <span>Lowther Studio</span>
+        <span>Management pack, August 2026</span>
+      </header>
+      <h2 class="sheet__title">Commentary</h2>
+      <div class="commentary" id="commentary"></div>
+      <div class="legend" id="legend"></div>
+      <table class="figures" id="figures"></table>
+      <footer class="sheet__foot" id="sheetFoot"></footer>
+    </article>
+
+    <aside class="review" id="review" aria-label="Review">
+      <div class="slip" id="slip"></div>
+      <div class="notes" id="notes"></div>
+      <div class="gates" id="gates"></div>
+    </aside>
+  </section>
+
+  <section class="how" id="how">
+    <h2>How each figure gets onto the page</h2>
+    <p class="how__lede">Authorised sources, then a frozen snapshot, reconciled figures, a Claude draft, two sets of checks, the finance review, and a versioned export. The draft never computes a number: it cites them.</p>
+    <div class="how__cols">
+      <div>
+        <h3>From Xero to the figures</h3>
+        <ul class="checks" id="checks"></ul>
+        <h3 class="basis__h">Reporting basis</h3>
+        <dl class="basis" id="basis"></dl>
+      </div>
+      <div>
+        <h3>From the figures to the words</h3>
+        <p>Claude receives the approved figures of one snapshot, each with a reference, and writes the commentary with references instead of numbers. The code prints the values. The checker then reads every sentence: for each figure, the words around it must name the right measure, client, period and comparator, and say the right direction. What it cannot tie to a figure (a cause, advice, a general remark) goes to the reviewer, never to a tick.</p>
+        <div class="results" id="results"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="arch">
+    <h2>Built to sit around your process</h2>
+    <div class="arch__cols">
+      <div>
+        <p>This prototype demonstrates explicit metric definitions, frozen evidence, claim checks, unresolved accounting questions and approval controls. It is designed to fit around your reporting process, not replace Xero, Syft or Claude.</p>
+        <p>It is a synthetic prototype: the Xero adapter reads responses in the shapes Xero documents (<code>Reports/ProfitAndLoss</code>, <code>Reports/TrialBalance</code>, <code>Budgets</code>, <code>Invoices</code>, <code>CreditNotes</code>, <code>ManualJournals</code>, <code>Organisation</code>, <code>TrackingCategories</code>, <code>Accounts</code>), but it has not been run against a Xero organisation. No journal stream is needed: Journals is a premium endpoint from Xero's Advanced tier.</p>
+      </div>
+      <div>
+        <p>Read-only scopes for a new app: <code>accounting.reports.profitandloss.read</code>, <code>accounting.reports.trialbalance.read</code>, <code>accounting.invoices.read</code>, <code>accounting.budgets.read</code>, <code>accounting.settings.read</code>. A Custom Connection serves one organisation, which can be a client's. Xero's terms forbid training models on API data.</p>
+        <p>Only figures, labels and client names reach the model, never transactions, staff or bank details. Anthropic does not train on API content; standard API retention is up to 30 days, zero retention by agreement. The drafts here were produced on <span id="modelLine"></span> and frozen: this page replays them and calls no model.</p>
+      </div>
+    </div>
+    <p class="links" id="links"></p>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>Fictional agency, synthetic data. Built by Frederic de Lavenne de Choulot, The AI Pipe.</p>
+</footer>
+
+<div class="pop" id="pop" role="dialog" aria-modal="false" hidden></div>
+<script src="/app.js" type="module"></script>
+</body>
+</html>
