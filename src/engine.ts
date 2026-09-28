@@ -292,7 +292,7 @@ export function sourceChecks(s: Sources, d: Decisions): { checks: CheckResult[];
     checks.push({
       id: 'invoices', title: 'Invoices less credit notes reconcile to revenue', status: ok ? 'pass' : 'fail',
       detail: `${latest.size} invoices ${displayValue(invoiced, 'gbp', false)}, less credit notes ${displayValue(credited, 'gbp', false)}, equals ${displayValue(invoiced - credited, 'gbp', false)} against revenue of ${displayValue(revenue, 'gbp', false)} in the P&L.` +
-        (dupes ? ` ${dupes} record(s) arrived twice (the 2 September incremental pull returned an edited invoice); kept the latest by UpdatedDateUTC. Without that, invoices would total ${displayValue(naive, 'gbp', false)} and the reconciliation would fail.` : ''),
+        (dupes ? ` ${dupes === 1 ? "One record" : `${dupes} records`} arrived twice (the 2 September incremental pull returned an edited invoice); kept the latest by UpdatedDateUTC. Without that, invoices would total ${displayValue(naive, 'gbp', false)} and the reconciliation would fail.` : ''),
       evidence: ['xero_invoices_pull_2026-09-01.json', 'xero_invoices_pull_2026-09-02_modified.json', 'xero_credit_notes_2026-08.json', 'xero_pl_2026-08.json'],
     });
   }
