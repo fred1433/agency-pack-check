@@ -1,0 +1,43 @@
+{
+  "Id": "64ab4d32--7ca-427d-a6ba-e736a-617f5c",
+  "Status": "OK",
+  "ProviderName": "agency-pack-check (synthetic fixture)",
+  "DateTimeUTC": "/Date(1788340440000+0000)/",
+  "_request": {
+    "endpoint": "GET /api.xro/2.0/TrackingCategories"
+  },
+  "TrackingCategories": [
+    {
+      "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+      "Name": "Client",
+      "Status": "ACTIVE",
+      "Options": [
+        {
+          "TrackingOptionID": "-6969c90-e466-4061-a-d8-ddebe-152c61",
+          "Name": "Orchard Lane Foods",
+          "Status": "ACTIVE"
+        },
+        {
+          "TrackingOptionID": "48e4820a--464-4c67-a-3c-0bc52e-1f9c5",
+          "Name": "Kestrel Mobility",
+          "Status": "ACTIVE"
+        },
+        {
+          "TrackingOptionID": "642e405e-0fe4-447e-a0a1-fb0e-2e6b010",
+          "Name": "Brightwater Housing",
+          "Status": "ACTIVE"
+        },
+        {
+          "TrackingOptionID": "-17998e6-e2be-45e4-a-2e-d2a56643dfd8",
+          "Name": "Marlow & Finch",
+          "Status": "ACTIVE"
+        },
+        {
+          "TrackingOptionID": "-23ce293-a48e-4dfb-a-5b-c1c1a2-1a3fa",
+          "Name": "Other clients",
+          "Status": "ACTIVE"
+        }
+      ]
+    }
+  ]
+}

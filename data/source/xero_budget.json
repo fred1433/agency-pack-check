@@ -1,0 +1,384 @@
+{
+  "Id": "-2b44b6c-a786-4e2c-a2c5-c4576-2ed3d4",
+  "Status": "OK",
+  "ProviderName": "agency-pack-check (synthetic fixture)",
+  "DateTimeUTC": "/Date(1788340440000+0000)/",
+  "_request": {
+    "endpoint": "GET /api.xro/2.0/Budgets/{BudgetID}",
+    "params": {
+      "DateFrom": "2026-04-01",
+      "DateTo": "2026-09-30"
+    }
+  },
+  "Budgets": [
+    {
+      "BudgetID": "1b4778a6-228a-468e-a9c6-5dfa-25736ce",
+      "Type": "OVERALL",
+      "Description": "FY2026-27 budget v2 (approved by the board 12 Mar 2026)",
+      "UpdatedDateUTC": "/Date(1773331320000+0000)/",
+      "BudgetLines": [
+        {
+          "AccountID": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+          "AccountCode": "200",
+          "BudgetBalances": [
+            {
+              "Period": "2026-04",
+              "Amount": "190000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-05",
+              "Amount": "190000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-06",
+              "Amount": "190000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-07",
+              "Amount": "190000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-08",
+              "Amount": "190000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-09",
+              "Amount": "190000",
+              "Notes": ""
+            }
+          ]
+        },
+        {
+          "AccountID": "-3527208-2369-4552-a011-9199e-5e731b",
+          "AccountCode": "310",
+          "BudgetBalances": [
+            {
+              "Period": "2026-04",
+              "Amount": "94000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-05",
+              "Amount": "94000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-06",
+              "Amount": "94000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-07",
+              "Amount": "94000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-08",
+              "Amount": "94000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-09",
+              "Amount": "94000",
+              "Notes": ""
+            }
+          ]
+        },
+        {
+          "AccountID": "-6cc6bc4-a-31-4329-a2-7-e81e81a-5384",
+          "AccountCode": "320",
+          "BudgetBalances": [
+            {
+              "Period": "2026-04",
+              "Amount": "21000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-05",
+              "Amount": "21000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-06",
+              "Amount": "21000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-07",
+              "Amount": "21000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-08",
+              "Amount": "21000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-09",
+              "Amount": "21000",
+              "Notes": ""
+            }
+          ]
+        },
+        {
+          "AccountID": "-2c78727-26bb-47dd-a77a-2730e32c1885",
+          "AccountCode": "325",
+          "BudgetBalances": [
+            {
+              "Period": "2026-04",
+              "Amount": "2800",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-05",
+              "Amount": "2800",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-06",
+              "Amount": "2800",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-07",
+              "Amount": "2800",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-08",
+              "Amount": "2800",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-09",
+              "Amount": "2800",
+              "Notes": ""
+            }
+          ]
+        },
+        {
+          "AccountID": "2745d2fe-7556-400e-a378-897e04b0c086",
+          "AccountCode": "400",
+          "BudgetBalances": [
+            {
+              "Period": "2026-04",
+              "Amount": "4000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-05",
+              "Amount": "4000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-06",
+              "Amount": "4000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-07",
+              "Amount": "4000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-08",
+              "Amount": "4000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-09",
+              "Amount": "4000",
+              "Notes": ""
+            }
+          ]
+        },
+        {
+          "AccountID": "465b0e6e--46e-4a9b-a31c-f995e3064911",
+          "AccountCode": "429",
+          "BudgetBalances": [
+            {
+              "Period": "2026-04",
+              "Amount": "3200",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-05",
+              "Amount": "3200",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-06",
+              "Amount": "3200",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-07",
+              "Amount": "3200",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-08",
+              "Amount": "3200",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-09",
+              "Amount": "3200",
+              "Notes": ""
+            }
+          ]
+        },
+        {
+          "AccountID": "-533da37-a-1e-4eb7-a2-3-04b4fda-414a",
+          "AccountCode": "463",
+          "BudgetBalances": [
+            {
+              "Period": "2026-04",
+              "Amount": "2500",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-05",
+              "Amount": "2500",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-06",
+              "Amount": "2500",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-07",
+              "Amount": "2500",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-08",
+              "Amount": "2500",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-09",
+              "Amount": "2500",
+              "Notes": ""
+            }
+          ]
+        },
+        {
+          "AccountID": "-1937b76-a-6d-42a9-a276-47d576-46ce3",
+          "AccountCode": "469",
+          "BudgetBalances": [
+            {
+              "Period": "2026-04",
+              "Amount": "9000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-05",
+              "Amount": "9000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-06",
+              "Amount": "9000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-07",
+              "Amount": "9000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-08",
+              "Amount": "9000",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-09",
+              "Amount": "9000",
+              "Notes": ""
+            }
+          ]
+        },
+        {
+          "AccountID": "-5ad4593-a-3c-47b4-a2-3-67647ca-aaff",
+          "AccountCode": "477",
+          "BudgetBalances": [
+            {
+              "Period": "2026-04",
+              "Amount": "28500",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-05",
+              "Amount": "28500",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-06",
+              "Amount": "28500",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-07",
+              "Amount": "28500",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-08",
+              "Amount": "28500",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-09",
+              "Amount": "28500",
+              "Notes": ""
+            }
+          ]
+        },
+        {
+          "AccountID": "-132f43a-0755-4f1e-a45e-e3bda-2121db",
+          "AccountCode": "485",
+          "BudgetBalances": [
+            {
+              "Period": "2026-04",
+              "Amount": "4800",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-05",
+              "Amount": "4800",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-06",
+              "Amount": "4800",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-07",
+              "Amount": "4800",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-08",
+              "Amount": "4800",
+              "Notes": ""
+            },
+            {
+              "Period": "2026-09",
+              "Amount": "4800",
+              "Notes": ""
+            }
+          ]
+        }
+      ],
+      "Tracking": []
+    }
+  ]
+}

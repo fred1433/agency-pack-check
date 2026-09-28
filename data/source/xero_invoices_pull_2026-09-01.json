@@ -1,0 +1,471 @@
+{
+  "Id": "-7a9090c-a794-4986-a-23-c529ea-5e008",
+  "Status": "OK",
+  "ProviderName": "agency-pack-check (synthetic fixture)",
+  "DateTimeUTC": "/Date(1788340440000+0000)/",
+  "_request": {
+    "endpoint": "GET /api.xro/2.0/Invoices",
+    "params": {
+      "where": "Type==\"ACCREC\" AND Date>=DateTime(2026,08,01) AND Date<=DateTime(2026,08,31)",
+      "page": 1
+    }
+  },
+  "Invoices": [
+    {
+      "Type": "ACCREC",
+      "InvoiceID": "-63a4a78-e-55-434d-a25d-46860a486489",
+      "InvoiceNumber": "INV-2281",
+      "Reference": "",
+      "Contact": {
+        "ContactID": "71bb6f9a-546a-405e-abb6-afaa5858bf56",
+        "Name": "Orchard Lane Foods"
+      },
+      "DateString": "2026-08-01T00:00:00",
+      "Date": "/Date(1785542400000+0000)/",
+      "DueDateString": "2026-08-01T00:00:00",
+      "Status": "AUTHORISED",
+      "LineAmountTypes": "Exclusive",
+      "LineItems": [
+        {
+          "Description": "August retainer",
+          "Quantity": 1,
+          "UnitAmount": 24000,
+          "AccountCode": "200",
+          "TaxType": "OUTPUT2",
+          "TaxAmount": 4800,
+          "LineAmount": 24000,
+          "Tracking": [
+            {
+              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "Name": "Client",
+              "Option": "Orchard Lane Foods"
+            }
+          ]
+        }
+      ],
+      "SubTotal": 24000,
+      "TotalTax": 4800,
+      "Total": 28800,
+      "CurrencyCode": "GBP",
+      "UpdatedDateUTC": "/Date(1788199200000+0000)/"
+    },
+    {
+      "Type": "ACCREC",
+      "InvoiceID": "-5ff1858-6-72-4b1d-a2-6-aeeaf2e035a0",
+      "InvoiceNumber": "INV-2282",
+      "Reference": "",
+      "Contact": {
+        "ContactID": "-42b7860-e-46-45ea-a2-6-29756067e28a",
+        "Name": "Kestrel Mobility"
+      },
+      "DateString": "2026-08-01T00:00:00",
+      "Date": "/Date(1785542400000+0000)/",
+      "DueDateString": "2026-08-01T00:00:00",
+      "Status": "AUTHORISED",
+      "LineAmountTypes": "Exclusive",
+      "LineItems": [
+        {
+          "Description": "August retainer",
+          "Quantity": 1,
+          "UnitAmount": 20000,
+          "AccountCode": "200",
+          "TaxType": "OUTPUT2",
+          "TaxAmount": 4000,
+          "LineAmount": 20000,
+          "Tracking": [
+            {
+              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "Name": "Client",
+              "Option": "Kestrel Mobility"
+            }
+          ]
+        }
+      ],
+      "SubTotal": 20000,
+      "TotalTax": 4000,
+      "Total": 24000,
+      "CurrencyCode": "GBP",
+      "UpdatedDateUTC": "/Date(1788199200000+0000)/"
+    },
+    {
+      "Type": "ACCREC",
+      "InvoiceID": "168d65a2--1d9-4ced-a-19-eb95ce0dd7aa",
+      "InvoiceNumber": "INV-2283",
+      "Reference": "",
+      "Contact": {
+        "ContactID": "54f7280e-4df2-4a3e-a992-b31e281bedf6",
+        "Name": "Brightwater Housing"
+      },
+      "DateString": "2026-08-03T00:00:00",
+      "Date": "/Date(1785715200000+0000)/",
+      "DueDateString": "2026-08-03T00:00:00",
+      "Status": "AUTHORISED",
+      "LineAmountTypes": "Exclusive",
+      "LineItems": [
+        {
+          "Description": "Tenant portal design, stage 2",
+          "Quantity": 1,
+          "UnitAmount": 12000,
+          "AccountCode": "200",
+          "TaxType": "OUTPUT2",
+          "TaxAmount": 2400,
+          "LineAmount": 12000,
+          "Tracking": [
+            {
+              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "Name": "Client",
+              "Option": "Brightwater Housing"
+            }
+          ]
+        }
+      ],
+      "SubTotal": 12000,
+      "TotalTax": 2400,
+      "Total": 14400,
+      "CurrencyCode": "GBP",
+      "UpdatedDateUTC": "/Date(1788199200000+0000)/"
+    },
+    {
+      "Type": "ACCREC",
+      "InvoiceID": "-21532c7-6-17-4114-a2-3-a0a1876-2ab9",
+      "InvoiceNumber": "INV-2284",
+      "Reference": "",
+      "Contact": {
+        "ContactID": "2f8588b2--57e-4068-a-4b-7c9d1e4f4722",
+        "Name": "Marlow & Finch"
+      },
+      "DateString": "2026-08-03T00:00:00",
+      "Date": "/Date(1785715200000+0000)/",
+      "DueDateString": "2026-08-03T00:00:00",
+      "Status": "AUTHORISED",
+      "LineAmountTypes": "Exclusive",
+      "LineItems": [
+        {
+          "Description": "August retainer",
+          "Quantity": 1,
+          "UnitAmount": 12000,
+          "AccountCode": "200",
+          "TaxType": "OUTPUT2",
+          "TaxAmount": 2400,
+          "LineAmount": 12000,
+          "Tracking": [
+            {
+              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "Name": "Client",
+              "Option": "Marlow & Finch"
+            }
+          ]
+        }
+      ],
+      "SubTotal": 12000,
+      "TotalTax": 2400,
+      "Total": 14400,
+      "CurrencyCode": "GBP",
+      "UpdatedDateUTC": "/Date(1788199200000+0000)/"
+    },
+    {
+      "Type": "ACCREC",
+      "InvoiceID": "-26cbc92-e-8c-49f3-a2b9-29932-6359d4",
+      "InvoiceNumber": "INV-2285",
+      "Reference": "",
+      "Contact": {
+        "ContactID": "-39f1c32-2432-4d09-a62f-61f8e1617a15",
+        "Name": "Tidewell Distillery"
+      },
+      "DateString": "2026-08-07T00:00:00",
+      "Date": "/Date(1786060800000+0000)/",
+      "DueDateString": "2026-08-07T00:00:00",
+      "Status": "AUTHORISED",
+      "LineAmountTypes": "Exclusive",
+      "LineItems": [
+        {
+          "Description": "Packaging refresh",
+          "Quantity": 1,
+          "UnitAmount": 9000,
+          "AccountCode": "200",
+          "TaxType": "OUTPUT2",
+          "TaxAmount": 1800,
+          "LineAmount": 9000,
+          "Tracking": [
+            {
+              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "Name": "Client",
+              "Option": "Other clients"
+            }
+          ]
+        }
+      ],
+      "SubTotal": 9000,
+      "TotalTax": 1800,
+      "Total": 10800,
+      "CurrencyCode": "GBP",
+      "UpdatedDateUTC": "/Date(1788199200000+0000)/"
+    },
+    {
+      "Type": "ACCREC",
+      "InvoiceID": "63ef69ba-38aa-4e46-a660-d21e666d28fb",
+      "InvoiceNumber": "INV-2286",
+      "Reference": "",
+      "Contact": {
+        "ContactID": "71bb6f9a-546a-405e-abb6-afaa5858bf56",
+        "Name": "Orchard Lane Foods"
+      },
+      "DateString": "2026-08-12T00:00:00",
+      "Date": "/Date(1786492800000+0000)/",
+      "DueDateString": "2026-08-12T00:00:00",
+      "Status": "AUTHORISED",
+      "LineAmountTypes": "Exclusive",
+      "LineItems": [
+        {
+          "Description": "Autumn campaign, phase 2",
+          "Quantity": 1,
+          "UnitAmount": 24000,
+          "AccountCode": "200",
+          "TaxType": "OUTPUT2",
+          "TaxAmount": 4800,
+          "LineAmount": 24000,
+          "Tracking": [
+            {
+              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "Name": "Client",
+              "Option": "Orchard Lane Foods"
+            }
+          ]
+        }
+      ],
+      "SubTotal": 24000,
+      "TotalTax": 4800,
+      "Total": 28800,
+      "CurrencyCode": "GBP",
+      "UpdatedDateUTC": "/Date(1788199200000+0000)/"
+    },
+    {
+      "Type": "ACCREC",
+      "InvoiceID": "53f1efc2--1a1-40d7-a03f-2493a-7c4691",
+      "InvoiceNumber": "INV-2287",
+      "Reference": "",
+      "Contact": {
+        "ContactID": "1f69fd36--56c-4db9-a755-59aa606e156b",
+        "Name": "Pennant Rowing Club"
+      },
+      "DateString": "2026-08-14T00:00:00",
+      "Date": "/Date(1786665600000+0000)/",
+      "DueDateString": "2026-08-14T00:00:00",
+      "Status": "AUTHORISED",
+      "LineAmountTypes": "Exclusive",
+      "LineItems": [
+        {
+          "Description": "Website rebuild, deposit",
+          "Quantity": 1,
+          "UnitAmount": 7500,
+          "AccountCode": "200",
+          "TaxType": "OUTPUT2",
+          "TaxAmount": 1500,
+          "LineAmount": 7500,
+          "Tracking": [
+            {
+              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "Name": "Client",
+              "Option": "Other clients"
+            }
+          ]
+        }
+      ],
+      "SubTotal": 7500,
+      "TotalTax": 1500,
+      "Total": 9000,
+      "CurrencyCode": "GBP",
+      "UpdatedDateUTC": "/Date(1788199200000+0000)/"
+    },
+    {
+      "Type": "ACCREC",
+      "InvoiceID": "37137eba--5ee-4490-a748-3bc722f0b523",
+      "InvoiceNumber": "INV-2288",
+      "Reference": "",
+      "Contact": {
+        "ContactID": "-42b7860-e-46-45ea-a2-6-29756067e28a",
+        "Name": "Kestrel Mobility"
+      },
+      "DateString": "2026-08-18T00:00:00",
+      "Date": "/Date(1787011200000+0000)/",
+      "DueDateString": "2026-08-18T00:00:00",
+      "Status": "AUTHORISED",
+      "LineAmountTypes": "Exclusive",
+      "LineItems": [
+        {
+          "Description": "App onboarding redesign",
+          "Quantity": 1,
+          "UnitAmount": 28000,
+          "AccountCode": "200",
+          "TaxType": "OUTPUT2",
+          "TaxAmount": 5600,
+          "LineAmount": 28000,
+          "Tracking": [
+            {
+              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "Name": "Client",
+              "Option": "Kestrel Mobility"
+            }
+          ]
+        }
+      ],
+      "SubTotal": 28000,
+      "TotalTax": 5600,
+      "Total": 33600,
+      "CurrencyCode": "GBP",
+      "UpdatedDateUTC": "/Date(1788199200000+0000)/"
+    },
+    {
+      "Type": "ACCREC",
+      "InvoiceID": "-78817b8-e-b9-46fd-a5ff-a7ffa-51288a",
+      "InvoiceNumber": "INV-2289",
+      "Reference": "",
+      "Contact": {
+        "ContactID": "54f7280e-4df2-4a3e-a992-b31e281bedf6",
+        "Name": "Brightwater Housing"
+      },
+      "DateString": "2026-08-20T00:00:00",
+      "Date": "/Date(1787184000000+0000)/",
+      "DueDateString": "2026-08-20T00:00:00",
+      "Status": "AUTHORISED",
+      "LineAmountTypes": "Exclusive",
+      "LineItems": [
+        {
+          "Description": "Tenant portal build, stage 3",
+          "Quantity": 1,
+          "UnitAmount": 24000,
+          "AccountCode": "200",
+          "TaxType": "OUTPUT2",
+          "TaxAmount": 4800,
+          "LineAmount": 24000,
+          "Tracking": [
+            {
+              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "Name": "Client",
+              "Option": "Brightwater Housing"
+            }
+          ]
+        }
+      ],
+      "SubTotal": 24000,
+      "TotalTax": 4800,
+      "Total": 28800,
+      "CurrencyCode": "GBP",
+      "UpdatedDateUTC": "/Date(1788199200000+0000)/"
+    },
+    {
+      "Type": "ACCREC",
+      "InvoiceID": "-5df62b1-e-6f-41f6-aa5d-0cc12a00c0aa",
+      "InvoiceNumber": "INV-2290",
+      "Reference": "",
+      "Contact": {
+        "ContactID": "428d929a-2f25-4d36-ac09-c022072c56a6",
+        "Name": "Arden Lettings"
+      },
+      "DateString": "2026-08-24T00:00:00",
+      "Date": "/Date(1787529600000+0000)/",
+      "DueDateString": "2026-08-24T00:00:00",
+      "Status": "AUTHORISED",
+      "LineAmountTypes": "Exclusive",
+      "LineItems": [
+        {
+          "Description": "Brand identity",
+          "Quantity": 1,
+          "UnitAmount": 19500,
+          "AccountCode": "200",
+          "TaxType": "OUTPUT2",
+          "TaxAmount": 3900,
+          "LineAmount": 19500,
+          "Tracking": [
+            {
+              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "Name": "Client",
+              "Option": "Other clients"
+            }
+          ]
+        }
+      ],
+      "SubTotal": 19500,
+      "TotalTax": 3900,
+      "Total": 23400,
+      "CurrencyCode": "GBP",
+      "UpdatedDateUTC": "/Date(1788199200000+0000)/"
+    },
+    {
+      "Type": "ACCREC",
+      "InvoiceID": "-d94d146--2d6-475a-a69e-2d4524c3b071",
+      "InvoiceNumber": "INV-2291",
+      "Reference": "",
+      "Contact": {
+        "ContactID": "71bb6f9a-546a-405e-abb6-afaa5858bf56",
+        "Name": "Orchard Lane Foods"
+      },
+      "DateString": "2026-08-27T00:00:00",
+      "Date": "/Date(1787788800000+0000)/",
+      "DueDateString": "2026-08-27T00:00:00",
+      "Status": "AUTHORISED",
+      "LineAmountTypes": "Exclusive",
+      "LineItems": [
+        {
+          "Description": "Autumn campaign, production",
+          "Quantity": 1,
+          "UnitAmount": 14000,
+          "AccountCode": "200",
+          "TaxType": "OUTPUT2",
+          "TaxAmount": 2800,
+          "LineAmount": 14000,
+          "Tracking": [
+            {
+              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "Name": "Client",
+              "Option": "Orchard Lane Foods"
+            }
+          ]
+        }
+      ],
+      "SubTotal": 14000,
+      "TotalTax": 2800,
+      "Total": 16800,
+      "CurrencyCode": "GBP",
+      "UpdatedDateUTC": "/Date(1788199200000+0000)/"
+    },
+    {
+      "Type": "ACCREC",
+      "InvoiceID": "-5d89a02-e614-4c56-a74f-574ca-752451",
+      "InvoiceNumber": "INV-2292",
+      "Reference": "",
+      "Contact": {
+        "ContactID": "2f8588b2--57e-4068-a-4b-7c9d1e4f4722",
+        "Name": "Marlow & Finch"
+      },
+      "DateString": "2026-08-28T00:00:00",
+      "Date": "/Date(1787875200000+0000)/",
+      "DueDateString": "2026-08-28T00:00:00",
+      "Status": "AUTHORISED",
+      "LineAmountTypes": "Exclusive",
+      "LineItems": [
+        {
+          "Description": "Seasonal catalogue",
+          "Quantity": 1,
+          "UnitAmount": 12000,
+          "AccountCode": "200",
+          "TaxType": "OUTPUT2",
+          "TaxAmount": 2400,
+          "LineAmount": 12000,
+          "Tracking": [
+            {
+              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "Name": "Client",
+              "Option": "Marlow & Finch"
+            }
+          ]
+        }
+      ],
+      "SubTotal": 12000,
+      "TotalTax": 2400,
+      "Total": 14400,
+      "CurrencyCode": "GBP",
+      "UpdatedDateUTC": "/Date(1788199200000+0000)/"
+    }
+  ]
+}

@@ -1,0 +1,491 @@
+{
+  "Id": "3df5135e--47c-46ab-a-4c-43e622-5bff7",
+  "Status": "OK",
+  "ProviderName": "agency-pack-check (synthetic fixture)",
+  "DateTimeUTC": "/Date(1788340440000+0000)/",
+  "_request": {
+    "endpoint": "GET /api.xro/2.0/Reports/ProfitAndLoss",
+    "params": {
+      "fromDate": "2026-08-01",
+      "toDate": "2026-08-31",
+      "standardLayout": true,
+      "paymentsOnly": false,
+      "trackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f"
+    }
+  },
+  "Reports": [
+    {
+      "ReportID": "ProfitAndLoss",
+      "ReportName": "Profit and Loss",
+      "ReportType": "ProfitAndLoss",
+      "ReportTitles": [
+        "Profit and Loss",
+        "Lowther Studio Ltd (fictional)",
+        "For the month ended 31 August 2026, by Client"
+      ],
+      "ReportDate": "2 September 2026",
+      "UpdatedDateUTC": "/Date(1788340440000+0000)/",
+      "Fields": [],
+      "Rows": [
+        {
+          "RowType": "Header",
+          "Cells": [
+            {
+              "Value": ""
+            },
+            {
+              "Value": "Orchard Lane Foods"
+            },
+            {
+              "Value": "Kestrel Mobility"
+            },
+            {
+              "Value": "Brightwater Housing"
+            },
+            {
+              "Value": "Marlow & Finch"
+            },
+            {
+              "Value": "Other clients"
+            },
+            {
+              "Value": "Unassigned"
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Income",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Sales - fees",
+                  "Attributes": [
+                    {
+                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "62000.00",
+                  "Attributes": [
+                    {
+                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "48000.00",
+                  "Attributes": [
+                    {
+                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "36000.00",
+                  "Attributes": [
+                    {
+                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "18000.00",
+                  "Attributes": [
+                    {
+                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "36000.00",
+                  "Attributes": [
+                    {
+                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Income"
+                },
+                {
+                  "Value": "62000.00"
+                },
+                {
+                  "Value": "48000.00"
+                },
+                {
+                  "Value": "36000.00"
+                },
+                {
+                  "Value": "18000.00"
+                },
+                {
+                  "Value": "36000.00"
+                },
+                {
+                  "Value": "0.00"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Less Cost of Sales",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Delivery staff costs",
+                  "Attributes": [
+                    {
+                      "Value": "-3527208-2369-4552-a011-9199e-5e731b",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "-3527208-2369-4552-a011-9199e-5e731b",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "-3527208-2369-4552-a011-9199e-5e731b",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "-3527208-2369-4552-a011-9199e-5e731b",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "-3527208-2369-4552-a011-9199e-5e731b",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "-3527208-2369-4552-a011-9199e-5e731b",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "96000.00",
+                  "Attributes": [
+                    {
+                      "Value": "-3527208-2369-4552-a011-9199e-5e731b",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Freelancers",
+                  "Attributes": [
+                    {
+                      "Value": "-6cc6bc4-a-31-4329-a2-7-e81e81a-5384",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "8000.00",
+                  "Attributes": [
+                    {
+                      "Value": "-6cc6bc4-a-31-4329-a2-7-e81e81a-5384",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "6000.00",
+                  "Attributes": [
+                    {
+                      "Value": "-6cc6bc4-a-31-4329-a2-7-e81e81a-5384",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "3000.00",
+                  "Attributes": [
+                    {
+                      "Value": "-6cc6bc4-a-31-4329-a2-7-e81e81a-5384",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1500.00",
+                  "Attributes": [
+                    {
+                      "Value": "-6cc6bc4-a-31-4329-a2-7-e81e81a-5384",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2500.00",
+                  "Attributes": [
+                    {
+                      "Value": "-6cc6bc4-a-31-4329-a2-7-e81e81a-5384",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "-6cc6bc4-a-31-4329-a2-7-e81e81a-5384",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Client delivery software",
+                  "Attributes": [
+                    {
+                      "Value": "-2c78727-26bb-47dd-a77a-2730e32c1885",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1000.00",
+                  "Attributes": [
+                    {
+                      "Value": "-2c78727-26bb-47dd-a77a-2730e32c1885",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "800.00",
+                  "Attributes": [
+                    {
+                      "Value": "-2c78727-26bb-47dd-a77a-2730e32c1885",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "400.00",
+                  "Attributes": [
+                    {
+                      "Value": "-2c78727-26bb-47dd-a77a-2730e32c1885",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "300.00",
+                  "Attributes": [
+                    {
+                      "Value": "-2c78727-26bb-47dd-a77a-2730e32c1885",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "500.00",
+                  "Attributes": [
+                    {
+                      "Value": "-2c78727-26bb-47dd-a77a-2730e32c1885",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "-2c78727-26bb-47dd-a77a-2730e32c1885",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Cost of Sales"
+                },
+                {
+                  "Value": "9000.00"
+                },
+                {
+                  "Value": "6800.00"
+                },
+                {
+                  "Value": "3400.00"
+                },
+                {
+                  "Value": "1800.00"
+                },
+                {
+                  "Value": "3000.00"
+                },
+                {
+                  "Value": "96000.00"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Gross Profit"
+                },
+                {
+                  "Value": "53000.00"
+                },
+                {
+                  "Value": "41200.00"
+                },
+                {
+                  "Value": "32600.00"
+                },
+                {
+                  "Value": "16200.00"
+                },
+                {
+                  "Value": "33000.00"
+                },
+                {
+                  "Value": "-96000.00"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Less Operating Expenses",
+          "Rows": [
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Operating Expenses"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Net Profit"
+                },
+                {
+                  "Value": "53000.00"
+                },
+                {
+                  "Value": "41200.00"
+                },
+                {
+                  "Value": "32600.00"
+                },
+                {
+                  "Value": "16200.00"
+                },
+                {
+                  "Value": "33000.00"
+                },
+                {
+                  "Value": "-96000.00"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

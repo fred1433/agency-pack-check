@@ -1,0 +1,56 @@
+{
+  "Id": "-becddae-5316-448e-acf7-b3ce-51c48ba",
+  "Status": "OK",
+  "ProviderName": "agency-pack-check (synthetic fixture)",
+  "DateTimeUTC": "/Date(1788340440000+0000)/",
+  "_request": {
+    "endpoint": "GET /api.xro/2.0/Invoices",
+    "headers": {
+      "If-Modified-Since": "2026-09-01T09:00:00Z"
+    },
+    "params": {
+      "where": "Type==\"ACCREC\"",
+      "page": 1
+    }
+  },
+  "Invoices": [
+    {
+      "Type": "ACCREC",
+      "InvoiceID": "-d94d146--2d6-475a-a69e-2d4524c3b071",
+      "InvoiceNumber": "INV-2291",
+      "Reference": "PO 7781",
+      "Contact": {
+        "ContactID": "71bb6f9a-546a-405e-abb6-afaa5858bf56",
+        "Name": "Orchard Lane Foods"
+      },
+      "DateString": "2026-08-27T00:00:00",
+      "Date": "/Date(1787788800000+0000)/",
+      "DueDateString": "2026-08-27T00:00:00",
+      "Status": "AUTHORISED",
+      "LineAmountTypes": "Exclusive",
+      "LineItems": [
+        {
+          "Description": "Autumn campaign, production",
+          "Quantity": 1,
+          "UnitAmount": 14000,
+          "AccountCode": "200",
+          "TaxType": "OUTPUT2",
+          "TaxAmount": 2800,
+          "LineAmount": 14000,
+          "Tracking": [
+            {
+              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "Name": "Client",
+              "Option": "Orchard Lane Foods"
+            }
+          ]
+        }
+      ],
+      "SubTotal": 14000,
+      "TotalTax": 2800,
+      "Total": 16800,
+      "CurrencyCode": "GBP",
+      "UpdatedDateUTC": "/Date(1788338460000+0000)/"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "Id": "-4ed83ea-66cb-47ce-a352-5cd121468407",
+  "Status": "OK",
+  "ProviderName": "agency-pack-check (synthetic fixture)",
+  "DateTimeUTC": "/Date(1788340440000+0000)/",
+  "_request": {
+    "endpoint": "GET /api.xro/2.0/CreditNotes",
+    "params": {
+      "where": "Type==\"ACCRECCREDIT\" AND Date>=DateTime(2026,08,01) AND Date<=DateTime(2026,08,31)"
+    }
+  },
+  "CreditNotes": [
+    {
+      "Type": "ACCRECCREDIT",
+      "CreditNoteID": "2f076a1e-2d12-473e-a58a-f0b32-240437",
+      "CreditNoteNumber": "CN-0147",
+      "Reference": "Against INV-2261 (July): scope reduced after sign-off",
+      "Contact": {
+        "ContactID": "2f8588b2--57e-4068-a-4b-7c9d1e4f4722",
+        "Name": "Marlow & Finch"
+      },
+      "DateString": "2026-08-29T00:00:00",
+      "Date": "/Date(1787961600000+0000)/",
+      "Status": "AUTHORISED",
+      "LineAmountTypes": "Exclusive",
+      "LineItems": [
+        {
+          "Description": "Credit: July catalogue scope reduction",
+          "Quantity": 1,
+          "UnitAmount": 6000,
+          "AccountCode": "200",
+          "TaxType": "OUTPUT2",
+          "TaxAmount": 1200,
+          "LineAmount": 6000,
+          "Tracking": [
+            {
+              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "Name": "Client",
+              "Option": "Marlow & Finch"
+            }
+          ]
+        }
+      ],
+      "SubTotal": 6000,
+      "TotalTax": 1200,
+      "Total": 7200,
+      "CurrencyCode": "GBP",
+      "UpdatedDateUTC": "/Date(1788016800000+0000)/"
+    }
+  ]
+}

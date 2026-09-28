@@ -1,0 +1,8 @@
+employee_ref,team,element,earned_period,gross,employer_nic,employer_pension
+D03,Delivery,August overtime and delivery bonus,2026-08,2000.00,300.00,100.00
+D07,Delivery,August overtime and delivery bonus,2026-08,1500.00,225.00,75.00
+D08,Delivery,August overtime and delivery bonus,2026-08,2500.00,375.00,125.00
+D11,Delivery,August overtime and delivery bonus,2026-08,1000.00,150.00,50.00
+D14,Delivery,August overtime and delivery bonus,2026-08,1800.00,270.00,90.00
+D19,Delivery,August overtime and delivery bonus,2026-08,1200.00,180.00,60.00
+ALL,Delivery,September basic pay,2026-09,74000.00,9600.00,3700.00

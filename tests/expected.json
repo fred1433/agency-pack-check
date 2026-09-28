@@ -1,0 +1,41 @@
+{
+  "_note": "Typed by hand from REFERENCE.md. Values are unrounded where the engine keeps them unrounded; displays are as printed.",
+  "open": {
+    "revenue.month.actual": 200000, "revenue.month.budget": 190000, "revenue.month.py": 170000,
+    "revenue.month.vs_budget": 10000, "revenue.month.vs_budget_pct|display": "5.3%", "revenue.month.vs_py_pct|display": "17.6%",
+    "direct_costs.month.actual": 120000, "direct_costs.month.budget": 117800,
+    "gross_profit.month.actual": 80000, "gross_profit.month.budget": 72200, "gross_profit.month.vs_budget_pct|display": "10.8%",
+    "gross_margin.month.actual|display": "40.0%", "gross_margin.month.budget|display": "38.0%", "gross_margin.month.py|display": "37.5%",
+    "gross_margin.month.vs_budget_pp|display": "2.0 percentage points", "gross_margin.month.vs_py_pp|display": "2.5 percentage points",
+    "overheads.month.actual": 50500, "overheads.month.budget": 52000,
+    "operating_profit.month.actual": 29500, "operating_profit.month.budget": 20200, "operating_profit.month.py": 17750,
+    "operating_profit.month.vs_budget_pct|display": "46.0%", "operating_profit.month.vs_py_pct|display": "66.2%",
+    "revenue.ytd.actual": 960000, "revenue.ytd.budget": 950000, "revenue.ytd.py": 845000,
+    "revenue.ytd.vs_budget_pct|display": "1.1%", "revenue.ytd.vs_py_pct|display": "13.6%",
+    "direct_costs.ytd.actual": 583000, "direct_costs.ytd.budget": 589000, "direct_costs.ytd.py": 528125,
+    "gross_profit.ytd.actual": 377000, "gross_margin.ytd.actual|display": "39.3%",
+    "overheads.ytd.actual": 254000, "overheads.ytd.budget": 260000, "overheads.ytd.py": 240000,
+    "operating_profit.ytd.actual": 123000, "operating_profit.ytd.budget": 101000, "operating_profit.ytd.py": 76875,
+    "operating_profit.ytd.vs_py_pct|display": "60.0%",
+    "gross_margin.month.actual@proposed|display": "34.0%", "gross_profit.month.actual@proposed": 68000,
+    "client.orchard-lane.share.month.actual|display": "31.0%", "client.orchard-lane.share.ytd.actual|display": "30.0%",
+    "client.marlow-finch.revenue.month.avg3m": 30000, "client.marlow-finch.revenue.month.vs_avg3m": -12000,
+    "client.marlow-finch.revenue.month.vs_avg3m_pct|display": "40.0%", "client.kestrel.revenue.ytd.actual": 226000,
+    "client.brightwater.revenue.ytd.actual": 172500
+  },
+  "approved": {
+    "direct_costs.month.actual": 132000, "gross_profit.month.actual": 68000,
+    "gross_margin.month.actual|display": "34.0%", "gross_margin.month.vs_budget_pp": -4.0, "gross_margin.month.vs_py_pp": -3.5,
+    "gross_profit.month.vs_budget": -4200, "gross_profit.month.vs_budget_pct|display": "5.8%",
+    "direct_costs.month.vs_budget": 14200, "direct_costs.month.vs_budget_pct|display": "12.1%",
+    "operating_profit.month.actual": 17500, "operating_profit.month.vs_budget": -2700, "operating_profit.month.vs_budget_pct|display": "13.4%",
+    "operating_profit.month.vs_py": -250, "operating_profit.month.vs_py_pct|display": "1.4%",
+    "direct_costs.ytd.actual": 595000, "gross_profit.ytd.actual": 365000, "gross_margin.ytd.actual|display": "38.0%",
+    "gross_margin.ytd.vs_budget_pp|display": "0.0 percentage points", "operating_profit.ytd.actual": 111000,
+    "revenue.month.actual": 200000
+  },
+  "reconciliation": {
+    "invoices_net": 200000, "invoices_count": 12, "invoices_if_duplicate_kept": 220000, "trial_balance_total": 1392000,
+    "accrual_total": 12000, "accrual_gross": 10000, "accrual_nic": 1500, "accrual_pension": 500
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "agency-pack-check",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fixtures": "node scripts/build-fixtures.ts",
+    "test": "node --test tests/",
+    "build": "node scripts/build-site.ts",
+    "pptx": "node scripts/export-pptx.ts"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "pptxgenjs": "^4.0.1"
+  }
+}

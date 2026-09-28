@@ -1,0 +1,20 @@
+{
+  "Id": "21a85b32--31f-4ec0-a5f9-c2eaa-3c5c03",
+  "Status": "OK",
+  "ProviderName": "agency-pack-check (synthetic fixture)",
+  "DateTimeUTC": "/Date(1788340440000+0000)/",
+  "_request": {
+    "endpoint": "GET /api.xro/2.0/Organisation"
+  },
+  "Organisations": [
+    {
+      "OrganisationID": "-5ace6be-a731-4b47-a-6f-09283a-74ab9",
+      "Name": "Lowther Studio Ltd (fictional)",
+      "BaseCurrency": "GBP",
+      "CountryCode": "GB",
+      "FinancialYearEndDay": 31,
+      "FinancialYearEndMonth": 3,
+      "OrganisationType": "COMPANY"
+    }
+  ]
+}

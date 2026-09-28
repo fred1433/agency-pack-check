@@ -1,0 +1,13 @@
+{
+  "Id": "-2bb91d7-e-65-4af7-aa6d-9bbeb22fa284",
+  "Status": "OK",
+  "ProviderName": "agency-pack-check (synthetic fixture)",
+  "DateTimeUTC": "/Date(1788340440000+0000)/",
+  "_request": {
+    "endpoint": "GET /api.xro/2.0/ManualJournals",
+    "params": {
+      "where": "Date>=DateTime(2026,08,01) AND Date<=DateTime(2026,08,31)"
+    }
+  },
+  "ManualJournals": []
+}

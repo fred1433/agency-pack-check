@@ -1,0 +1,288 @@
+{
+  "Id": "-468b3cb-a-56-4987-a2-3-a15538a-1e8b",
+  "Status": "OK",
+  "ProviderName": "agency-pack-check (synthetic fixture)",
+  "DateTimeUTC": "/Date(1788340440000+0000)/",
+  "_request": {
+    "endpoint": "GET /api.xro/2.0/Reports/ProfitAndLoss",
+    "params": {
+      "fromDate": "2026-05-01",
+      "toDate": "2026-05-31",
+      "standardLayout": true,
+      "paymentsOnly": false,
+      "trackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f"
+    }
+  },
+  "Reports": [
+    {
+      "ReportID": "ProfitAndLoss",
+      "ReportName": "Profit and Loss",
+      "ReportType": "ProfitAndLoss",
+      "ReportTitles": [
+        "Profit and Loss",
+        "Lowther Studio Ltd (fictional)",
+        "For the month ended 31 May 2026, by Client"
+      ],
+      "ReportDate": "2 September 2026",
+      "UpdatedDateUTC": "/Date(1788340440000+0000)/",
+      "Fields": [],
+      "Rows": [
+        {
+          "RowType": "Header",
+          "Cells": [
+            {
+              "Value": ""
+            },
+            {
+              "Value": "Orchard Lane Foods"
+            },
+            {
+              "Value": "Kestrel Mobility"
+            },
+            {
+              "Value": "Brightwater Housing"
+            },
+            {
+              "Value": "Marlow & Finch"
+            },
+            {
+              "Value": "Other clients"
+            },
+            {
+              "Value": "Unassigned"
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Income",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Sales - fees",
+                  "Attributes": [
+                    {
+                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "57000.00",
+                  "Attributes": [
+                    {
+                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "44000.00",
+                  "Attributes": [
+                    {
+                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "34000.00",
+                  "Attributes": [
+                    {
+                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "31000.00",
+                  "Attributes": [
+                    {
+                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "24000.00",
+                  "Attributes": [
+                    {
+                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Income"
+                },
+                {
+                  "Value": "57000.00"
+                },
+                {
+                  "Value": "44000.00"
+                },
+                {
+                  "Value": "34000.00"
+                },
+                {
+                  "Value": "31000.00"
+                },
+                {
+                  "Value": "24000.00"
+                },
+                {
+                  "Value": "0.00"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Less Cost of Sales",
+          "Rows": [
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Cost of Sales"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Gross Profit"
+                },
+                {
+                  "Value": "57000.00"
+                },
+                {
+                  "Value": "44000.00"
+                },
+                {
+                  "Value": "34000.00"
+                },
+                {
+                  "Value": "31000.00"
+                },
+                {
+                  "Value": "24000.00"
+                },
+                {
+                  "Value": "0.00"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Less Operating Expenses",
+          "Rows": [
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Operating Expenses"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Net Profit"
+                },
+                {
+                  "Value": "57000.00"
+                },
+                {
+                  "Value": "44000.00"
+                },
+                {
+                  "Value": "34000.00"
+                },
+                {
+                  "Value": "31000.00"
+                },
+                {
+                  "Value": "24000.00"
+                },
+                {
+                  "Value": "0.00"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "_note": "Income rows only are used from this month (for the three-month client average); cost rows omitted from the fixture."
+}

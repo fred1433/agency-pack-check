@@ -1,0 +1,115 @@
+{
+  "Id": "5ca7989e--1de-4d48-a-3d-3cfa02-45247",
+  "Status": "OK",
+  "ProviderName": "agency-pack-check (synthetic fixture)",
+  "DateTimeUTC": "/Date(1788340440000+0000)/",
+  "_request": {
+    "endpoint": "GET /api.xro/2.0/Accounts"
+  },
+  "Accounts": [
+    {
+      "AccountID": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+      "Code": "200",
+      "Name": "Sales - fees",
+      "Type": "REVENUE",
+      "Class": "REVENUE",
+      "Status": "ACTIVE"
+    },
+    {
+      "AccountID": "-3527208-2369-4552-a011-9199e-5e731b",
+      "Code": "310",
+      "Name": "Delivery staff costs",
+      "Type": "DIRECTCOSTS",
+      "Class": "EXPENSE",
+      "Status": "ACTIVE"
+    },
+    {
+      "AccountID": "-6cc6bc4-a-31-4329-a2-7-e81e81a-5384",
+      "Code": "320",
+      "Name": "Freelancers",
+      "Type": "DIRECTCOSTS",
+      "Class": "EXPENSE",
+      "Status": "ACTIVE"
+    },
+    {
+      "AccountID": "-2c78727-26bb-47dd-a77a-2730e32c1885",
+      "Code": "325",
+      "Name": "Client delivery software",
+      "Type": "DIRECTCOSTS",
+      "Class": "EXPENSE",
+      "Status": "ACTIVE"
+    },
+    {
+      "AccountID": "-1937b76-a-6d-42a9-a276-47d576-46ce3",
+      "Code": "469",
+      "Name": "Rent",
+      "Type": "OVERHEADS",
+      "Class": "EXPENSE",
+      "Status": "ACTIVE"
+    },
+    {
+      "AccountID": "-5ad4593-a-3c-47b4-a2-3-67647ca-aaff",
+      "Code": "477",
+      "Name": "Admin salaries",
+      "Type": "OVERHEADS",
+      "Class": "EXPENSE",
+      "Status": "ACTIVE"
+    },
+    {
+      "AccountID": "-132f43a-0755-4f1e-a45e-e3bda-2121db",
+      "Code": "485",
+      "Name": "Subscriptions & software",
+      "Type": "OVERHEADS",
+      "Class": "EXPENSE",
+      "Status": "ACTIVE"
+    },
+    {
+      "AccountID": "2745d2fe-7556-400e-a378-897e04b0c086",
+      "Code": "400",
+      "Name": "Advertising & marketing",
+      "Type": "OVERHEADS",
+      "Class": "EXPENSE",
+      "Status": "ACTIVE"
+    },
+    {
+      "AccountID": "-533da37-a-1e-4eb7-a2-3-04b4fda-414a",
+      "Code": "463",
+      "Name": "Training",
+      "Type": "OVERHEADS",
+      "Class": "EXPENSE",
+      "Status": "ACTIVE"
+    },
+    {
+      "AccountID": "7e1db8a6-06bc-409e-a6c3-97761fead626",
+      "Code": "489",
+      "Name": "Recruitment fees",
+      "Type": "OVERHEADS",
+      "Class": "EXPENSE",
+      "Status": "ACTIVE"
+    },
+    {
+      "AccountID": "465b0e6e--46e-4a9b-a31c-f995e3064911",
+      "Code": "429",
+      "Name": "General expenses",
+      "Type": "OVERHEADS",
+      "Class": "EXPENSE",
+      "Status": "ACTIVE"
+    },
+    {
+      "AccountID": "-5b07c7e-2-2a-47d8-a209-817d3e-11ab3",
+      "Code": "260",
+      "Name": "Recharged production costs",
+      "Type": "REVENUE",
+      "Class": "REVENUE",
+      "Status": "ACTIVE"
+    },
+    {
+      "AccountID": "0614338e--4cf-48f6-a0c6-e3dfe5e5c90a",
+      "Code": "821",
+      "Name": "Accruals",
+      "Type": "CURRLIAB",
+      "Class": "LIABILITY",
+      "Status": "ACTIVE"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "snapshot": "approved",
+  "snapshotFingerprint": "c952e4151e561d66",
+  "run": 1,
+  "model": [
+    "claude-sonnet-5"
+  ],
+  "requestedModel": "claude-sonnet-5",
+  "started": "2026-09-28T13:35:34.082Z",
+  "finished": "2026-09-28T13:35:52.815Z",
+  "prompt": "data/drafts/prompt_approved.txt",
+  "prompt_template": "prompts/commentary.md",
+  "raw": "{\"commentary\": \"August revenue of [[revenue.month.actual]] came in above budget by [[revenue.month.vs_budget]] and up on last year by [[revenue.month.vs_py]], but direct costs also ran above budget by [[direct_costs.month.vs_budget]], leaving gross margin at [[gross_margin.month.actual]], below budget by [[gross_margin.month.vs_budget_pp]] and down on last year by [[gross_margin.month.vs_py_pp]]. Operating profit for the month was [[operating_profit.month.actual]], below budget by [[operating_profit.month.vs_budget]] and slightly down on last year by [[operating_profit.month.vs_py]]. Year to date, revenue of [[revenue.ytd.actual]] is above budget by [[revenue.ytd.vs_budget]] and up on last year by [[revenue.ytd.vs_py]], with operating profit of [[operating_profit.ytd.actual]] above budget by [[operating_profit.ytd.vs_budget]] and up on last year by [[operating_profit.ytd.vs_py]]. Orchard Lane Foods remains the largest client, contributing [[client.orchard-lane.share.month.actual]] of August revenue, with its August revenue of [[client.orchard-lane.revenue.month.actual]] above its May to July average by [[client.orchard-lane.revenue.month.vs_avg3m]]. Marlow & Finch's August revenue of [[client.marlow-finch.revenue.month.actual]] was below its May to July average by [[client.marlow-finch.revenue.month.vs_avg3m]], a fall of [[client.marlow-finch.revenue.month.vs_avg3m_pct]].\"}",
+  "commentary": "August revenue of [[revenue.month.actual]] came in above budget by [[revenue.month.vs_budget]] and up on last year by [[revenue.month.vs_py]], but direct costs also ran above budget by [[direct_costs.month.vs_budget]], leaving gross margin at [[gross_margin.month.actual]], below budget by [[gross_margin.month.vs_budget_pp]] and down on last year by [[gross_margin.month.vs_py_pp]]. Operating profit for the month was [[operating_profit.month.actual]], below budget by [[operating_profit.month.vs_budget]] and slightly down on last year by [[operating_profit.month.vs_py]]. Year to date, revenue of [[revenue.ytd.actual]] is above budget by [[revenue.ytd.vs_budget]] and up on last year by [[revenue.ytd.vs_py]], with operating profit of [[operating_profit.ytd.actual]] above budget by [[operating_profit.ytd.vs_budget]] and up on last year by [[operating_profit.ytd.vs_py]]. Orchard Lane Foods remains the largest client, contributing [[client.orchard-lane.share.month.actual]] of August revenue, with its August revenue of [[client.orchard-lane.revenue.month.actual]] above its May to July average by [[client.orchard-lane.revenue.month.vs_avg3m]]. Marlow & Finch's August revenue of [[client.marlow-finch.revenue.month.actual]] was below its May to July average by [[client.marlow-finch.revenue.month.vs_avg3m]], a fall of [[client.marlow-finch.revenue.month.vs_avg3m_pct]]."
+}
