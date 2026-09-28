@@ -1,0 +1,11 @@
+name = "agency-pack"
+compatibility_date = "2026-09-01"
+workers_dev = false
+routes = [
+  { pattern = "theaipipe.com/agency-pack*", zone_name = "theaipipe.com" }
+]
+
+[assets]
+directory = "./deploy"
+html_handling = "auto-trailing-slash"
+not_found_handling = "none"

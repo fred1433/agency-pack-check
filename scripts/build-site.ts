@@ -26,6 +26,10 @@ await build({
 for (const f of ['index.html', 'styles.css']) copyFileSync(p(`web/${f}`), p(`site/${f}`));
 const fav = '/Users/frederic/ProjetsDev/the-ai-pipe-website/website/public/';
 for (const f of ['favicon.svg', 'favicon.png']) copyFileSync(fav + f, p(`site/${f}`));
-writeFileSync(p('site/_headers'), '/*\n  X-Robots-Tag: noindex, nofollow\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Content-Type-Options: nosniff\n');
+writeFileSync(p('site/_headers'), '/agency-pack/*\n  X-Robots-Tag: noindex, nofollow\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Content-Type-Options: nosniff\n');
 writeFileSync(p('site/robots.txt'), 'User-agent: *\nDisallow: /\n');
+// Served under theaipipe.com/agency-pack/ by a Worker with static assets (the zone has no room for a subdomain).
+mkdirSync(p('deploy/agency-pack'), { recursive: true });
+for (const f of ['index.html', 'styles.css', 'app.js', 'favicon.svg', 'favicon.png']) copyFileSync(p(`site/${f}`), p(`deploy/agency-pack/${f}`));
+writeFileSync(p('deploy/_headers'), '/agency-pack/*\n  X-Robots-Tag: noindex, nofollow\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Content-Type-Options: nosniff\n');
 console.log('site built');

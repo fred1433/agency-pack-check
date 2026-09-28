@@ -24,4 +24,6 @@ const out = new URL('../exports/lowther-august-2026-commentary.pptx', import.met
 await pres.writeFile({ fileName: out });
 mkdirSync(new URL('../site/', import.meta.url), { recursive: true });
 copyFileSync(out, new URL('../site/lowther-august-2026-commentary.pptx', import.meta.url).pathname);
+mkdirSync(new URL('../deploy/agency-pack/', import.meta.url), { recursive: true });
+copyFileSync(out, new URL('../deploy/agency-pack/lowther-august-2026-commentary.pptx', import.meta.url).pathname);
 console.log('exported', out, 'accepted review items:', [...review.reviewed]);

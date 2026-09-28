@@ -4,3 +4,4 @@ site/
 .wrangler/
 vendor-ref/
 .DS_Store
+deploy/

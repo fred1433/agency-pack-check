@@ -6,7 +6,7 @@ release until a reviewer decides it. One page exports to an editable PowerPoint 
 
 Everything is fictional: Lowther Studio Ltd, its clients and its figures do not exist.
 
-Live page: https://agency-pack.theaipipe.com
+Live page: https://theaipipe.com/agency-pack/
 
 ## The case
 
@@ -42,7 +42,7 @@ sign-off.
 npm install
 npm test                               # 72 tests: reference case, calculation edge cases, claims, release
 node scripts/evaluate.ts heldout2      # natural drafts and corrupted copies
-node scripts/build-site.ts && node scripts/export-pptx.ts
+node scripts/build-site.ts && node scripts/export-pptx.ts && npx wrangler deploy
 ```
 
 Node 22.18 or later (TypeScript runs natively).

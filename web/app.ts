@@ -278,7 +278,7 @@ function renderHow() {
     </tbody></table>
     <p>The ${r.corrupted.passed} that passed are listed in the repository. Most are comparisons between two figures in one sentence ("a share of 9.0% against 14.4%"), which the checker does not read.</p>`;
   $('modelLine').textContent = `${A.model} through Claude Code, on ${A.started.slice(0, 10)}`;
-  $('links').innerHTML = `<a href="${r.repo}">Code, data and tests</a><a href="${r.repo}/blob/main/REFERENCE.md">The reference case, calculated by hand</a><a href="/lowther-august-2026-commentary.pptx">The exported page (.pptx)</a>`;
+  $('links').innerHTML = `<a href="${r.repo}">Code, data and tests</a><a href="${r.repo}/blob/main/REFERENCE.md">The reference case, calculated by hand</a><a href="lowther-august-2026-commentary.pptx">The exported page (.pptx)</a>`;
 }
 
 update();
