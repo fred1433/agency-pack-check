@@ -209,3 +209,6 @@ body[data-view="client"] .sent--authored { background: none; }
   .intro { padding: 8px 0 18px; }
   .intro h1 { font-size: 28px; margin-bottom: 10px; }
 }
+/* Figure marks stay small and light: a pencil tick by each number; a cross stays full size. */
+.fig .mk { width: .58em; height: .5em; margin-left: .06em; vertical-align: .55em; stroke-width: 2.2; opacity: .55; }
+.fig--bad .mk { width: .9em; height: .8em; opacity: 1; vertical-align: .3em; }
