@@ -131,7 +131,7 @@ export function checkDraft(markup: string, ms: MetricSet, draftSnapshotFingerpri
     for (const r of refs) r.clause = clauseOf(r.start);
     const rawHits = scan(masked.replace(/\u0001/g, ' ')).map((h) => ({ ...h, clause: clauseOf(h.start) }));
     // "[[x]] of agency revenue": the figure is a share, whatever words sit between "of" and "revenue".
-    const SHARE_AFTER = /^\s*\)?\s*(?:of|in)\s+(?:(?:the|its|total|overall|agency|agency['’]s|august|august['’]s|month['’]s|year[- ]to[- ]date|monthly|all)\s+)*(?:revenue|fees|income|sales|billings)\b/i;
+    const SHARE_AFTER = /^\s*\)?\s*(?:(?:of|in)\s+(?:(?:the|its|total|overall|agency|agency['’]s|august|august['’]s|month['’]s|year[- ]to[- ]date|monthly|all)\s+)*(?:revenue|fees|income|sales|billings)\b|of\s+the\s+month\b|of\s+the\s+total\b)/i;
     const shareSpans = new Map<RefPos, { start: number; end: number }>();
     for (const r of refs) {
       const sm = SHARE_AFTER.exec(masked.slice(r.end));
@@ -144,11 +144,28 @@ export function checkDraft(markup: string, ms: MetricSet, draftSnapshotFingerpri
       if (obj && (!nextRef || nextRef.start >= h.end + obj[0].length)) shareSpans.set({ id: '', start: h.start, end: h.start, clause: h.clause }, { start: h.end, end: h.end + obj[0].length });
     }
     const inShare = (h: { start: number; end: number }) => [...shareSpans.values()].some((sp) => h.start >= sp.start && h.end <= sp.end);
-    const hits = rawHits.filter((h) => !(inShare(h) && (h.cls === 'entity' || h.cls === 'measure')));
+    const qualifiesRevenue = (h: Hit) => h.cls === 'entity' && h.value === 'agency' && /^(?:['’]s)?\s+(?:revenue|fees|income)\b/i.test(masked.slice(h.end)) && /\bof\s+(?:the\s+)?$/i.test(masked.slice(0, h.start));
+    const hits = rawHits.filter((h) => !(inShare(h) && (h.cls === 'entity' || h.cls === 'measure')) && !qualifiesRevenue(h));
     // The noun at the end of a share phrase still names revenue for the figures that follow it.
     for (const [r, sp] of shareSpans) if (r.id) hits.push({ cls: 'measure', value: 'revenue', start: sp.end - 1, end: sp.end, phrase: 'revenue', clause: clauseOf(sp.end) });
     hits.sort((a, b) => a.start - b.start);
-    const respectively = /\brespectively\b/i.test(masked);
+    const respectively = /\brespective(ly)?\b/i.test(masked);
+    // "A and B ... [[x]] ([[x%]]) and [[y]] ([[y%]]) respectively": the k-th group of client figures after the names
+    // belongs to the k-th client named (cycling when the pattern repeats); a parenthesised figure joins its group.
+    const respectiveOwner = new Map<RefPos, string | null>();
+    if (respectively) {
+      const named = [...new Set(hits.filter((h) => h.cls === 'entity' && h.value !== 'agency').map((h) => h.value))];
+      const lastName = Math.max(-1, ...hits.filter((h) => h.cls === 'entity' && h.value !== 'agency').map((h) => h.end));
+      const clientRefs = refs.filter((r) => r.start > lastName && ms.metrics.get(r.id)?.entity !== 'agency' && ms.metrics.has(r.id));
+      const groups: RefPos[][] = [];
+      clientRefs.forEach((r, i) => {
+        const prev = clientRefs[i - 1];
+        if (prev && /^\s*\(\s*$/.test(masked.slice(prev.end, r.start))) groups[groups.length - 1].push(r);
+        else groups.push([r]);
+      });
+      const ok = named.length > 1 && groups.length % named.length === 0;
+      groups.forEach((g, k) => g.forEach((r) => respectiveOwner.set(r, ok ? named[k % named.length] : null)));
+    }
 
     // Figures typed by hand: digits outside refs, after masking years that follow a month name or FY.
     const noYears = masked.replace(/\b(january|february|march|april|may|june|july|august|september|october|november|december|fy)\s+(19|20)\d{2}\b/gi, (m) => m.replace(/\d/g, 'Y'))
@@ -191,11 +208,13 @@ export function checkDraft(markup: string, ms: MetricSet, draftSnapshotFingerpri
       const nextRef = refs.filter((x) => x.start > r.start && x.clause === r.clause).map((x) => x.start)[0] ?? Infinity;
       const compAfter = (from: number) => compHits.find((h) => inClause(h) && h.start >= from && h.start < nextRef) ?? null;
       const compBefore = (to: number, from = -1) => compHits.filter((h) => inClause(h) && h.end <= to && h.start >= from).pop() ?? null;
+      // "up [[a]] and [[b]] respectively against their averages": the comparator comes after both figures.
+      const compAnyAfter = (from: number) => compHits.find((h) => inClause(h) && h.start >= from) ?? null;
       const post = dirHits.find((h) => inClause(h) && h.start >= r.end && /^[\s)]*$/.test(masked.slice(r.end, h.start)));
-      if (post) return { dir: post, comp: compAfter(post.end) ?? compBefore(r.start), gapBefore: '', gapAfter: masked.slice(r.end, post.start) };
+      if (post) return { dir: post, comp: compAfter(post.end) ?? compBefore(r.start) ?? compAnyAfter(post.end), gapBefore: '', gapAfter: masked.slice(r.end, post.start) };
       const pre = dirHits.filter((h) => inClause(h) && h.end <= r.start).pop();
-      if (pre) return { dir: pre, comp: compBefore(r.start, pre.end) ?? compAfter(r.end) ?? compBefore(r.start), gapBefore: masked.slice(pre.end, r.start), gapAfter: null };
-      return { dir: null, comp: compAfter(r.end) ?? compBefore(r.start), gapBefore: null, gapAfter: null };
+      if (pre) return { dir: pre, comp: compBefore(r.start, pre.end) ?? compAfter(r.end) ?? compBefore(r.start) ?? compAnyAfter(r.end), gapBefore: masked.slice(pre.end, r.start), gapAfter: null };
+      return { dir: null, comp: compAfter(r.end) ?? compBefore(r.start) ?? compAnyAfter(r.end), gapBefore: null, gapAfter: null };
     };
     const sayOf = (h: Hit, polarity: number) => (h.value === 'inline' ? 0 : h.value === 'up' ? 1 : h.value === 'down' ? -1 : (h.value === 'good' ? 1 : -1) * polarity);
 
@@ -216,6 +235,7 @@ export function checkDraft(markup: string, ms: MetricSet, draftSnapshotFingerpri
       // Period: the nearest statement before the figure in its clause, else after it, else earlier in the sentence.
       const sp = shareSpans.get(r);
       const ph = (sp && hits.find((h) => h.cls === 'period' && h.start >= sp.start && h.end <= sp.end))
+        ?? hits.find((h) => h.cls === 'period' && h.clause === r.clause && h.start >= r.end && /^[\s,)]*(?:in|for)?\s*$/i.test(masked.slice(r.end, h.start)))
         ?? hits.filter((h) => h.cls === 'period' && h.clause === r.clause && h.end <= r.start).pop()
         ?? hits.find((h) => h.cls === 'period' && h.clause === r.clause && h.start >= r.end)
         ?? hits.filter((h) => h.cls === 'period' && h.end <= r.start).pop() ?? null;
@@ -243,7 +263,11 @@ export function checkDraft(markup: string, ms: MetricSet, draftSnapshotFingerpri
       if (m.entity !== 'agency') {
         const named = (clientBefore.filter((h) => h.clause === r.clause).pop() ?? clientBefore.pop())?.value ?? ctxEntity;
         const agencyWordsFirst = nearestInClause?.value === 'agency' && m.measure !== 'share';
-        if (respectively && hits.some((h) => h.cls === 'entity' && h.value === m.entity)) { /* "A and B ... x and y respectively" */ }
+        if (respectively && respectiveOwner.has(r)) {
+          const owner = respectiveOwner.get(r);
+          if (owner === null) findings.push({ severity: 'review', rule: 'entity-pairing', ref: r.id, message: `Cannot pair ${m.display} with one of the clients named "respectively": reviewer to confirm.` });
+          else if (owner !== m.entity) findings.push({ severity: 'fail', rule: 'entity', ref: r.id, message: `${m.display} belongs to ${m.entity}; read "respectively", it is attributed to ${owner}.` });
+        }
         else if (agencyWordsFirst) findings.push({ severity: 'fail', rule: 'entity', ref: r.id, message: `${m.display} belongs to ${m.entity}; the words present it as an agency total.` });
         else if (named !== m.entity) findings.push({ severity: 'fail', rule: 'entity', ref: r.id, message: `${m.display} belongs to ${m.entity}; the sentence ${named && named !== 'agency' ? `names ${named}` : 'names no client'}.` });
       } else if (nearestInClause && nearestInClause.value !== 'agency') {
@@ -264,7 +288,9 @@ export function checkDraft(markup: string, ms: MetricSet, draftSnapshotFingerpri
         else if (sayOf(bound.dir, m.polarity) !== is) findings.push({ severity: 'fail', rule: 'direction', ref: r.id, message: `"${bound.dir.phrase}" but ${m.label} is ${is === 0 ? 'nil at the precision shown' : is > 0 ? 'higher' : 'lower'}.` });
       } else if (m.kind === 'level' && m.scenario === 'actual' && bound.dir && bound.comp) {
         // "Revenue rose to £X against budget", "revenue of £X, below budget": the implied variance must agree.
-        const adjacent = (bound.gapAfter !== null && /^[\s,]*$/.test(bound.gapAfter)) || (bound.gapBefore !== null && /^\s*(to|at)?\s*$/i.test(bound.gapBefore));
+        // Adjacent: "rose to [[x]]", "[[x]], below budget", "ran lower than budget at [[x]]".
+        const gapB = bound.gapBefore === null ? null : bound.gapBefore.replace(new RegExp(bound.comp.phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'), ' ');
+        const adjacent = (bound.gapAfter !== null && /^[\s,]*$/.test(bound.gapAfter)) || (gapB !== null && /^\s*(?:(?:than|against|on|versus|compared with)\s+)?(?:the\s+)?\s*(?:to|at|of)?\s*$/i.test(gapB));
         const comp = bound.comp.value as Comparator;
         const twin = ms.metrics.get(m.id.replace(/\.actual(@proposed)?$/, `.vs_${comp}${m.unit === 'pct' ? '_pp' : ''}$1`));
         if (adjacent && twin && twin.value !== null) {

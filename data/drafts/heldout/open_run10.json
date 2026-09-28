@@ -1,0 +1,16 @@
+{
+  "snapshot": "open",
+  "snapshotFingerprint": "6e5cd784ec3d8be6",
+  "run": 10,
+  "model": [
+    "claude-sonnet-5"
+  ],
+  "requestedModel": "claude-sonnet-5",
+  "started": "2026-09-28T13:41:49.203Z",
+  "finished": "2026-09-28T13:42:00.244Z",
+  "batch": "heldout",
+  "prompt": "data/drafts/heldout/prompt_open.txt",
+  "prompt_template": "prompts/commentary.md",
+  "raw": "```json\n{\"commentary\": \"August revenue of [[revenue.month.actual]] came in above budget by [[revenue.month.vs_budget]] ([[revenue.month.vs_budget_pct]]) and up on last year by [[revenue.month.vs_py]] ([[revenue.month.vs_py_pct]]), helping gross profit of [[gross_profit.month.actual]] beat budget by [[gross_profit.month.vs_budget]] and operating profit of [[operating_profit.month.actual]] finish [[operating_profit.month.vs_budget]] above budget. Year to date, revenue of [[revenue.ytd.actual]] is [[revenue.ytd.vs_budget]] above budget and [[revenue.ytd.vs_py]] up on last year, with operating profit of [[operating_profit.ytd.actual]] running [[operating_profit.ytd.vs_budget]] above budget and [[operating_profit.ytd.vs_py]] up on last year. Orchard Lane Foods remains the largest client, contributing [[client.orchard-lane.revenue.month.actual]] in August ([[client.orchard-lane.share.month.actual]] of agency revenue) and [[client.orchard-lane.revenue.month.vs_avg3m]] above its May to July average. Kestrel Mobility and Brightwater Housing also billed above their May to July averages in August, by [[client.kestrel.revenue.month.vs_avg3m]] and [[client.brightwater.revenue.month.vs_avg3m]] respectively. Marlow & Finch's August revenue of [[client.marlow-finch.revenue.month.actual]] was [[client.marlow-finch.revenue.month.vs_avg3m]] below its May to July average, a fall of [[client.marlow-finch.revenue.month.vs_avg3m_pct]], and is worth a check with the account lead.\"}\n```",
+  "commentary": "August revenue of [[revenue.month.actual]] came in above budget by [[revenue.month.vs_budget]] ([[revenue.month.vs_budget_pct]]) and up on last year by [[revenue.month.vs_py]] ([[revenue.month.vs_py_pct]]), helping gross profit of [[gross_profit.month.actual]] beat budget by [[gross_profit.month.vs_budget]] and operating profit of [[operating_profit.month.actual]] finish [[operating_profit.month.vs_budget]] above budget. Year to date, revenue of [[revenue.ytd.actual]] is [[revenue.ytd.vs_budget]] above budget and [[revenue.ytd.vs_py]] up on last year, with operating profit of [[operating_profit.ytd.actual]] running [[operating_profit.ytd.vs_budget]] above budget and [[operating_profit.ytd.vs_py]] up on last year. Orchard Lane Foods remains the largest client, contributing [[client.orchard-lane.revenue.month.actual]] in August ([[client.orchard-lane.share.month.actual]] of agency revenue) and [[client.orchard-lane.revenue.month.vs_avg3m]] above its May to July average. Kestrel Mobility and Brightwater Housing also billed above their May to July averages in August, by [[client.kestrel.revenue.month.vs_avg3m]] and [[client.brightwater.revenue.month.vs_avg3m]] respectively. Marlow & Finch's August revenue of [[client.marlow-finch.revenue.month.actual]] was [[client.marlow-finch.revenue.month.vs_avg3m]] below its May to July average, a fall of [[client.marlow-finch.revenue.month.vs_avg3m_pct]], and is worth a check with the account lead."
+}

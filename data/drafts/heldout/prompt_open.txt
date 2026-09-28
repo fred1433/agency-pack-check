@@ -1,0 +1,120 @@
+You are drafting the management commentary paragraph for the August 2026 management pack of Lowther Studio Ltd (fictional), a fictional UK creative agency. The reader is the agency's owner. Write 4 to 6 sentences in British English: how the month and the year to date went against budget and last year, and anything about clients the owner should know.
+
+A checker will read your text, so keep to this format:
+- Never type a figure. Write every figure as its reference, exactly as listed: [[metric.id]]. The code prints the value.
+- Variances print without a sign, so say the direction in words next to them (above or below budget, up or down on last year).
+- Name the period (August, or year to date) and the comparator (budget, last year, the May to July average) in the same sentence as the figure.
+- Name the client when you use a client's figure.
+- The facts below contain no causes. If you state a cause or give advice, a reviewer will have to confirm it.
+
+Facts (reference | meaning | value):
+[[revenue.month.actual]] | Revenue, August 2026 | £200,000
+[[revenue.month.budget]] | Revenue, budget, August 2026 | £190,000
+[[revenue.month.py]] | Revenue, prior year, August 2025 | £170,000
+[[revenue.month.vs_budget]] | Revenue, August 2026, difference against budget (prints as a magnitude; it is higher) | £10,000
+[[revenue.month.vs_budget_pct]] | Revenue, August 2026, % change against budget (prints as a magnitude; it is higher) | 5.3%
+[[revenue.month.vs_py]] | Revenue, August 2026, difference against prior year (prints as a magnitude; it is higher) | £30,000
+[[revenue.month.vs_py_pct]] | Revenue, August 2026, % change against prior year (prints as a magnitude; it is higher) | 17.6%
+[[direct_costs.month.actual]] | Direct costs, August 2026 | £120,000
+[[direct_costs.month.budget]] | Direct costs, budget, August 2026 | £117,800
+[[direct_costs.month.py]] | Direct costs, prior year, August 2025 | £106,250
+[[direct_costs.month.vs_budget]] | Direct costs, August 2026, difference against budget (prints as a magnitude; it is higher) | £2,200
+[[direct_costs.month.vs_budget_pct]] | Direct costs, August 2026, % change against budget (prints as a magnitude; it is higher) | 1.9%
+[[direct_costs.month.vs_py]] | Direct costs, August 2026, difference against prior year (prints as a magnitude; it is higher) | £13,750
+[[direct_costs.month.vs_py_pct]] | Direct costs, August 2026, % change against prior year (prints as a magnitude; it is higher) | 12.9%
+[[gross_profit.month.actual]] | Gross profit, August 2026 | £80,000
+[[gross_profit.month.budget]] | Gross profit, budget, August 2026 | £72,200
+[[gross_profit.month.py]] | Gross profit, prior year, August 2025 | £63,750
+[[gross_profit.month.vs_budget]] | Gross profit, August 2026, difference against budget (prints as a magnitude; it is higher) | £7,800
+[[gross_profit.month.vs_budget_pct]] | Gross profit, August 2026, % change against budget (prints as a magnitude; it is higher) | 10.8%
+[[gross_profit.month.vs_py]] | Gross profit, August 2026, difference against prior year (prints as a magnitude; it is higher) | £16,250
+[[gross_profit.month.vs_py_pct]] | Gross profit, August 2026, % change against prior year (prints as a magnitude; it is higher) | 25.5%
+[[gross_margin.month.actual]] | Gross margin, August 2026 | 40.0%
+[[gross_margin.month.budget]] | Gross margin, budget, August 2026 | 38.0%
+[[gross_margin.month.py]] | Gross margin, prior year, August 2025 | 37.5%
+[[gross_margin.month.vs_budget_pp]] | Gross margin, August 2026, difference against budget (prints as a magnitude; it is higher) | 2.0 percentage points
+[[gross_margin.month.vs_py_pp]] | Gross margin, August 2026, difference against prior year (prints as a magnitude; it is higher) | 2.5 percentage points
+[[overheads.month.actual]] | Overheads, August 2026 | £50,500
+[[overheads.month.budget]] | Overheads, budget, August 2026 | £52,000
+[[overheads.month.py]] | Overheads, prior year, August 2025 | £46,000
+[[overheads.month.vs_budget]] | Overheads, August 2026, difference against budget (prints as a magnitude; it is lower) | £1,500
+[[overheads.month.vs_budget_pct]] | Overheads, August 2026, % change against budget (prints as a magnitude; it is lower) | 2.9%
+[[overheads.month.vs_py]] | Overheads, August 2026, difference against prior year (prints as a magnitude; it is higher) | £4,500
+[[overheads.month.vs_py_pct]] | Overheads, August 2026, % change against prior year (prints as a magnitude; it is higher) | 9.8%
+[[operating_profit.month.actual]] | Operating profit, August 2026 | £29,500
+[[operating_profit.month.budget]] | Operating profit, budget, August 2026 | £20,200
+[[operating_profit.month.py]] | Operating profit, prior year, August 2025 | £17,750
+[[operating_profit.month.vs_budget]] | Operating profit, August 2026, difference against budget (prints as a magnitude; it is higher) | £9,300
+[[operating_profit.month.vs_budget_pct]] | Operating profit, August 2026, % change against budget (prints as a magnitude; it is higher) | 46.0%
+[[operating_profit.month.vs_py]] | Operating profit, August 2026, difference against prior year (prints as a magnitude; it is higher) | £11,750
+[[operating_profit.month.vs_py_pct]] | Operating profit, August 2026, % change against prior year (prints as a magnitude; it is higher) | 66.2%
+[[revenue.ytd.actual]] | Revenue, year to date, 1 April to 31 August 2026 | £960,000
+[[revenue.ytd.budget]] | Revenue, budget, year to date, 1 April to 31 August 2026 | £950,000
+[[revenue.ytd.py]] | Revenue, prior year, 1 April to 31 August 2025 | £845,000
+[[revenue.ytd.vs_budget]] | Revenue, year to date, 1 April to 31 August 2026, difference against budget (prints as a magnitude; it is higher) | £10,000
+[[revenue.ytd.vs_budget_pct]] | Revenue, year to date, 1 April to 31 August 2026, % change against budget (prints as a magnitude; it is higher) | 1.1%
+[[revenue.ytd.vs_py]] | Revenue, year to date, 1 April to 31 August 2026, difference against prior year (prints as a magnitude; it is higher) | £115,000
+[[revenue.ytd.vs_py_pct]] | Revenue, year to date, 1 April to 31 August 2026, % change against prior year (prints as a magnitude; it is higher) | 13.6%
+[[direct_costs.ytd.actual]] | Direct costs, year to date, 1 April to 31 August 2026 | £583,000
+[[direct_costs.ytd.budget]] | Direct costs, budget, year to date, 1 April to 31 August 2026 | £589,000
+[[direct_costs.ytd.py]] | Direct costs, prior year, 1 April to 31 August 2025 | £528,125
+[[direct_costs.ytd.vs_budget]] | Direct costs, year to date, 1 April to 31 August 2026, difference against budget (prints as a magnitude; it is lower) | £6,000
+[[direct_costs.ytd.vs_budget_pct]] | Direct costs, year to date, 1 April to 31 August 2026, % change against budget (prints as a magnitude; it is lower) | 1.0%
+[[direct_costs.ytd.vs_py]] | Direct costs, year to date, 1 April to 31 August 2026, difference against prior year (prints as a magnitude; it is higher) | £54,875
+[[direct_costs.ytd.vs_py_pct]] | Direct costs, year to date, 1 April to 31 August 2026, % change against prior year (prints as a magnitude; it is higher) | 10.4%
+[[gross_profit.ytd.actual]] | Gross profit, year to date, 1 April to 31 August 2026 | £377,000
+[[gross_profit.ytd.budget]] | Gross profit, budget, year to date, 1 April to 31 August 2026 | £361,000
+[[gross_profit.ytd.py]] | Gross profit, prior year, 1 April to 31 August 2025 | £316,875
+[[gross_profit.ytd.vs_budget]] | Gross profit, year to date, 1 April to 31 August 2026, difference against budget (prints as a magnitude; it is higher) | £16,000
+[[gross_profit.ytd.vs_budget_pct]] | Gross profit, year to date, 1 April to 31 August 2026, % change against budget (prints as a magnitude; it is higher) | 4.4%
+[[gross_profit.ytd.vs_py]] | Gross profit, year to date, 1 April to 31 August 2026, difference against prior year (prints as a magnitude; it is higher) | £60,125
+[[gross_profit.ytd.vs_py_pct]] | Gross profit, year to date, 1 April to 31 August 2026, % change against prior year (prints as a magnitude; it is higher) | 19.0%
+[[gross_margin.ytd.actual]] | Gross margin, year to date, 1 April to 31 August 2026 | 39.3%
+[[gross_margin.ytd.budget]] | Gross margin, budget, year to date, 1 April to 31 August 2026 | 38.0%
+[[gross_margin.ytd.py]] | Gross margin, prior year, 1 April to 31 August 2025 | 37.5%
+[[gross_margin.ytd.vs_budget_pp]] | Gross margin, year to date, 1 April to 31 August 2026, difference against budget (prints as a magnitude; it is higher) | 1.3 percentage points
+[[gross_margin.ytd.vs_py_pp]] | Gross margin, year to date, 1 April to 31 August 2026, difference against prior year (prints as a magnitude; it is higher) | 1.8 percentage points
+[[overheads.ytd.actual]] | Overheads, year to date, 1 April to 31 August 2026 | £254,000
+[[overheads.ytd.budget]] | Overheads, budget, year to date, 1 April to 31 August 2026 | £260,000
+[[overheads.ytd.py]] | Overheads, prior year, 1 April to 31 August 2025 | £240,000
+[[overheads.ytd.vs_budget]] | Overheads, year to date, 1 April to 31 August 2026, difference against budget (prints as a magnitude; it is lower) | £6,000
+[[overheads.ytd.vs_budget_pct]] | Overheads, year to date, 1 April to 31 August 2026, % change against budget (prints as a magnitude; it is lower) | 2.3%
+[[overheads.ytd.vs_py]] | Overheads, year to date, 1 April to 31 August 2026, difference against prior year (prints as a magnitude; it is higher) | £14,000
+[[overheads.ytd.vs_py_pct]] | Overheads, year to date, 1 April to 31 August 2026, % change against prior year (prints as a magnitude; it is higher) | 5.8%
+[[operating_profit.ytd.actual]] | Operating profit, year to date, 1 April to 31 August 2026 | £123,000
+[[operating_profit.ytd.budget]] | Operating profit, budget, year to date, 1 April to 31 August 2026 | £101,000
+[[operating_profit.ytd.py]] | Operating profit, prior year, 1 April to 31 August 2025 | £76,875
+[[operating_profit.ytd.vs_budget]] | Operating profit, year to date, 1 April to 31 August 2026, difference against budget (prints as a magnitude; it is higher) | £22,000
+[[operating_profit.ytd.vs_budget_pct]] | Operating profit, year to date, 1 April to 31 August 2026, % change against budget (prints as a magnitude; it is higher) | 21.8%
+[[operating_profit.ytd.vs_py]] | Operating profit, year to date, 1 April to 31 August 2026, difference against prior year (prints as a magnitude; it is higher) | £46,125
+[[operating_profit.ytd.vs_py_pct]] | Operating profit, year to date, 1 April to 31 August 2026, % change against prior year (prints as a magnitude; it is higher) | 60.0%
+[[client.orchard-lane.revenue.month.actual]] | Orchard Lane Foods: revenue, August 2026 | £62,000
+[[client.orchard-lane.revenue.ytd.actual]] | Orchard Lane Foods: revenue, year to date | £288,000
+[[client.orchard-lane.share.month.actual]] | Orchard Lane Foods: share of agency revenue, August 2026 | 31.0%
+[[client.orchard-lane.share.ytd.actual]] | Orchard Lane Foods: share of agency revenue, year to date | 30.0%
+[[client.orchard-lane.revenue.month.avg3m]] | Orchard Lane Foods: average monthly revenue, May to July 2026 | £57,667
+[[client.orchard-lane.revenue.month.vs_avg3m]] | Orchard Lane Foods: revenue, August 2026 against its May to July average, difference (prints as a magnitude; it is higher) | £4,333
+[[client.orchard-lane.revenue.month.vs_avg3m_pct]] | Orchard Lane Foods: revenue, August 2026 against its May to July average, % change (prints as a magnitude; it is higher) | 7.5%
+[[client.kestrel.revenue.month.actual]] | Kestrel Mobility: revenue, August 2026 | £48,000
+[[client.kestrel.revenue.ytd.actual]] | Kestrel Mobility: revenue, year to date | £226,000
+[[client.kestrel.share.month.actual]] | Kestrel Mobility: share of agency revenue, August 2026 | 24.0%
+[[client.kestrel.share.ytd.actual]] | Kestrel Mobility: share of agency revenue, year to date | 23.5%
+[[client.kestrel.revenue.month.avg3m]] | Kestrel Mobility: average monthly revenue, May to July 2026 | £45,000
+[[client.kestrel.revenue.month.vs_avg3m]] | Kestrel Mobility: revenue, August 2026 against its May to July average, difference (prints as a magnitude; it is higher) | £3,000
+[[client.kestrel.revenue.month.vs_avg3m_pct]] | Kestrel Mobility: revenue, August 2026 against its May to July average, % change (prints as a magnitude; it is higher) | 6.7%
+[[client.brightwater.revenue.month.actual]] | Brightwater Housing: revenue, August 2026 | £36,000
+[[client.brightwater.revenue.ytd.actual]] | Brightwater Housing: revenue, year to date | £172,500
+[[client.brightwater.share.month.actual]] | Brightwater Housing: share of agency revenue, August 2026 | 18.0%
+[[client.brightwater.share.ytd.actual]] | Brightwater Housing: share of agency revenue, year to date | 18.0%
+[[client.brightwater.revenue.month.avg3m]] | Brightwater Housing: average monthly revenue, May to July 2026 | £34,500
+[[client.brightwater.revenue.month.vs_avg3m]] | Brightwater Housing: revenue, August 2026 against its May to July average, difference (prints as a magnitude; it is higher) | £1,500
+[[client.brightwater.revenue.month.vs_avg3m_pct]] | Brightwater Housing: revenue, August 2026 against its May to July average, % change (prints as a magnitude; it is higher) | 4.3%
+[[client.marlow-finch.revenue.month.actual]] | Marlow & Finch: revenue, August 2026 | £18,000
+[[client.marlow-finch.revenue.ytd.actual]] | Marlow & Finch: revenue, year to date | £138,000
+[[client.marlow-finch.share.month.actual]] | Marlow & Finch: share of agency revenue, August 2026 | 9.0%
+[[client.marlow-finch.share.ytd.actual]] | Marlow & Finch: share of agency revenue, year to date | 14.4%
+[[client.marlow-finch.revenue.month.avg3m]] | Marlow & Finch: average monthly revenue, May to July 2026 | £30,000
+[[client.marlow-finch.revenue.month.vs_avg3m]] | Marlow & Finch: revenue, August 2026 against its May to July average, difference (prints as a magnitude; it is lower) | £12,000
+[[client.marlow-finch.revenue.month.vs_avg3m_pct]] | Marlow & Finch: revenue, August 2026 against its May to July average, % change (prints as a magnitude; it is lower) | 40.0%
+
+Reply with JSON only: {"commentary": "..."}
