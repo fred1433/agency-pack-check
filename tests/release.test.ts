@@ -68,3 +68,8 @@ test('a failing claim blocks sign-off even if everything else holds', () => {
   const st = state({ accrual: 'approved' }, GOOD_APPROVED + ' August revenue was [[revenue.month.vs_budget_pct]] below budget.', { accrual: 'approved' });
   assert.equal(canSignOff(st), false);
 });
+
+test('a cause inside a failing sentence keeps the reviewer gate closed', () => {
+  const st = state({ accrual: 'approved' }, 'August revenue was [[revenue.month.vs_budget_pct]] below budget, driven by Orchard Lane Foods. ' + GOOD_APPROVED, { accrual: 'approved' });
+  assert.equal(releaseGates(st)[4].ok, false);
+});

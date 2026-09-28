@@ -1,5 +1,5 @@
 {
-  "Id": "-becddae-5316-448e-acf7-b3ce-51c48ba",
+  "Id": "f4132252-5316-448e-a308-4c32ae3b7456",
   "Status": "OK",
   "ProviderName": "agency-pack-check (synthetic fixture)",
   "DateTimeUTC": "/Date(1788340440000+0000)/",
@@ -16,7 +16,7 @@
   "Invoices": [
     {
       "Type": "ACCREC",
-      "InvoiceID": "-d94d146--2d6-475a-a69e-2d4524c3b071",
+      "InvoiceID": "f26b2eba-d29d-4a5e-a9e2-d4524c3b0716",
       "InvoiceNumber": "INV-2291",
       "Reference": "PO 7781",
       "Contact": {
@@ -39,7 +39,7 @@
           "LineAmount": 14000,
           "Tracking": [
             {
-              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "TrackingCategoryID": "4d8500de-5954-42ee-a81f-32aef1912706",
               "Name": "Client",
               "Option": "Orchard Lane Foods"
             }

@@ -18,7 +18,7 @@ function uid(label: string): string {
       h1 = Math.imul(h1 ^ ch.charCodeAt(0), 16777619) >>> 0;
       h2 = Math.imul(h2 ^ ch.charCodeAt(0), 2246822519) >>> 0;
     }
-    hex.push((h1 ^ h2).toString(16).padStart(8, '0'));
+    hex.push(((h1 ^ h2) >>> 0).toString(16).padStart(8, '0'));
   }
   const s = hex.join('');
   return `${s.slice(0, 8)}-${s.slice(8, 12)}-4${s.slice(13, 16)}-a${s.slice(17, 20)}-${s.slice(20, 32)}`;
@@ -309,19 +309,20 @@ write('xero_tracking_categories.json', envelope({
   TrackingCategories: [{ TrackingCategoryID: TRACKING_ID, Name: 'Client', Status: 'ACTIVE', Options: [...CLIENTS.map((c) => ({ TrackingOptionID: uid('opt-' + c), Name: c, Status: 'ACTIVE' }))] }],
 }));
 
-// Payroll bureau run report for the September payroll (not Xero). Six August-earned lines, then September basic pay.
+// Payroll input approved on 1 September 2026 for the September payroll (not Xero): six August-earned lines, then
+// September basic pay. It exists before the snapshot (2 September, 09:14).
 {
   const lines = [
-    ['employee_ref', 'team', 'element', 'earned_period', 'gross', 'employer_nic', 'employer_pension'],
-    ['D03', 'Delivery', 'August overtime and delivery bonus', '2026-08', '2000.00', '300.00', '100.00'],
-    ['D07', 'Delivery', 'August overtime and delivery bonus', '2026-08', '1500.00', '225.00', '75.00'],
-    ['D08', 'Delivery', 'August overtime and delivery bonus', '2026-08', '2500.00', '375.00', '125.00'],
-    ['D11', 'Delivery', 'August overtime and delivery bonus', '2026-08', '1000.00', '150.00', '50.00'],
-    ['D14', 'Delivery', 'August overtime and delivery bonus', '2026-08', '1800.00', '270.00', '90.00'],
-    ['D19', 'Delivery', 'August overtime and delivery bonus', '2026-08', '1200.00', '180.00', '60.00'],
-    ['ALL', 'Delivery', 'September basic pay', '2026-09', '74000.00', '9600.00', '3700.00'],
+    ['employee_ref', 'team', 'element', 'earned_period', 'gross', 'employer_nic', 'employer_pension', 'approved_on'],
+    ['D03', 'Delivery', 'August overtime and delivery bonus', '2026-08', '2000.00', '300.00', '100.00', '2026-09-01'],
+    ['D07', 'Delivery', 'August overtime and delivery bonus', '2026-08', '1500.00', '225.00', '75.00', '2026-09-01'],
+    ['D08', 'Delivery', 'August overtime and delivery bonus', '2026-08', '2500.00', '375.00', '125.00', '2026-09-01'],
+    ['D11', 'Delivery', 'August overtime and delivery bonus', '2026-08', '1000.00', '150.00', '50.00', '2026-09-01'],
+    ['D14', 'Delivery', 'August overtime and delivery bonus', '2026-08', '1800.00', '270.00', '90.00', '2026-09-01'],
+    ['D19', 'Delivery', 'August overtime and delivery bonus', '2026-08', '1200.00', '180.00', '60.00', '2026-09-01'],
+    ['ALL', 'Delivery', 'September basic pay', '2026-09', '74000.00', '9600.00', '3700.00', '2026-09-01'],
   ];
   mkdirSync(new URL('../data/workpapers/', import.meta.url), { recursive: true });
-  writeFileSync(new URL('../data/workpapers/payroll_run_2026-09.csv', import.meta.url), lines.map((l) => l.join(',')).join('\n') + '\n');
+  writeFileSync(new URL('../data/workpapers/payroll_input_2026-09-01.csv', import.meta.url), lines.map((l) => l.join(',')).join('\n') + '\n');
 }
 console.log('fixtures written');

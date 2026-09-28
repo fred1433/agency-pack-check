@@ -1,5 +1,5 @@
 {
-  "Id": "-4ed83ea-66cb-47ce-a352-5cd121468407",
+  "Id": "b127c15a-6cb0-4ce6-a525-cd1214684076",
   "Status": "OK",
   "ProviderName": "agency-pack-check (synthetic fixture)",
   "DateTimeUTC": "/Date(1788340440000+0000)/",
@@ -12,11 +12,11 @@
   "CreditNotes": [
     {
       "Type": "ACCRECCREDIT",
-      "CreditNoteID": "2f076a1e-2d12-473e-a58a-f0b32-240437",
+      "CreditNoteID": "2f076a1e-2d12-473e-a750-f4cefdbfbc86",
       "CreditNoteNumber": "CN-0147",
       "Reference": "Against INV-2261 (July): scope reduced after sign-off",
       "Contact": {
-        "ContactID": "2f8588b2--57e-4068-a-4b-7c9d1e4f4722",
+        "ContactID": "2f8588b2-a810-497e-a483-62e24f472296",
         "Name": "Marlow & Finch"
       },
       "DateString": "2026-08-29T00:00:00",
@@ -34,7 +34,7 @@
           "LineAmount": 6000,
           "Tracking": [
             {
-              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "TrackingCategoryID": "4d8500de-5954-42ee-a81f-32aef1912706",
               "Name": "Client",
               "Option": "Marlow & Finch"
             }

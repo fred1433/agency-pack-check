@@ -1,6 +1,6 @@
 // Chooses the two drafts the page shows, by a stated rule: in each held-out batch, the first run (by run number)
 // with no failing sentence. Every run and its result stays in data/drafts/ and data/results/.
-import { readFileSync, readdirSync } from 'node:fs';
+import { loadBatch } from './drafts-node.ts';
 import { computeMetrics } from './engine.ts';
 import { checkDraft } from './claims.ts';
 import type { Sources } from './engine.ts';
@@ -9,8 +9,7 @@ import type { Draft } from './pack.ts';
 export const BATCH = 'heldout2';
 
 export function pinnedDrafts(s: Sources): { A: Draft; B: Draft; rule: string } {
-  const dir = new URL(`../data/drafts/${BATCH}/`, import.meta.url);
-  const all = readdirSync(dir).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(readFileSync(new URL(f, dir), 'utf8')));
+  const all = loadBatch(BATCH);
   const pick = (snapshot: 'open' | 'approved') => {
     const ms = computeMetrics(s, { accrual: snapshot });
     const runs = all.filter((d) => d.snapshot === snapshot).sort((a, b) => a.run - b.run);

@@ -3,6 +3,7 @@ import { build } from 'esbuild';
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync } from 'node:fs';
 import { loadSources } from '../src/sources-node.ts';
 import { pinnedDrafts, BATCH } from '../src/pinned-node.ts';
+import { CHECKER_VERSION } from '../src/claims.ts';
 
 const root = new URL('../', import.meta.url);
 const p = (x: string) => new URL(x, root).pathname;
@@ -11,12 +12,15 @@ mkdirSync(p('site'), { recursive: true });
 const s = loadSources();
 writeFileSync(p('web/generated/sources.json'), JSON.stringify(s));
 writeFileSync(p('web/generated/pinned.json'), JSON.stringify(pinnedDrafts(s)));
-const ev = JSON.parse(readFileSync(p(`data/results/eval_${BATCH}.json`), 'utf8'));
-const adj = JSON.parse(readFileSync(p(`data/results/adjudication_${BATCH}.json`), 'utf8'));
+const ev = JSON.parse(readFileSync(p(`data/results/eval_checker-${CHECKER_VERSION}_${BATCH}.json`), 'utf8'));
+const adj = JSON.parse(readFileSync(p(`data/results/adjudication_checker-${CHECKER_VERSION}_${BATCH}.json`), 'utf8'));
+const prev = JSON.parse(readFileSync(p(`data/results/eval_checker-v2_${BATCH}.json`), 'utf8'));
 writeFileSync(p('web/generated/results.json'), JSON.stringify({
   natural: { ...ev.natural, perDraft: undefined },
   corrupted: { cases: ev.corrupted.cases, failed: ev.corrupted.failed, toReviewer: ev.corrupted.toReviewer, passed: ev.corrupted.passed, byType: ev.corrupted.byType },
   adjudication: { realErrors: adj.realErrors, realSummary: adj.realSummary, falseSummary: adj.falseSummary },
+  checker: CHECKER_VERSION,
+  previous: { checker: 'v2', verified: prev.natural.verified, review: prev.natural.review, fail: prev.natural.fail, passed: prev.corrupted.passed },
   repo: process.env.REPO_URL ?? 'https://github.com/fred1433/agency-pack-check',
 }));
 await build({
@@ -24,8 +28,7 @@ await build({
   outfile: p('site/app.js'), loader: { '.json': 'json' }, logLevel: 'warning',
 });
 for (const f of ['index.html', 'styles.css']) copyFileSync(p(`web/${f}`), p(`site/${f}`));
-const fav = '/Users/frederic/ProjetsDev/the-ai-pipe-website/website/public/';
-for (const f of ['favicon.svg', 'favicon.png']) copyFileSync(fav + f, p(`site/${f}`));
+for (const f of ['favicon.svg', 'favicon.png']) copyFileSync(p(`web/brand/${f}`), p(`site/${f}`));
 writeFileSync(p('site/_headers'), '/agency-pack/*\n  X-Robots-Tag: noindex, nofollow\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Content-Type-Options: nosniff\n');
 writeFileSync(p('site/robots.txt'), 'User-agent: *\nDisallow: /\n');
 // Served under theaipipe.com/agency-pack/ by a Worker with static assets (the zone has no room for a subdomain).

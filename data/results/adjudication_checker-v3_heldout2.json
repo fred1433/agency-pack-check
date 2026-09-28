@@ -1,0 +1,43 @@
+{
+  "_note": "Checker v3 rejects the same seven natural sentences as v2 (same drafts, same rules for these cases); classification unchanged. v3 sends more sentences to the reviewer and ticks fewer.",
+  "cases": [
+    {
+      "draft": "approved_run1",
+      "verdict": "checker wrong",
+      "why": "In 'down to 9.0% of agency revenue against 14.4% year to date', 14.4% is a share compared with a share; the checker read its measure as revenue."
+    },
+    {
+      "draft": "approved_run4",
+      "verdict": "checker wrong",
+      "why": "Same construction: '9.0% of agency revenue in the month against 14.4% year to date'."
+    },
+    {
+      "draft": "approved_run9",
+      "verdict": "real error",
+      "why": "Claude wrote a unit after a reference: the page would print '4.0 percentage points percentage points'."
+    },
+    {
+      "draft": "approved_run10",
+      "verdict": "checker wrong",
+      "why": "'down on budget by 4.0 percentage points': the phrase 'on budget' (in line) matched before 'down on'."
+    },
+    {
+      "draft": "open_run7",
+      "verdict": "real error",
+      "why": "Claude typed '£190,000' instead of citing the budget figure. The value is right, but typed figures are outside the contract and cannot be checked."
+    },
+    {
+      "draft": "open_run8",
+      "verdict": "real error",
+      "why": "Claude typed '2.0' percentage points instead of citing the variance."
+    },
+    {
+      "draft": "open_run8",
+      "verdict": "checker wrong",
+      "why": "Second sentence: 'a month share of 9.0%' is August; the checker does not know 'month share' as a period and inherited year to date."
+    }
+  ],
+  "realErrors": 3,
+  "realSummary": "one unit written twice, two figures typed instead of cited",
+  "falseSummary": "two share-against-share comparisons, one 'down on budget' read as 'on budget', one 'month share' not recognised as August"
+}

@@ -1,5 +1,5 @@
 {
-  "Id": "-7a9090c-a794-4986-a-23-c529ea-5e008",
+  "Id": "856f6f36-7944-486e-ac3a-d616a1ff7166",
   "Status": "OK",
   "ProviderName": "agency-pack-check (synthetic fixture)",
   "DateTimeUTC": "/Date(1788340440000+0000)/",
@@ -13,7 +13,7 @@
   "Invoices": [
     {
       "Type": "ACCREC",
-      "InvoiceID": "-63a4a78-e-55-434d-a25d-46860a486489",
+      "InvoiceID": "9c5b5872-aafc-42fe-ad46-860a48648986",
       "InvoiceNumber": "INV-2281",
       "Reference": "",
       "Contact": {
@@ -36,7 +36,7 @@
           "LineAmount": 24000,
           "Tracking": [
             {
-              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "TrackingCategoryID": "4d8500de-5954-42ee-a81f-32aef1912706",
               "Name": "Client",
               "Option": "Orchard Lane Foods"
             }
@@ -51,11 +51,11 @@
     },
     {
       "Type": "ACCREC",
-      "InvoiceID": "-5ff1858-6-72-4b1d-a2-6-aeeaf2e035a0",
+      "InvoiceID": "a00e7a7a-8dc4-423e-a511-50d2035a0f66",
       "InvoiceNumber": "INV-2282",
       "Reference": "",
       "Contact": {
-        "ContactID": "-42b7860-e-46-45ea-a2-6-29756067e28a",
+        "ContactID": "bd4879f2-b9ba-45de-ad68-a9fa7e28ae86",
         "Name": "Kestrel Mobility"
       },
       "DateString": "2026-08-01T00:00:00",
@@ -74,7 +74,7 @@
           "LineAmount": 20000,
           "Tracking": [
             {
-              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "TrackingCategoryID": "4d8500de-5954-42ee-a81f-32aef1912706",
               "Name": "Client",
               "Option": "Kestrel Mobility"
             }
@@ -89,7 +89,7 @@
     },
     {
       "Type": "ACCREC",
-      "InvoiceID": "168d65a2--1d9-4ced-a-19-eb95ce0dd7aa",
+      "InvoiceID": "168d65a2-e268-4126-a614-6a320dd7aa46",
       "InvoiceNumber": "INV-2283",
       "Reference": "",
       "Contact": {
@@ -112,7 +112,7 @@
           "LineAmount": 12000,
           "Tracking": [
             {
-              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "TrackingCategoryID": "4d8500de-5954-42ee-a81f-32aef1912706",
               "Name": "Client",
               "Option": "Brightwater Housing"
             }
@@ -127,11 +127,11 @@
     },
     {
       "Type": "ACCREC",
-      "InvoiceID": "-21532c7-6-17-4114-a2-3-a0a1876-2ab9",
+      "InvoiceID": "deacd38a-e80e-4b3e-a5f5-e78ad5464406",
       "InvoiceNumber": "INV-2284",
       "Reference": "",
       "Contact": {
-        "ContactID": "2f8588b2--57e-4068-a-4b-7c9d1e4f4722",
+        "ContactID": "2f8588b2-a810-497e-a483-62e24f472296",
         "Name": "Marlow & Finch"
       },
       "DateString": "2026-08-03T00:00:00",
@@ -150,7 +150,7 @@
           "LineAmount": 12000,
           "Tracking": [
             {
-              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "TrackingCategoryID": "4d8500de-5954-42ee-a81f-32aef1912706",
               "Name": "Client",
               "Option": "Marlow & Finch"
             }
@@ -165,11 +165,11 @@
     },
     {
       "Type": "ACCREC",
-      "InvoiceID": "-26cbc92-e-8c-49f3-a2b9-29932-6359d4",
+      "InvoiceID": "d93436d2-f736-40c6-ab92-99329ca62bf6",
       "InvoiceNumber": "INV-2285",
       "Reference": "",
       "Contact": {
-        "ContactID": "-39f1c32-2432-4d09-a62f-61f8e1617a15",
+        "ContactID": "c60e3cde-432a-409e-a2f6-1f8e1617a156",
         "Name": "Tidewell Distillery"
       },
       "DateString": "2026-08-07T00:00:00",
@@ -188,7 +188,7 @@
           "LineAmount": 9000,
           "Tracking": [
             {
-              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "TrackingCategoryID": "4d8500de-5954-42ee-a81f-32aef1912706",
               "Name": "Client",
               "Option": "Other clients"
             }
@@ -203,7 +203,7 @@
     },
     {
       "Type": "ACCREC",
-      "InvoiceID": "63ef69ba-38aa-4e46-a660-d21e666d28fb",
+      "InvoiceID": "63ef69ba-38aa-4e46-a9f2-de1a66d28fb6",
       "InvoiceNumber": "INV-2286",
       "Reference": "",
       "Contact": {
@@ -226,7 +226,7 @@
           "LineAmount": 24000,
           "Tracking": [
             {
-              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "TrackingCategoryID": "4d8500de-5954-42ee-a81f-32aef1912706",
               "Name": "Client",
               "Option": "Orchard Lane Foods"
             }
@@ -241,11 +241,11 @@
     },
     {
       "Type": "ACCREC",
-      "InvoiceID": "53f1efc2--1a1-40d7-a03f-2493a-7c4691",
+      "InvoiceID": "53f1efc2-e5ef-428e-a3f2-493a83b96e86",
       "InvoiceNumber": "INV-2287",
       "Reference": "",
       "Contact": {
-        "ContactID": "1f69fd36--56c-4db9-a755-59aa606e156b",
+        "ContactID": "1f69fd36-a936-446e-a555-9aa606e156b6",
         "Name": "Pennant Rowing Club"
       },
       "DateString": "2026-08-14T00:00:00",
@@ -264,7 +264,7 @@
           "LineAmount": 7500,
           "Tracking": [
             {
-              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "TrackingCategoryID": "4d8500de-5954-42ee-a81f-32aef1912706",
               "Name": "Client",
               "Option": "Other clients"
             }
@@ -279,11 +279,11 @@
     },
     {
       "Type": "ACCREC",
-      "InvoiceID": "37137eba--5ee-4490-a748-3bc722f0b523",
+      "InvoiceID": "37137eba-a112-46f6-a483-bc722f0b5236",
       "InvoiceNumber": "INV-2288",
       "Reference": "",
       "Contact": {
-        "ContactID": "-42b7860-e-46-45ea-a2-6-29756067e28a",
+        "ContactID": "bd4879f2-b9ba-45de-ad68-a9fa7e28ae86",
         "Name": "Kestrel Mobility"
       },
       "DateString": "2026-08-18T00:00:00",
@@ -302,7 +302,7 @@
           "LineAmount": 28000,
           "Tracking": [
             {
-              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "TrackingCategoryID": "4d8500de-5954-42ee-a81f-32aef1912706",
               "Name": "Client",
               "Option": "Kestrel Mobility"
             }
@@ -317,7 +317,7 @@
     },
     {
       "Type": "ACCREC",
-      "InvoiceID": "-78817b8-e-b9-46fd-a5ff-a7ffa-51288a",
+      "InvoiceID": "877e8472-f46d-402e-affa-7ffaaed775a6",
       "InvoiceNumber": "INV-2289",
       "Reference": "",
       "Contact": {
@@ -340,7 +340,7 @@
           "LineAmount": 24000,
           "Tracking": [
             {
-              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "TrackingCategoryID": "4d8500de-5954-42ee-a81f-32aef1912706",
               "Name": "Client",
               "Option": "Brightwater Housing"
             }
@@ -355,7 +355,7 @@
     },
     {
       "Type": "ACCREC",
-      "InvoiceID": "-5df62b1-e-6f-41f6-aa5d-0cc12a00c0aa",
+      "InvoiceID": "a209d4e2-903e-4956-ad0c-c12a00c0aa56",
       "InvoiceNumber": "INV-2290",
       "Reference": "",
       "Contact": {
@@ -378,7 +378,7 @@
           "LineAmount": 19500,
           "Tracking": [
             {
-              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "TrackingCategoryID": "4d8500de-5954-42ee-a81f-32aef1912706",
               "Name": "Client",
               "Option": "Other clients"
             }
@@ -393,7 +393,7 @@
     },
     {
       "Type": "ACCREC",
-      "InvoiceID": "-d94d146--2d6-475a-a69e-2d4524c3b071",
+      "InvoiceID": "f26b2eba-d29d-4a5e-a9e2-d4524c3b0716",
       "InvoiceNumber": "INV-2291",
       "Reference": "",
       "Contact": {
@@ -416,7 +416,7 @@
           "LineAmount": 14000,
           "Tracking": [
             {
-              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "TrackingCategoryID": "4d8500de-5954-42ee-a81f-32aef1912706",
               "Name": "Client",
               "Option": "Orchard Lane Foods"
             }
@@ -431,11 +431,11 @@
     },
     {
       "Type": "ACCREC",
-      "InvoiceID": "-5d89a02-e614-4c56-a74f-574ca-752451",
+      "InvoiceID": "a2765fd2-6146-456e-a4f5-74ca8adbaec6",
       "InvoiceNumber": "INV-2292",
       "Reference": "",
       "Contact": {
-        "ContactID": "2f8588b2--57e-4068-a-4b-7c9d1e4f4722",
+        "ContactID": "2f8588b2-a810-497e-a483-62e24f472296",
         "Name": "Marlow & Finch"
       },
       "DateString": "2026-08-28T00:00:00",
@@ -454,7 +454,7 @@
           "LineAmount": 12000,
           "Tracking": [
             {
-              "TrackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f",
+              "TrackingCategoryID": "4d8500de-5954-42ee-a81f-32aef1912706",
               "Name": "Client",
               "Option": "Marlow & Finch"
             }

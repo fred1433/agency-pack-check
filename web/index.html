@@ -27,7 +27,7 @@
     <div class="left">
   <div class="intro">
     <h1>The August pack is right, and it cannot go yet.</h1>
-    <p class="lede">A fictional agency's management commentary. Claude wrote the words; the code supplied every figure and checked each claim against them. The draft agrees with the ledger. The ledger is missing £12,000 of August pay.</p>
+    <p class="lede">A fictional agency's management commentary. Claude wrote the words; the code supplied every figure and checked the words around each one. The draft agrees with the ledger. The ledger is missing £12,000 of August pay.</p>
   </div>
 
     <article class="sheet" id="sheet" aria-label="Management pack page">
@@ -40,7 +40,9 @@
       <div class="qc" id="qc"></div>
       <div class="commentary" id="commentary"></div>
       <div class="legend" id="legend"></div>
+      <div class="otherq" id="otherq"></div>
       <table class="figures" id="figures"></table>
+      <table class="figures figures--ytd" id="figuresYtd"></table>
       <footer class="sheet__foot" id="sheetFoot"></footer>
     </article>
     </div>
@@ -64,7 +66,16 @@
       </div>
       <div>
         <h3>From the figures to the words</h3>
-        <p>Claude receives the approved figures of one snapshot, each with a reference, and writes the commentary with references instead of numbers. The code prints the values. The checker then reads every sentence: for each figure, the words around it must name the right measure, client, period and comparator, and say the right direction. What it cannot tie to a figure (a cause, advice, a general remark) goes to the reviewer, never to a tick.</p>
+        <p>Claude receives the approved figures of one snapshot, each with a reference, and writes with references instead of numbers. The code prints the values. Then, for each figure, the checker reads the words in its clause and verifies five things:</p>
+        <ul class="plain">
+          <li>the measure named is the figure's measure (revenue, gross profit, margin, overheads, operating profit, a client's share);</li>
+          <li>the client named, or the agency total, is the figure's;</li>
+          <li>the period named (August or year to date) is the figure's;</li>
+          <li>for a variance or a budget figure, the comparator named (budget, last year, the May to July average) is the figure's;</li>
+          <li>for a variance, the direction word (above, below, up, down, in line, favourable, adverse) matches its sign at the precision printed.</li>
+        </ul>
+        <p>It also rejects figures typed instead of cited, units typed by hand, a figure that includes an unapproved adjustment, months outside this snapshot and measures this pack does not calculate (such as revenue per head). A sentence gets a tick only when every figure in it passes and nothing in it is outside that list.</p>
+        <p>It does not read, and sends to the reviewer instead: causes ("driven by"), advice and judgements ("may wish to review", "the picture is stronger", "slightly", "well above"), rankings ("largest", "remained", "first"), relations ("the same amount", "unlike"), negations, two clients around one figure, and comparisons between two figures in one sentence. It checks nothing about whether the commentary says what matters, beyond the material movements it requires to be mentioned.</p>
         <div class="results" id="results"></div>
       </div>
     </div>

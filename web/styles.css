@@ -179,3 +179,20 @@ body[data-view="reviewer"] .fig:hover { background: var(--pen-soft); }
 .review--resolved .notes { order: 1; }
 .review--resolved .gates { order: 2; }
 .review--resolved .slip { order: 3; }
+
+.figures--ytd { display: none; }
+.mini__sum { font-size: 13px; color: var(--ink-2); margin: -6px 0 14px !important; }
+.otherq { margin-top: 22px; border-top: 1px solid var(--rule); padding-top: 12px; font-size: 14px; color: var(--ink-2); }
+.otherq:empty { display: none; }
+.otherq__h { font-weight: 600; color: var(--pen); margin: 0 0 6px; font-size: 13.5px; }
+.otherq ul { margin: 0; padding-left: 18px; }
+.otherq li { margin-bottom: 6px; }
+.otherq strong { color: var(--ink); font-weight: 600; }
+.plain { padding-left: 18px; max-width: 66ch; }
+.plain li { margin-bottom: 4px; }
+@media (max-width: 720px) {
+  .figures { display: table !important; overflow: visible !important; }
+  #figures th.gap, #figures td.gap, #figures tr > :nth-child(6) { display: none; }
+  .figures--ytd { display: table !important; margin-top: 18px; }
+  .figures th, .figures td { white-space: normal; }
+}

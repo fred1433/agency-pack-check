@@ -1,17 +1,17 @@
 // Produces the frozen commentary drafts with Claude, on the subscription (claude -p), before publishing.
 // The page never calls a model: it replays these files. Usage: node scripts/draft.ts <open|approved> <n>
 import { spawn } from 'node:child_process';
+import { homedir } from 'node:os';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { loadSources } from '../src/sources-node.ts';
-import { computeMetrics, ASSUMPTIONS } from '../src/engine.ts';
+import { computeMetrics, ASSUMPTIONS, factsText } from '../src/engine.ts';
 
 const MODEL = process.env.DRAFT_MODEL ?? 'claude-sonnet-5';
 const state = (process.argv[2] ?? 'open') as 'open' | 'approved';
 const n = Number(process.argv[3] ?? 5);
 const batch = process.argv[4] ?? 'heldout';
 const ms = computeMetrics(loadSources(), { accrual: state });
-const facts = [...ms.metrics.values()].filter((m) => m.status !== 'proposed')
-  .map((m) => `[[${m.id}]] | ${m.label}${m.kind === 'variance' ? ` (prints as a magnitude; it is ${m.value === null ? 'not meaningful' : m.value > 0 ? 'higher' : m.value < 0 ? 'lower' : 'nil'})` : ''} | ${m.display}`).join('\n');
+const facts = factsText(ms.metrics);
 const template = readFileSync(new URL('../prompts/commentary.md', import.meta.url), 'utf8');
 const prompt = template.replace('{{agency}}', ASSUMPTIONS.agency).replace('{{facts}}', facts);
 const outDir = new URL(`../data/drafts/${batch}/`, import.meta.url);
@@ -21,7 +21,7 @@ writeFileSync(new URL(`prompt_${state}.txt`, outDir), prompt);
 function run(i: number): Promise<void> {
   return new Promise((resolve) => {
     const started = new Date().toISOString();
-    const p = spawn('claude', ['-p', '--model', MODEL, '--settings', JSON.stringify({ claudeMdExcludes: ['/Users/**'], language: 'English' }), '--strict-mcp-config', '--system-prompt', 'You write management commentary for a UK finance team.', '--tools', '', '--no-session-persistence', '--output-format', 'json', prompt], { cwd: new URL('../scratch/', import.meta.url).pathname });
+    const p = spawn('claude', ['-p', '--model', MODEL, '--settings', JSON.stringify({ claudeMdExcludes: [homedir() + '/**'], language: 'English' }), '--strict-mcp-config', '--system-prompt', 'You write management commentary for a UK finance team.', '--tools', '', '--no-session-persistence', '--output-format', 'json', prompt], { cwd: new URL('../scratch/', import.meta.url).pathname });
     let out = '';
     p.stdout.on('data', (d) => (out += d));
     p.on('close', () => {

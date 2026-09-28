@@ -10,8 +10,8 @@ Live page: https://theaipipe.com/agency-pack/
 
 ## The case
 
-The posted August figures are right, and the draft Claude wrote from them agrees with every one. The September
-payroll run pays £12,000 of overtime, bonuses, employer NIC and pension earned in August, and nothing for it is in the
+The posted August figures are right, and the draft Claude wrote from them agrees with every one. The payroll
+input approved on 1 September for the September run holds £12,000 of overtime, bonuses, employer NIC and pension earned in August, and nothing for it is in the
 August ledger. Approving the accrual moves August gross margin from 40.0% (2.0 points above budget) to 34.0% (4.0 points
 below). The draft written for the posted figures, re-read against the approved snapshot, now makes false claims, and
 the release control will not let it through. A draft written for the approved snapshot passes, the reviewer accepts
@@ -25,7 +25,7 @@ sign-off.
 | Path | What |
 |---|---|
 | `data/source/` | The frozen source snapshot, in the shapes of Xero Accounting API responses |
-| `data/workpapers/` | The payroll run report (not a Xero source) |
+| `data/workpapers/` | The payroll input approved on 1 September 2026 (not a Xero source), before the 2 September snapshot |
 | `src/xero.ts` | Adapter for `ReportWithRows` and list responses |
 | `src/engine.ts` | Metrics, source controls, close questions, coverage rules |
 | `src/claims.ts` | The commentary checker and its documented language (`LEXICON`) |
@@ -40,29 +40,33 @@ sign-off.
 
 ```
 npm install
-npm test                               # 72 tests: reference case, calculation edge cases, claims, release
+npm test                               # 86 tests: reference case, calculation edge cases, claims, release
 node scripts/evaluate.ts heldout2      # natural drafts and corrupted copies
 node scripts/build-site.ts && node scripts/export-pptx.ts && npx wrangler deploy
 ```
 
 Node 22.18 or later (TypeScript runs natively).
 
-## Results (checker v2, held-out batch 2)
+## Results (checker v3, held-out batch 2)
 
-The checker was frozen (commit history) before batch 2 was drafted. Batch 1 was used to fix it; its results before and
-after are kept in `data/results/`.
+Twenty drafts by `claude-sonnet-5` through Claude Code, ten per snapshot, as written: 99 sentences; 38 ticked (every
+figure checked, nothing outside the checked list), 54 sent to the reviewer (causes, judgements, rankings, negations,
+advice, a figure without its measure), 7 rejected. Of the 7, 3 are real errors in the draft (a unit written twice, two
+figures typed instead of cited) and 4 are the checker being wrong (`data/results/adjudication_checker-v3_heldout2.json`).
 
-Twenty drafts by `claude-sonnet-5` through Claude Code, ten per snapshot, as written: 99 sentences; 79 agree to the
-snapshot, 13 go to the reviewer (causes, advice, a figure without its measure), 7 do not agree. Of those 7, 3 are real
-errors in the draft (a unit written twice, two figures typed instead of cited) and 4 are the checker being wrong
-(`data/results/adjudication_heldout2.json`).
+Corrupted copies of the same sentences, one change at a time: 2,257 cases; 2,230 rejected, 27 sent to the reviewer,
+0 ticked.
 
-Corrupted copies of the same sentences, one change at a time: 2,257 cases; 2,230 rejected, 17 sent to the reviewer,
-10 passed. By change: period swapped 507 (494 rejected, 13 to reviewer); measure swapped 381 (381); figure typed 604
-(604); comparator swapped 317 (317); client swapped 185 (183, 2 to reviewer); unapproved figure stated as fact 97 (97);
-direction word flipped 166 (154, 2 to reviewer, 10 passed). The ten that passed are listed in
-`data/results/eval_heldout2.json`: mostly comparisons between two figures in one sentence, which the checker does not
-read.
+History, all kept in `data/results/`: v1 was frozen before held-out batch 1; v2 fixed what batch 1 showed and was
+frozen before batch 2 (on batch 2 it ticked 79 sentences and let 10 corrupted cases through); a fresh review then wrote
+sentences v2 ticked although they were wrong (rankings, "the same amount", "unlike", negations, "September", "revenue
+per head"). v3 sends those to the reviewer or rejects them (`NOT_TICKED` in `tests/claims.test.ts`). Batch 2 was not
+used to tune v3, but the reviewer had read two of its sentences.
+
+What the checker verifies, for each figure: the measure, the client or agency, the period, the comparator (for a
+variance or a budget figure) and the direction word against the sign. It also rejects typed figures, hand-written
+units, unapproved figures stated as fact, months outside the snapshot and measures this pack does not calculate.
+Everything else it does not read, and sends to the reviewer.
 
 These are counts on one synthetic month, not an accuracy rate.
 

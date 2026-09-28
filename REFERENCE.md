@@ -41,7 +41,7 @@ Year to date (5 months): revenue 950,000; direct costs 589,000; overheads 260,00
 
 ## The close question
 
-Payroll run report for September, lines earned in August:
+Payroll input approved on 1 September 2026 for the September run (before the 2 September snapshot), lines earned in August:
 
 | Ref | Gross | Employer NIC 15% | Employer pension 5% |
 |---|---|---|---|

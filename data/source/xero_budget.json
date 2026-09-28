@@ -1,5 +1,5 @@
 {
-  "Id": "-2b44b6c-a786-4e2c-a2c5-c4576-2ed3d4",
+  "Id": "d4bb4936-7865-42ce-ac5c-4576d12c2b76",
   "Status": "OK",
   "ProviderName": "agency-pack-check (synthetic fixture)",
   "DateTimeUTC": "/Date(1788340440000+0000)/",
@@ -12,13 +12,13 @@
   },
   "Budgets": [
     {
-      "BudgetID": "1b4778a6-228a-468e-a9c6-5dfa-25736ce",
+      "BudgetID": "1b4778a6-228a-468e-a639-a206da8c9316",
       "Type": "OVERALL",
       "Description": "FY2026-27 budget v2 (approved by the board 12 Mar 2026)",
       "UpdatedDateUTC": "/Date(1773331320000+0000)/",
       "BudgetLines": [
         {
-          "AccountID": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+          "AccountID": "7f24ebde-257c-4e0e-abed-ca0ea79c0346",
           "AccountCode": "200",
           "BudgetBalances": [
             {
@@ -54,7 +54,7 @@
           ]
         },
         {
-          "AccountID": "-3527208-2369-4552-a011-9199e-5e731b",
+          "AccountID": "cad8df7e-3690-452e-a119-199ea18ce4d6",
           "AccountCode": "310",
           "BudgetBalances": [
             {
@@ -90,7 +90,7 @@
           ]
         },
         {
-          "AccountID": "-6cc6bc4-a-31-4329-a2-7-e81e81a-5384",
+          "AccountID": "933943b6-ce8c-46ee-a17e-17e6ac7b1af6",
           "AccountCode": "320",
           "BudgetBalances": [
             {
@@ -126,7 +126,7 @@
           ]
         },
         {
-          "AccountID": "-2c78727-26bb-47dd-a77a-2730e32c1885",
+          "AccountID": "d3878d8e-6bb8-4dde-a7a2-730e32c18856",
           "AccountCode": "325",
           "BudgetBalances": [
             {
@@ -198,7 +198,7 @@
           ]
         },
         {
-          "AccountID": "465b0e6e--46e-4a9b-a31c-f995e3064911",
+          "AccountID": "465b0e6e-b910-464e-a1cf-995e30649116",
           "AccountCode": "429",
           "BudgetBalances": [
             {
@@ -234,7 +234,7 @@
           ]
         },
         {
-          "AccountID": "-533da37-a-1e-4eb7-a2-3-04b4fda-414a",
+          "AccountID": "acc25c86-e1b1-483e-afb4-b026beb51ef6",
           "AccountCode": "463",
           "BudgetBalances": [
             {
@@ -270,7 +270,7 @@
           ]
         },
         {
-          "AccountID": "-1937b76-a-6d-42a9-a276-47d576-46ce3",
+          "AccountID": "e6c84896-928d-461e-a647-d576b931cff6",
           "AccountCode": "469",
           "BudgetBalances": [
             {
@@ -306,7 +306,7 @@
           ]
         },
         {
-          "AccountID": "-5ad4593-a-3c-47b4-a2-3-67647ca-aaff",
+          "AccountID": "a52ba6c6-c368-4b1e-a989-b836f5500786",
           "AccountCode": "477",
           "BudgetBalances": [
             {
@@ -342,7 +342,7 @@
           ]
         },
         {
-          "AccountID": "-132f43a-0755-4f1e-a45e-e3bda-2121db",
+          "AccountID": "fecd0bc6-0755-4f1e-aa11-c426dede2496",
           "AccountCode": "485",
           "BudgetBalances": [
             {

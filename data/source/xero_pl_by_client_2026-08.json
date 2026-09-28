@@ -1,5 +1,5 @@
 {
-  "Id": "3df5135e--47c-46ab-a-4c-43e622-5bff7",
+  "Id": "3df5135e-b830-454e-a3bc-19dea40088c6",
   "Status": "OK",
   "ProviderName": "agency-pack-check (synthetic fixture)",
   "DateTimeUTC": "/Date(1788340440000+0000)/",
@@ -10,7 +10,7 @@
       "toDate": "2026-08-31",
       "standardLayout": true,
       "paymentsOnly": false,
-      "trackingCategoryID": "4d8500de-5954-42ee-a27e-0cd52-e6ed8f"
+      "trackingCategoryID": "4d8500de-5954-42ee-a81f-32aef1912706"
     }
   },
   "Reports": [
@@ -64,7 +64,7 @@
                   "Value": "Sales - fees",
                   "Attributes": [
                     {
-                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Value": "7f24ebde-257c-4e0e-abed-ca0ea79c0346",
                       "Id": "account"
                     }
                   ]
@@ -73,7 +73,7 @@
                   "Value": "62000.00",
                   "Attributes": [
                     {
-                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Value": "7f24ebde-257c-4e0e-abed-ca0ea79c0346",
                       "Id": "account"
                     }
                   ]
@@ -82,7 +82,7 @@
                   "Value": "48000.00",
                   "Attributes": [
                     {
-                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Value": "7f24ebde-257c-4e0e-abed-ca0ea79c0346",
                       "Id": "account"
                     }
                   ]
@@ -91,7 +91,7 @@
                   "Value": "36000.00",
                   "Attributes": [
                     {
-                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Value": "7f24ebde-257c-4e0e-abed-ca0ea79c0346",
                       "Id": "account"
                     }
                   ]
@@ -100,7 +100,7 @@
                   "Value": "18000.00",
                   "Attributes": [
                     {
-                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Value": "7f24ebde-257c-4e0e-abed-ca0ea79c0346",
                       "Id": "account"
                     }
                   ]
@@ -109,7 +109,7 @@
                   "Value": "36000.00",
                   "Attributes": [
                     {
-                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Value": "7f24ebde-257c-4e0e-abed-ca0ea79c0346",
                       "Id": "account"
                     }
                   ]
@@ -118,7 +118,7 @@
                   "Value": "0.00",
                   "Attributes": [
                     {
-                      "Value": "7f24ebde-257c-4e0e-a441-235f2-5863fc",
+                      "Value": "7f24ebde-257c-4e0e-abed-ca0ea79c0346",
                       "Id": "account"
                     }
                   ]
@@ -164,7 +164,7 @@
                   "Value": "Delivery staff costs",
                   "Attributes": [
                     {
-                      "Value": "-3527208-2369-4552-a011-9199e-5e731b",
+                      "Value": "cad8df7e-3690-452e-a119-199ea18ce4d6",
                       "Id": "account"
                     }
                   ]
@@ -173,7 +173,7 @@
                   "Value": "0.00",
                   "Attributes": [
                     {
-                      "Value": "-3527208-2369-4552-a011-9199e-5e731b",
+                      "Value": "cad8df7e-3690-452e-a119-199ea18ce4d6",
                       "Id": "account"
                     }
                   ]
@@ -182,7 +182,7 @@
                   "Value": "0.00",
                   "Attributes": [
                     {
-                      "Value": "-3527208-2369-4552-a011-9199e-5e731b",
+                      "Value": "cad8df7e-3690-452e-a119-199ea18ce4d6",
                       "Id": "account"
                     }
                   ]
@@ -191,7 +191,7 @@
                   "Value": "0.00",
                   "Attributes": [
                     {
-                      "Value": "-3527208-2369-4552-a011-9199e-5e731b",
+                      "Value": "cad8df7e-3690-452e-a119-199ea18ce4d6",
                       "Id": "account"
                     }
                   ]
@@ -200,7 +200,7 @@
                   "Value": "0.00",
                   "Attributes": [
                     {
-                      "Value": "-3527208-2369-4552-a011-9199e-5e731b",
+                      "Value": "cad8df7e-3690-452e-a119-199ea18ce4d6",
                       "Id": "account"
                     }
                   ]
@@ -209,7 +209,7 @@
                   "Value": "0.00",
                   "Attributes": [
                     {
-                      "Value": "-3527208-2369-4552-a011-9199e-5e731b",
+                      "Value": "cad8df7e-3690-452e-a119-199ea18ce4d6",
                       "Id": "account"
                     }
                   ]
@@ -218,7 +218,7 @@
                   "Value": "96000.00",
                   "Attributes": [
                     {
-                      "Value": "-3527208-2369-4552-a011-9199e-5e731b",
+                      "Value": "cad8df7e-3690-452e-a119-199ea18ce4d6",
                       "Id": "account"
                     }
                   ]
@@ -232,7 +232,7 @@
                   "Value": "Freelancers",
                   "Attributes": [
                     {
-                      "Value": "-6cc6bc4-a-31-4329-a2-7-e81e81a-5384",
+                      "Value": "933943b6-ce8c-46ee-a17e-17e6ac7b1af6",
                       "Id": "account"
                     }
                   ]
@@ -241,7 +241,7 @@
                   "Value": "8000.00",
                   "Attributes": [
                     {
-                      "Value": "-6cc6bc4-a-31-4329-a2-7-e81e81a-5384",
+                      "Value": "933943b6-ce8c-46ee-a17e-17e6ac7b1af6",
                       "Id": "account"
                     }
                   ]
@@ -250,7 +250,7 @@
                   "Value": "6000.00",
                   "Attributes": [
                     {
-                      "Value": "-6cc6bc4-a-31-4329-a2-7-e81e81a-5384",
+                      "Value": "933943b6-ce8c-46ee-a17e-17e6ac7b1af6",
                       "Id": "account"
                     }
                   ]
@@ -259,7 +259,7 @@
                   "Value": "3000.00",
                   "Attributes": [
                     {
-                      "Value": "-6cc6bc4-a-31-4329-a2-7-e81e81a-5384",
+                      "Value": "933943b6-ce8c-46ee-a17e-17e6ac7b1af6",
                       "Id": "account"
                     }
                   ]
@@ -268,7 +268,7 @@
                   "Value": "1500.00",
                   "Attributes": [
                     {
-                      "Value": "-6cc6bc4-a-31-4329-a2-7-e81e81a-5384",
+                      "Value": "933943b6-ce8c-46ee-a17e-17e6ac7b1af6",
                       "Id": "account"
                     }
                   ]
@@ -277,7 +277,7 @@
                   "Value": "2500.00",
                   "Attributes": [
                     {
-                      "Value": "-6cc6bc4-a-31-4329-a2-7-e81e81a-5384",
+                      "Value": "933943b6-ce8c-46ee-a17e-17e6ac7b1af6",
                       "Id": "account"
                     }
                   ]
@@ -286,7 +286,7 @@
                   "Value": "0.00",
                   "Attributes": [
                     {
-                      "Value": "-6cc6bc4-a-31-4329-a2-7-e81e81a-5384",
+                      "Value": "933943b6-ce8c-46ee-a17e-17e6ac7b1af6",
                       "Id": "account"
                     }
                   ]
@@ -300,7 +300,7 @@
                   "Value": "Client delivery software",
                   "Attributes": [
                     {
-                      "Value": "-2c78727-26bb-47dd-a77a-2730e32c1885",
+                      "Value": "d3878d8e-6bb8-4dde-a7a2-730e32c18856",
                       "Id": "account"
                     }
                   ]
@@ -309,7 +309,7 @@
                   "Value": "1000.00",
                   "Attributes": [
                     {
-                      "Value": "-2c78727-26bb-47dd-a77a-2730e32c1885",
+                      "Value": "d3878d8e-6bb8-4dde-a7a2-730e32c18856",
                       "Id": "account"
                     }
                   ]
@@ -318,7 +318,7 @@
                   "Value": "800.00",
                   "Attributes": [
                     {
-                      "Value": "-2c78727-26bb-47dd-a77a-2730e32c1885",
+                      "Value": "d3878d8e-6bb8-4dde-a7a2-730e32c18856",
                       "Id": "account"
                     }
                   ]
@@ -327,7 +327,7 @@
                   "Value": "400.00",
                   "Attributes": [
                     {
-                      "Value": "-2c78727-26bb-47dd-a77a-2730e32c1885",
+                      "Value": "d3878d8e-6bb8-4dde-a7a2-730e32c18856",
                       "Id": "account"
                     }
                   ]
@@ -336,7 +336,7 @@
                   "Value": "300.00",
                   "Attributes": [
                     {
-                      "Value": "-2c78727-26bb-47dd-a77a-2730e32c1885",
+                      "Value": "d3878d8e-6bb8-4dde-a7a2-730e32c18856",
                       "Id": "account"
                     }
                   ]
@@ -345,7 +345,7 @@
                   "Value": "500.00",
                   "Attributes": [
                     {
-                      "Value": "-2c78727-26bb-47dd-a77a-2730e32c1885",
+                      "Value": "d3878d8e-6bb8-4dde-a7a2-730e32c18856",
                       "Id": "account"
                     }
                   ]
@@ -354,7 +354,7 @@
                   "Value": "0.00",
                   "Attributes": [
                     {
-                      "Value": "-2c78727-26bb-47dd-a77a-2730e32c1885",
+                      "Value": "d3878d8e-6bb8-4dde-a7a2-730e32c18856",
                       "Id": "account"
                     }
                   ]

@@ -16,6 +16,6 @@ export function loadSources(): Sources {
     trialBalance: j('xero_trial_balance_2026-08-31.json'), budget: j('xero_budget.json'),
     invoicePulls: [j('xero_invoices_pull_2026-09-01.json'), j('xero_invoices_pull_2026-09-02_modified.json')],
     creditNotes: j('xero_credit_notes_2026-08.json'), manualJournals: j('xero_manual_journals_2026-08.json'),
-    payrollCsv: readFileSync(new URL('workpapers/payroll_run_2026-09.csv', dir), 'utf8'),
+    payrollCsv: readFileSync(new URL('workpapers/payroll_input_2026-09-01.csv', dir), 'utf8'),
   };
 }

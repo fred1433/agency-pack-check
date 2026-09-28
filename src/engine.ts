@@ -65,7 +65,7 @@ export const CLIENTS = [
 export const ACCRUAL = {
   id: 'accrual-aug-payroll',
   accountCode: '310',
-  description: 'August overtime and delivery bonuses paid in the September payroll, with employer NIC and pension',
+  description: 'August overtime and delivery bonuses, approved on 1 September for the September payroll, with employer NIC and pension',
 };
 
 type Parsed = {
@@ -231,12 +231,20 @@ export function computeMetrics(s: Sources, decisions: Decisions): MetricSet {
     mkc('revenue.month.vs_avg3m', 'revenue', 'month', 'variance', 'actual', 'avg3m', 'gbp', aug === null ? null : aug - avg, 'August minus three-month average', 'revenue, August 2026 against its May to July average, difference', ['xero_pl_by_client_2026-08.json']);
     mkc('revenue.month.vs_avg3m_pct', 'revenue', 'month', 'variance', 'actual', 'avg3m', 'pct', pctChange(aug, avg), '(August - average) / average', 'revenue, August 2026 against its May to July average, % change', ['xero_pl_by_client_2026-08.json']);
   }
-  return { metrics, decisions, snapshotFingerprint: snapshotFingerprint(s, decisions) };
+  return { metrics, decisions, snapshotFingerprint: fingerprint(factsText(metrics)) };
 }
 
-export function snapshotFingerprint(s: Sources, d: Decisions): string {
-  // Approval of the accrual changes the reporting snapshot; holding it does not.
-  return fingerprint({ sources: fingerprint(s as unknown), accrual: d.accrual === 'approved' ? 'approved' : 'not-approved' });
+// The approved figures of a snapshot, exactly as the drafting prompt lists them. A draft belongs to the figures it
+// was given: its fingerprint is this text's, so a draft is stale as soon as any approved figure changes.
+export function factsText(metrics: Map<string, Metric>): string {
+  return [...metrics.values()].filter((m) => m.status !== 'proposed')
+    .map((m) => `[[${m.id}]] | ${m.label}${m.kind === 'variance' ? ` (prints as a magnitude; it is ${m.value === null ? 'not meaningful' : m.value > 0 ? 'higher' : m.value < 0 ? 'lower' : 'nil'})` : ''} | ${m.display}`).join('\n');
+}
+export function factsFromPrompt(prompt: string): string {
+  const a = prompt.indexOf('Facts (reference | meaning | value):\n');
+  const b = prompt.indexOf('\n\nReply with JSON');
+  if (a < 0 || b < 0) throw new Error('Prompt has no facts section');
+  return prompt.slice(a + 'Facts (reference | meaning | value):\n'.length, b);
 }
 
 // ---------- Source -> metrics controls ----------
@@ -262,10 +270,10 @@ export function sourceChecks(s: Sources, d: Decisions): { checks: CheckResult[];
   }
   // 2. Accounting basis.
   {
-    const reps = [p.plMonth, p.plYtd, p.plPyMonth, p.plPyYtd, p.tb];
+    const reps = [p.plMonth, p.plYtd, p.plPyMonth, p.plPyYtd, p.tb, ...Object.values(p.byClient)];
     const cash = reps.filter((r) => r.params.paymentsOnly !== false);
     checks.push({ id: 'basis', title: 'Accruals basis on every report', status: cash.length ? 'fail' : 'pass',
-      detail: cash.length ? `${cash.length} report(s) not requested with paymentsOnly=false` : 'All five reports requested with paymentsOnly=false.', evidence: ['_request.params.paymentsOnly'] });
+      detail: cash.length ? `${cash.length} report(s) not requested with paymentsOnly=false` : 'Every report requested with paymentsOnly=false (P&L month, year to date, both prior-year periods, the five by client, and the trial balance).', evidence: ['_request.params.paymentsOnly'] });
   }
   // 3. Currency.
   {
@@ -359,9 +367,9 @@ export function sourceChecks(s: Sources, d: Decisions): { checks: CheckResult[];
   const accrualJournals = s.manualJournals.ManualJournals.filter((j: any) => /accru/i.test(j.Narration ?? ''));
   checks.push({
     id: 'accrual', title: 'Payroll costs earned in August are in August', status: d.accrual === 'approved' ? 'pass' : 'fail',
-    detail: `The September payroll run pays ${acc.lines.length} August-earned lines: ${displayValue(acc.gross, 'gbp', false)} gross, ${displayValue(acc.nic, 'gbp', false)} employer NIC, ${displayValue(acc.pension, 'gbp', false)} employer pension, ${displayValue(acc.total, 'gbp', false)} in all. August manual journals with an accrual: ${accrualJournals.length}.` +
+    detail: `The payroll input approved on 1 September for the September run holds ${acc.lines.length} August-earned lines: ${displayValue(acc.gross, 'gbp', false)} gross, ${displayValue(acc.nic, 'gbp', false)} employer NIC, ${displayValue(acc.pension, 'gbp', false)} employer pension, ${displayValue(acc.total, 'gbp', false)} in all. August manual journals with an accrual: ${accrualJournals.length}.` +
       (d.accrual === 'approved' ? ' Accrual approved as a reporting adjustment.' : ' No August cost recorded for them.'),
-    evidence: ['data/workpapers/payroll_run_2026-09.csv', 'xero_manual_journals_2026-08.json'],
+    evidence: ['data/workpapers/payroll_input_2026-09-01.csv', 'xero_manual_journals_2026-08.json'],
   });
 
   // ---------- Questions for the finance director ----------
@@ -371,17 +379,17 @@ export function sourceChecks(s: Sources, d: Decisions): { checks: CheckResult[];
   const questions: Question[] = [{
     id: ACCRUAL.id,
     title: `Accrue ${displayValue(acc.total, 'gbp', false)} of August delivery pay?`,
-    detail: `${ACCRUAL.description}. Basis: ${displayValue(acc.gross, 'gbp', false)} gross, employer NIC at 15% (${displayValue(acc.nic, 'gbp', false)}), employer pension at 5% (${displayValue(acc.pension, 'gbp', false)}). Rates as they appear in the run report; NIC assumes each employee is above the secondary threshold.`,
+    detail: `${ACCRUAL.description}. Basis: ${displayValue(acc.gross, 'gbp', false)} gross, employer NIC at 15% (${displayValue(acc.nic, 'gbp', false)}), employer pension at 5% (${displayValue(acc.pension, 'gbp', false)}). Rates as they appear in the payroll input; NIC assumes each employee is above the secondary threshold.`,
     effect: `Gross margin for August moves from ${displayValue(gm, 'pct', false)} to ${displayValue(gmAdj, 'pct', false)}.`,
     material: acc.total >= ASSUMPTIONS.materialityGbp || Math.abs(gm - gmAdj) >= ASSUMPTIONS.materialityMarginPp,
     state: d.accrual === 'approved' ? 'resolved' : d.accrual === 'held' ? 'held' : 'open',
     blocksRelease: d.accrual !== 'approved',
-    evidence: ['data/workpapers/payroll_run_2026-09.csv'],
+    evidence: ['data/workpapers/payroll_input_2026-09-01.csv'],
   }];
   for (const cn of s.creditNotes.CreditNotes) questions.push({
     id: `credit-note-${cn.CreditNoteNumber.toLowerCase()}`, title: `Credit note ${cn.CreditNoteNumber}, issued ${new Date(cn.DateString.slice(0, 10) + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', timeZone: 'UTC' })}`,
     detail: `${cn.Contact.Name}, ${displayValue(cn.SubTotal, 'gbp', false)}. ${cn.Reference}. Treated under the stated policy: credit notes reduce revenue in the month they are issued.`,
-    effect: `Without it, August revenue would be ${displayValue(sectionTotal(p.plMonth, PL_SECTIONS.income) + cn.SubTotal, 'gbp', false)}. It explains ${displayValue(cn.SubTotal, 'gbp', false)} of the fall at ${cn.Contact.Name}.`,
+    effect: `Without it, August revenue would be ${displayValue(sectionTotal(p.plMonth, PL_SECTIONS.income) + cn.SubTotal, 'gbp', false)}. It is ${displayValue(cn.SubTotal, 'gbp', false)} of the ${displayValue(Math.abs(month.get('client.marlow-finch.revenue.month.vs_avg3m')!.value ?? 0), 'gbp', false)} fall at ${cn.Contact.Name} against its May to July average: a credit on July work, posted in August.`,
     material: false, state: 'resolved', blocksRelease: false, evidence: ['xero_credit_notes_2026-08.json'],
   });
   const mf = month.get('client.marlow-finch.revenue.month.vs_avg3m_pct')!;

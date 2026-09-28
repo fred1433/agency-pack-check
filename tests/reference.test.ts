@@ -53,3 +53,13 @@ test('approval changes the snapshot fingerprint; holding does not', () => {
   assert.equal(computeMetrics(s, { accrual: 'held' }).snapshotFingerprint, a);
   assert.notEqual(computeMetrics(s, { accrual: 'approved' }).snapshotFingerprint, a);
 });
+
+test('each saved prompt lists exactly the approved figures of its snapshot', async () => {
+  const { factsFromPrompt, factsText } = await import('../src/engine.ts');
+  for (const batch of ['heldout', 'heldout2']) {
+    for (const st of ['open', 'approved'] as const) {
+      const prompt = readFileSync(new URL(`../data/drafts/${batch}/prompt_${st}.txt`, import.meta.url), 'utf8');
+      assert.equal(factsFromPrompt(prompt), factsText(computeMetrics(s, { accrual: st }).metrics), `${batch} ${st}`);
+    }
+  }
+});

@@ -4,14 +4,13 @@
 import { readFileSync, readdirSync, writeFileSync, mkdirSync } from 'node:fs';
 import { loadSources } from '../src/sources-node.ts';
 import { computeMetrics, CLIENTS, type MetricSet } from '../src/engine.ts';
-import { checkDraft, splitSentences } from '../src/claims.ts';
+import { checkDraft, splitSentences, CHECKER_VERSION } from '../src/claims.ts';
+import { loadBatch } from '../src/drafts-node.ts';
 
 const s = loadSources();
 const sets: Record<string, MetricSet> = { open: computeMetrics(s, { accrual: 'open' }), approved: computeMetrics(s, { accrual: 'approved' }) };
 const batch = process.argv[2] ?? 'heldout2';
-const dir = new URL(`../data/drafts/${batch}/`, import.meta.url);
-const drafts = readdirSync(dir).filter((f) => f.endsWith('.json')).sort((a, b) => a.localeCompare(b, 'en', { numeric: true }))
-  .map((f) => JSON.parse(readFileSync(new URL(f, dir), 'utf8')));
+const drafts = loadBatch(batch);
 
 // ---------- Natural outputs ----------
 const natural = drafts.map((d) => {
@@ -93,7 +92,7 @@ for (const c of cases) {
 }
 const sum = (f: (x: (typeof natural)[number]) => number) => natural.reduce((a, x) => a + f(x), 0);
 const result = {
-  generated: new Date().toISOString(), batch,
+  generated: new Date().toISOString(), batch, checker: CHECKER_VERSION,
   natural: {
     drafts: natural.length,
     sentences: sum((x) => x.counts.verified + x.counts.review + x.counts.fail),
@@ -108,7 +107,7 @@ const result = {
   },
 };
 mkdirSync(new URL('../data/results/', import.meta.url), { recursive: true });
-writeFileSync(new URL(`../data/results/eval_${batch}.json`, import.meta.url), JSON.stringify(result, null, 2) + '\n');
+writeFileSync(new URL(`../data/results/eval_checker-${CHECKER_VERSION}_${batch}.json`, import.meta.url), JSON.stringify(result, null, 2) + '\n');
 console.log('natural', JSON.stringify({ ...result.natural, perDraft: undefined }));
 console.log('corrupted', result.corrupted.cases, 'failed', result.corrupted.failed, 'review', result.corrupted.toReviewer, 'passed', result.corrupted.passed, JSON.stringify(byType));
 for (const m of result.corrupted.passedSilently) console.log('PASSED', m.type, '|', m.corrupted);

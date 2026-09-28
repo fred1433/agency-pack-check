@@ -1,7 +1,6 @@
 import PptxGenJS from 'pptxgenjs';
 import { ASSUMPTIONS, accrualEvidence, type Sources, type Metric } from '../src/engine.ts';
-import { evaluate, tableCells, sentencesOf, buildPptx, paragraphGroups, type Review, type Draft } from '../src/pack.ts';
-import { render } from '../src/claims.ts';
+import { evaluate, tableCells, sentencesOf, buildPptx, paragraphGroups, formatDateTime, type Review, type Draft } from '../src/pack.ts';
 import { displayValue } from '../src/format.ts';
 import { fingerprint } from '../src/hash.ts';
 import sources from './generated/sources.json';
@@ -28,9 +27,11 @@ const circled = (n: number) => `<span class="mk-n" aria-label="note ${n}">${n}</
 let ev = evaluate(S, state);
 
 function update() {
+  pop.hidden = true;
   ev = evaluate(S, state);
   renderSheet();
   renderReview();
+  renderHow();
 }
 
 // ---------- The sheet ----------
@@ -70,11 +71,16 @@ function renderSheet() {
     <thead><tr><th></th><th>August</th><th>Budget</th><th>Last year</th><th class="gap">Year to date</th><th>Budget</th></tr></thead>
     <tbody>${rows.map((r) => `<tr><th scope="row">${r.label}</th>${[...r.month, ...r.ytd].map((m, k) => `<td class="${k === 3 ? 'gap' : ''}${m.status === 'adjusted' ? ' adj' : ''}">${esc(m.display)}</td>`).join('')}</tr>`).join('')}</tbody>`;
 
+  $('figuresYtd').innerHTML = `<caption>Year to date</caption><thead><tr><th></th><th>Actual</th><th>Budget</th></tr></thead>
+    <tbody>${rows.map((r) => `<tr><th scope="row">${r.label}</th>${r.ytd.map((m) => `<td class="${m.status === 'adjusted' ? 'adj' : ''}">${esc(m.display)}</td>`).join('')}</tr>`).join('')}</tbody>`;
+  // Other questions, not blocking: next to the commentary, where a finance director looks for them.
+  const others = ev.questions.filter((q) => !q.blocksRelease && q.id !== 'accrual-aug-payroll');
+  $('otherq').innerHTML = reviewer && others.length ? `<p class="otherq__h">Other questions, not blocking</p><ul>${others.map((q) => `<li><strong>${esc(q.title)}${/[?.]$/.test(q.title) ? '' : '.'}</strong> ${esc(q.detail)} ${esc(q.effect)}${q.hypotheses ? ` Possible reasons, not established: ${q.hypotheses.map((h) => esc(h.toLowerCase())).join('; ')}.` : ''}</li>`).join('')}</ul>` : '';
   const released = ev.releasable;
   const stamp = $('stamp');
-  stamp.textContent = released ? `Released ${new Date(state.signoff!.at).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}` : 'Draft, not for release';
+  stamp.textContent = released ? `Released ${formatDateTime(state.signoff!.at)}` : 'Draft, not for release';
   stamp.classList.toggle('stamp--released', released);
-  $('sheetFoot').textContent = `From the Xero snapshot of 2 September 2026, 09:14, fingerprint ${ev.ms.snapshotFingerprint}${ev.ms.decisions.accrual === 'approved' ? ', with one approved reporting adjustment' : ''}. Fictional agency. Prototype layout.`;
+  $('sheetFoot').textContent = `From the Xero snapshot of ${formatDateTime('2026-09-02T09:14:00Z')} and the payroll input approved on 1 September 2026. Figures fingerprint ${ev.ms.snapshotFingerprint}${ev.ms.decisions.accrual === 'approved' ? ', with one approved reporting adjustment' : ''}. Fictional agency. Prototype layout.`;
 }
 
 // ---------- The review column ----------
@@ -95,12 +101,13 @@ function renderReview() {
   slip.innerHTML = `
     <p class="slip__kind">Close question${d === 'approved' ? ', resolved' : d === 'held' ? ', on hold' : ''}</p>
     <h3 class="slip__q">${esc(q.title)}</h3>
-    <p>${esc(acc.lines.length.toString())} lines in the September payroll run were earned in August. None is in the August ledger.</p>
+    <p>The payroll input approved on 1 September 2026 for the September run holds ${acc.lines.length} lines earned in August. None is in the August ledger.</p>
     <table class="mini">
       <thead><tr><th>Earned in August</th><th>Gross</th><th>Employer NIC</th><th>Pension</th></tr></thead>
       <tbody>${acc.lines.map((l) => `<tr><td>${l.employee_ref}</td><td>${fmt(l.gross)}</td><td>${fmt(l.employer_nic)}</td><td>${fmt(l.employer_pension)}</td></tr>`).join('')}
-      <tr class="tot"><td>Total ${fmt(acc.total)}</td><td>${fmt(acc.gross)}</td><td>${fmt(acc.nic)}</td><td>${fmt(acc.pension)}</td></tr></tbody>
+      <tr class="tot"><td>Total</td><td>${fmt(acc.gross)}</td><td>${fmt(acc.nic)}</td><td>${fmt(acc.pension)}</td></tr></tbody>
     </table>
+    <p class="mini__sum">Accrual: ${fmt(acc.gross)} + ${fmt(acc.nic)} + ${fmt(acc.pension)} = ${fmt(acc.total)}.</p>
     <table class="effect">
       <thead><tr><th>August</th><th>As posted</th><th>With the accrual</th></tr></thead>
       <tbody>
@@ -232,7 +239,7 @@ document.addEventListener('click', (e) => {
     state.signoff = { by: 'Reviewer (demo)', at: new Date().toISOString(), snapshotFingerprint: ev.ms.snapshotFingerprint, draftFingerprint: fingerprint(state.markup) };
   }
   if (act === 'export') {
-    const pres = buildPptx(PptxGenJS, ev.ms, state.markup, { agency: ASSUMPTIONS.agency, released: `Released by ${state.signoff!.by}, ${new Date(state.signoff!.at).toUTCString()}, text ${ev.result.draftFingerprint}.`, draftLabel: state.draft.label + (state.edited ? ', edited by the reviewer' : '') });
+    const pres = buildPptx(PptxGenJS, ev.ms, state.markup, { agency: ASSUMPTIONS.agency, released: `Released by ${state.signoff!.by}, ${formatDateTime(state.signoff!.at)}, text ${ev.result.draftFingerprint}.`, draftLabel: state.draft.label + (state.edited ? ', edited by the reviewer' : '') });
     pres.writeFile({ fileName: 'lowther-august-2026-commentary.pptx' });
     return;
   }
@@ -256,7 +263,7 @@ document.addEventListener('keydown', (e) => {
 // ---------- How it works ----------
 function renderHow() {
   const { checks } = ev;
-  $('checks').innerHTML = evaluate(S, { ...state, decisions: { accrual: 'open' } }).checks.map((c) => `<li class="c--${c.status}">${c.status === 'pass' ? TICK : c.status === 'fail' ? CROSS : '<span class="mk-note">note</span>'}<div><p class="c__t">${esc(c.title)}</p><p>${esc(c.detail)}</p></div></li>`).join('');
+  $('checks').innerHTML = ev.checks.map((c) => `<li class="c--${c.status}">${c.status === 'pass' ? TICK : c.status === 'fail' ? CROSS : '<span class="mk-note">note</span>'}<div><p class="c__t">${esc(c.title)}</p><p>${esc(c.detail)}</p></div></li>`).join('');
   void checks;
   const basis: [string, string][] = [
     ['Period', 'August 2026; year to date 1 April to 31 August 2026, from the year end in Organisation (31 March, a fictional assumption).'],
@@ -273,24 +280,23 @@ function renderHow() {
   const r = results as any;
   const bt = r.corrupted.byType as Record<string, { cases: number; failed: number; toReviewer: number; passed: number }>;
   $('results').innerHTML = `
-    <h4>Test results</h4>
-    <p>Twenty drafts written by Claude after the checker was frozen, ten per snapshot, as written:</p>
+    <h4>Test results, checker ${r.checker}</h4>
+    <p>Twenty drafts written by Claude, ten per snapshot, as written:</p>
     <table class="res"><tbody>
       <tr><th>Sentences</th><td>${r.natural.sentences}</td></tr>
-      <tr><th>Agree to the snapshot</th><td>${r.natural.verified}</td></tr>
-      <tr><th>For the reviewer (a cause, advice, a figure without its measure)</th><td>${r.natural.review}</td></tr>
-      <tr><th>Do not agree</th><td>${r.natural.fail}</td></tr>
+      <tr><th>Ticked: every figure checked, nothing outside the checked list</th><td>${r.natural.verified}</td></tr>
+      <tr><th>To the reviewer (a cause, a judgement, a ranking, a negation, a figure without its measure)</th><td>${r.natural.review}</td></tr>
+      <tr><th>Rejected</th><td>${r.natural.fail}</td></tr>
     </tbody></table>
-    <p>Of the ${r.natural.fail} that do not agree, ${r.adjudication.realErrors} are real errors in what Claude wrote (${esc(r.adjudication.realSummary)}) and ${r.natural.fail - r.adjudication.realErrors} are the checker being wrong (${esc(r.adjudication.falseSummary)}).</p>
+    <p>Of the ${r.natural.fail} rejected, ${r.adjudication.realErrors} are real errors in what Claude wrote (${esc(r.adjudication.realSummary)}) and ${r.natural.fail - r.adjudication.realErrors} are the checker being wrong (${esc(r.adjudication.falseSummary)}). The previous version, ${r.previous.checker}, ticked ${r.previous.verified} of these sentences; a fresh review found wrong sentences it ticked, so ${r.checker} ticks fewer and asks the reviewer more. Both results are in the repository.</p>
     <p>The same sentences, corrupted on purpose, one change at a time:</p>
-    <table class="res res--wide"><thead><tr><th>Change</th><th>Cases</th><th>Rejected</th><th>To the reviewer</th><th>Passed</th></tr></thead><tbody>
+    <table class="res res--wide"><thead><tr><th>Change</th><th>Cases</th><th>Rejected</th><th>To the reviewer</th><th>Ticked</th></tr></thead><tbody>
       ${Object.entries(bt).map(([k, v]) => `<tr><th>${esc(k[0].toUpperCase() + k.slice(1))}</th><td>${v.cases}</td><td>${v.failed}</td><td>${v.toReviewer}</td><td>${v.passed}</td></tr>`).join('')}
       <tr class="tot"><th>All</th><td>${r.corrupted.cases}</td><td>${r.corrupted.failed}</td><td>${r.corrupted.toReviewer}</td><td>${r.corrupted.passed}</td></tr>
     </tbody></table>
-    <p>The ${r.corrupted.passed} that passed are listed in the repository. Most are comparisons between two figures in one sentence ("a share of 9.0% against 14.4%"), which the checker does not read.</p>`;
+    <p>Counts on one synthetic month, not an accuracy rate. Every case is listed in the repository.</p>`;
   $('modelLine').textContent = `${A.model} through Claude Code, on ${A.started.slice(0, 10)}`;
   $('links').innerHTML = `<a href="${r.repo}">Code, data and tests</a><a href="${r.repo}/blob/main/REFERENCE.md">The reference case, calculated by hand</a><a href="lowther-august-2026-commentary.pptx">The exported page (.pptx)</a>`;
 }
 
 update();
-renderHow();

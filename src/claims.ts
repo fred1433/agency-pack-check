@@ -7,6 +7,10 @@ import { requiredCoverage, CLIENTS } from './engine.ts';
 import { roundsToZero } from './format.ts';
 import { fingerprint } from './hash.ts';
 
+// v1 frozen before held-out batch 1; v2 after it, before batch 2; v3 after the fresh review of 28/09 (rankings,
+// relations, judgements, negations, other months, measures not calculated, two clients around one figure).
+export const CHECKER_VERSION = 'v3';
+
 export type Severity = 'fail' | 'review';
 export type Finding = { severity: Severity; rule: string; message: string; ref?: string };
 export type SentenceResult = { markup: string; rendered: string; refs: string[]; status: 'verified' | 'review' | 'fail'; findings: Finding[] };
@@ -27,8 +31,8 @@ export const LEXICON: Lex[] = [
   { cls: 'dir', value: 'inline', phrases: ['in line with', 'on budget', 'level with', 'unchanged', 'flat'] },
   { cls: 'dir', value: 'up', phrases: ['ahead of', 'above', 'up on', 'up', 'rose', 'risen', 'rising', 'increased', 'increase', 'grew', 'grown', 'growth', 'higher', 'exceeded', 'exceeding'] },
   { cls: 'dir', value: 'down', phrases: ['short of', 'behind', 'below', 'down on', 'down', 'fell', 'fallen', 'falling', 'fall', 'decreased', 'decrease', 'declined', 'decline', 'dropped', 'drop', 'lower', 'shortfall'] },
-  { cls: 'pol', value: 'good', phrases: ['favourable', 'favourably', 'better', 'improved', 'improvement', 'stronger'] },
-  { cls: 'pol', value: 'bad', phrases: ['adverse', 'adversely', 'worse', 'deteriorated', 'weaker'] },
+  { cls: 'pol', value: 'good', phrases: ['favourable', 'favourably', 'better', 'improved', 'improvement'] },
+  { cls: 'pol', value: 'bad', phrases: ['adverse', 'adversely', 'worse', 'deteriorated'] },
   { cls: 'measure', value: 'share', phrases: ['share', 'concentration'] },
   { cls: 'measure', value: 'gross_margin', phrases: ['gross margin', 'margin'] },
   { cls: 'measure', value: 'gross_profit', phrases: ['gross profit'] },
@@ -41,6 +45,11 @@ export const LEXICON: Lex[] = [
   { cls: 'cond', value: 'cond', phrases: ['subject to', 'if approved', 'once approved', 'pending', 'would', 'if the', 'if it'] },
   { cls: 'causal', value: 'causal', phrases: ['because', 'due to', 'driven by', 'drove', 'reflecting', 'reflects', 'reflected', 'reflect', 'as a result', 'owing to', 'thanks to', 'demonstrates', 'shows that', 'suggests', 'indicates', 'led by', 'driving', 'drive', 'on the back of', 'result of', 'attributable', 'explained by', 'caused', 'contributed to', 'helped', 'boosted', 'weighed on', 'offset by', 'offsetting'] },
   { cls: 'forward', value: 'forward', phrases: ['should', 'recommend', 'we expect', 'expected to', 'likely', 'will', 'may need', 'might', 'could', 'forecast', 'outlook', 'going forward', 'next month', 'worth watching', 'keep an eye', 'monitor'] },
+  // Read but not checked: these send the sentence to the reviewer, never to a tick.
+  { cls: 'rank', value: 'rank', phrases: ['largest', 'biggest', 'highest', 'lowest', 'smallest', 'first', 'best', 'worst', 'top', 'leading', 'remained', 'remains', 'remain', 'still', 'only', 'most', 'least', 'again', 'second', 'third', 'last'] },
+  { cls: 'relational', value: 'relational', phrases: ['the same amount', 'same amount', 'the same as', 'same as', 'the same', 'unlike', 'like', 'similar', 'similarly', 'as much as', 'equal', 'equally', 'matched', 'mirrored', 'in contrast', 'by contrast', 'whereas'] },
+  { cls: 'judgement', value: 'judgement', phrases: ['the picture', 'picture', 'stronger', 'weaker', 'strong', 'weak', 'healthy', 'solid', 'robust', 'softer', 'soft', 'notably', 'notable', 'slightly', 'sharply', 'significantly', 'significant', 'broadly', 'steady', 'stable', 'worth', 'may wish', 'wish to', 'to watch', 'to flag', 'concern', 'concerning', 'encouraging', 'disappointing', 'pleasing', 'good', 'bad', 'one to watch'] },
+  { cls: 'unsupported', value: 'unsupported', phrases: ['per head', 'per employee', 'per fte', 'per person', 'headcount', 'utilisation', 'utilization', 'recovery', 'ebitda', 'cash', 'runway', 'debtors', 'receivables', 'work in progress', 'pipeline', 'backlog', 'client margin', 'margin per client', 'client profitability'] },
   { cls: 'excluded', value: 'excluded', phrases: ['nearly doubled', 'almost doubled', 'more than doubled', 'doubled', 'tripled', 'halved', 'quadrupled', 'twice', 'three times', 'record', 'highest ever', 'lowest ever', 'best ever', 'worst ever'] },
 ];
 
@@ -185,6 +194,35 @@ export function checkDraft(markup: string, ms: MetricSet, draftSnapshotFingerpri
     }
     const causal = hits.filter((h) => h.cls === 'causal');
     if (causal.length) findings.push({ severity: 'review', rule: 'interpretation', message: `States a cause ("${causal.map((h) => h.phrase).join('", "')}"). Nothing in the snapshot proves causes: reviewer to confirm or cut.` });
+    const kinds: [string, string, string][] = [
+      ['rank', 'ranking', 'Ranks or compares over time ("%s"): not checked, reviewer to confirm.'],
+      ['relational', 'relation', 'Relates two figures or entities ("%s"): not checked, reviewer to confirm.'],
+      ['judgement', 'judgement', 'Makes a judgement or recommends ("%s"): reviewer to confirm.'],
+    ];
+    for (const [cls, rule, msg] of kinds) {
+      const hs = hits.filter((h) => h.cls === cls);
+      if (hs.length) findings.push({ severity: 'review', rule, message: msg.replace('%s', hs.map((h) => h.phrase).join('", "')) });
+    }
+    const degree = /\bwell\s+(?=above|below|ahead|behind|short|up|down)/i.exec(masked);
+    if (degree && !findings.some((f) => f.rule === 'judgement')) findings.push({ severity: 'review', rule: 'judgement', message: 'Makes a judgement ("well"): reviewer to confirm.' });
+    const neg = /\b(not|never|no longer|neither|nor|none|without)\b|n['’]t\b/i.exec(masked);
+    if (neg) findings.push({ severity: 'review', rule: 'negation', message: `Contains a negation ("${neg[0]}"): the checker does not read negations, reviewer to confirm.` });
+    for (const h of hits.filter((h) => h.cls === 'unsupported')) {
+      findings.push({ severity: 'fail', rule: 'unsupported-measure', message: `"${h.phrase}" is not a figure this pack calculates.` });
+    }
+    // Months other than August, outside the documented comparator and period phrases, are not in this snapshot.
+    const covered = (a: number, b: number) => rawHits.some((h) => (h.cls === 'comp' || h.cls === 'period') && h.start <= a && h.end >= b);
+    for (const mo of masked.matchAll(/\b(January|February|March|April|May|June|July|September|October|November|December)\b/g)) {
+      if (mo.index === 0 && mo[1] === 'May') continue;
+      if (!covered(mo.index!, mo.index! + mo[0].length)) findings.push({ severity: 'fail', rule: 'period-outside', message: `Names ${mo[1]}; this pack covers August 2026, the year to date and the May to July average only.` });
+    }
+    // Two different clients in the clause of a client figure, without "respectively": pairing not read.
+    for (const r of refs) {
+      const mm = ms.metrics.get(r.id);
+      if (!mm || mm.entity === 'agency' || respectively) continue;
+      const names = new Set(hits.filter((h) => h.cls === 'entity' && h.value !== 'agency' && h.clause === r.clause).map((h) => h.value));
+      if (names.size > 1) { findings.push({ severity: 'review', rule: 'two-entities', message: `Names ${[...names].join(' and ')} around one client figure: pairing not checked, reviewer to confirm.` }); break; }
+    }
     const fwd = hits.filter((h) => h.cls === 'forward');
     if (fwd.length) findings.push({ severity: 'review', rule: 'forward-looking', message: `Forward-looking or advisory ("${fwd.map((h) => h.phrase).join('", "')}"): reviewer to confirm.` });
 

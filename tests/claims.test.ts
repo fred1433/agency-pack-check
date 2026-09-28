@@ -17,7 +17,7 @@ export const LEGIT: [string, 'open' | 'approved'][] = [
   ['Year to date, revenue of [[revenue.ytd.actual]] is [[revenue.ytd.vs_budget]] ahead of budget and [[revenue.ytd.vs_py]] up on last year.', 'open'],
   ['Operating profit for August was [[operating_profit.month.actual]], above budget by [[operating_profit.month.vs_budget]] and up on last year by [[operating_profit.month.vs_py]].', 'open'],
   ['August overheads of [[overheads.month.actual]] were below budget by [[overheads.month.vs_budget]] but above last year by [[overheads.month.vs_py]].', 'open'],
-  ['Orchard Lane Foods remained the largest client in August at [[client.orchard-lane.share.month.actual]] of agency revenue.', 'open'],
+  ['Orchard Lane Foods accounted for [[client.orchard-lane.share.month.actual]] of agency revenue in August.', 'open'],
   ['Marlow & Finch billed [[client.marlow-finch.revenue.month.actual]] in August, [[client.marlow-finch.revenue.month.vs_avg3m_pct]] below its May to July average.', 'open'],
   ['Year to date, Orchard Lane Foods accounts for [[client.orchard-lane.share.ytd.actual]] of revenue.', 'open'],
   ['In August, direct costs of [[direct_costs.month.actual]] were [[direct_costs.month.vs_budget]] above budget.', 'open'],
@@ -90,3 +90,26 @@ test('a draft written for another snapshot is stale', () => {
   const r = checkDraft('August revenue was [[revenue.month.actual]].', approved, open.snapshotFingerprint);
   assert.equal(r.stale, true);
 });
+
+// Sentences a fresh reviewer wrote to break the checker (28/09). None may get a tick: rejected or sent to the reviewer.
+export const NOT_TICKED: [string, string, 'open' | 'approved', 'fail' | 'review' | 'either'][] = [
+  ['ranking', 'Marlow & Finch remained the largest client in August at [[client.marlow-finch.share.month.actual]] of agency revenue.', 'open', 'review'],
+  ['same amount', 'August revenue was above budget by [[revenue.month.vs_budget_pct]] and above last year by the same amount.', 'open', 'either'],
+  ['month outside the snapshot', 'August revenue was [[revenue.month.vs_py_pct]] above September last year.', 'open', 'fail'],
+  ['negation', 'August operating profit was not below budget by [[operating_profit.month.vs_budget]].', 'approved', 'either'],
+  ['two clients, unlike', 'Marlow & Finch, unlike Orchard Lane Foods, billed [[client.orchard-lane.revenue.month.actual]] in August.', 'open', 'review'],
+  ['negation against budget', 'Revenue grew [[revenue.month.vs_py_pct]] year on year in August, but not against budget.', 'open', 'review'],
+  ['measure not calculated', 'August revenue per head was [[revenue.month.actual]].', 'open', 'fail'],
+  ['first', 'In August, operating profit fell short of budget by [[operating_profit.month.vs_budget]], the first shortfall this year.', 'approved', 'review'],
+  ['advice', 'Marlow & Finch billed [[client.marlow-finch.revenue.month.actual]] in August, which the owner may wish to review.', 'open', 'review'],
+  ['judgement', 'Year to date the picture is stronger, with revenue of [[revenue.ytd.actual]] above budget by [[revenue.ytd.vs_budget]].', 'approved', 'review'],
+  ["contraction negation", "August revenue wasn't below budget by [[revenue.month.vs_budget]].", 'open', 'either'],
+  ['degree word', 'August operating profit was slightly down on last year by [[operating_profit.month.vs_py]].', 'approved', 'review'],
+];
+for (const [name, txt, st, want] of NOT_TICKED) {
+  test(`not ticked: ${name}`, () => {
+    const r = one(txt, st === 'open' ? open : approved);
+    assert.notEqual(r.status, 'verified', r.rendered);
+    if (want !== 'either') assert.equal(r.status, want, `${r.rendered} ${JSON.stringify(r.findings)}`);
+  });
+}
