@@ -73,7 +73,8 @@ export function buildPptx(PptxGenJS: any, ms: MetricSet, markup: string, meta: {
   const grey = '6B7280';
   s.addText(meta.agency.replace(' (fictional)', ''), { x: 0.6, y: 0.45, w: 8, h: 0.4, fontFace: 'Arial', fontSize: 12, color: grey });
   s.addText('Management commentary, August 2026', { x: 0.6, y: 0.8, w: 8, h: 0.6, fontFace: 'Georgia', fontSize: 26, color: ink });
-  const text = markup.replace(/\[\[([a-z0-9_.@-]+)\]\]/g, (_, id) => ms.metrics.get(id)?.display ?? id).replace(/\s+/g, ' ').trim();
+  const groups = paragraphGroups(markup);
+  const text = sentencesOf(markup).map((sent, i) => (i > 0 && groups[i] !== groups[i - 1] ? '\n' : i > 0 ? ' ' : '') + sent.replace(/\[\[([a-z0-9_.@-]+)\]\]/g, (_, id) => ms.metrics.get(id)?.display ?? id)).join('');
   s.addText(text, { x: 0.6, y: 1.6, w: 7.3, h: 4.9, fontFace: 'Georgia', fontSize: 13, color: ink, valign: 'top', paraSpaceAfter: 6, lineSpacingMultiple: 1.15 });
   const head = (t: string) => ({ text: t, options: { bold: true, color: grey, fontSize: 9, align: 'right' } });
   const rows: any[] = [[{ text: '', options: {} }, head('August'), head('Budget'), head('Last year'), head('Year to date'), head('Budget')]];
@@ -87,4 +88,16 @@ export function buildPptx(PptxGenJS: any, ms: MetricSet, markup: string, meta: {
   s.addText(`Fictional agency, synthetic data. Prototype layout, not your master template. ${meta.released}`, { x: 0.6, y: 6.85, w: 12, h: 0.3, fontFace: 'Arial', fontSize: 8, color: grey });
   s.addNotes([`Draft: ${meta.draftLabel}.`, 'Evidence for each figure:', ...evidenceNotes(ms, markup)].join('\n'));
   return pres;
+}
+
+// Layout only: the commentary set in three paragraphs (the month, the year to date, the clients), broken at existing
+// sentence boundaries. No word of the draft changes.
+export function paragraphGroups(markup: string): number[] {
+  const clientStart = /^(on clients|by client|client|orchard|kestrel|brightwater|marlow|among clients)/i;
+  let g = 0;
+  return sentencesOf(markup).map((s) => {
+    const next = /^(year to date|year-to-date|so far this year|for the year)/i.test(s) ? 1 : clientStart.test(s) ? 2 : g;
+    g = Math.max(g, next);
+    return g;
+  });
 }

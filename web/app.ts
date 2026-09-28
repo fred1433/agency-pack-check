@@ -1,6 +1,6 @@
 import PptxGenJS from 'pptxgenjs';
 import { ASSUMPTIONS, accrualEvidence, type Sources, type Metric } from '../src/engine.ts';
-import { evaluate, tableCells, sentencesOf, buildPptx, type Review, type Draft } from '../src/pack.ts';
+import { evaluate, tableCells, sentencesOf, buildPptx, paragraphGroups, type Review, type Draft } from '../src/pack.ts';
 import { render } from '../src/claims.ts';
 import { displayValue } from '../src/format.ts';
 import { fingerprint } from '../src/hash.ts';
@@ -52,9 +52,12 @@ function renderSheet() {
     if (reviewer && r.status === 'verified') tail = TICK;
     if (reviewer && r.status !== 'verified') tail = circled(++noteNo);
     return `<span class="sent sent--${r.status}" data-i="${i}">${body}${tail}</span>`;
-  }).join(' ');
+  });
+  const groups = paragraphGroups(state.markup);
+  const paras: string[][] = [];
+  html.forEach((h, i) => { if (i === 0 || groups[i] !== groups[i - 1]) paras.push([]); paras[paras.length - 1].push(h); });
   const c = $('commentary');
-  c.innerHTML = `<p>${html}</p>`;
+  c.innerHTML = paras.map((p) => `<p>${p.join(' ')}</p>`).join('');
   c.setAttribute('contenteditable', state.editing ? 'true' : 'false');
   c.classList.toggle('commentary--editing', state.editing);
 
@@ -80,6 +83,13 @@ function renderReview() {
   const acc = accrualEvidence(S);
   const open = computeProposed();
   const d = state.decisions.accrual;
+  $('qc').innerHTML = d === 'approved'
+    ? `<p class="qc__h">${TICK} Accrual of ${fmt(acc.total)} approved: gross margin ${open.gm1}, operating profit ${open.op1}.</p>
+       ${ev.result.stale ? `<p class="qc__e">This draft was written for the posted figures; its claims below no longer hold.</p>` : ''}
+       <div class="qc__a">${ev.result.stale ? '<button type="button" class="btn" data-act="useB">Use draft B, written for this snapshot</button>' : ''}<button type="button" class="btn btn--quiet" data-act="reopen">Reopen</button></div>`
+    : `<p class="qc__k">Close question</p><p class="qc__h">${esc(q.title)}</p>
+       <p class="qc__e">August gross margin ${open.gm0} → ${open.gm1} (budget ${open.gmb}); operating profit ${open.op0} → ${open.op1}. Payroll evidence below the page.</p>
+       <div class="qc__a"><button type="button" class="btn" data-act="approve">Approve the accrual</button><button type="button" class="btn btn--quiet" data-act="hold"${d === 'held' ? ' disabled' : ''}>${d === 'held' ? 'On hold' : 'Hold for payroll'}</button></div>`;
   const slip = $('slip');
   $('review').classList.toggle('review--resolved', d === 'approved');
   slip.innerHTML = `
@@ -123,7 +133,7 @@ function renderReview() {
   for (const o of ev.result.omissions) notes.push(`<div class="note note--${o.severity}"><p class="note__h">${o.severity === 'fail' ? 'Missing' : 'Not mentioned'}</p><p>${esc(o.message)}</p></div>`);
   const editBtn = `<button type="button" class="btn btn--quiet" data-act="edit">${state.editing ? 'Done editing' : 'Edit the text'}</button>`;
   const header = `<div class="notes__head"><p><span class="count">${ev.result.counts.verified}</span> of ${ev.result.sentences.length} sentences agree to the snapshot${state.edited ? ', text edited by the reviewer' : ''}.</p>${editBtn}</div>`;
-  $('notes').innerHTML = header + notes.join('') + `<p class="provenance">${esc(state.draft.label)}.</p>`;
+  $('notes').innerHTML = header + notes.join('') + `<p class="provenance">${esc(state.draft.label)}. Paragraph breaks are layout; the words are as Claude wrote them.</p>`;
 
   $('gates').innerHTML = `<p class="gates__h">Release</p><ul>${ev.gates.map((g) => `<li class="${g.ok ? 'ok' : 'no'}">${g.ok ? TICK : '<span class="box"></span>'}<span>${esc(g.label)}</span></li>`).join('')}</ul>
     <div class="gates__act">
@@ -176,6 +186,7 @@ function serialise(root: HTMLElement): string {
     if (el.classList?.contains('fig')) { out += `[[${el.dataset.ref}]]`; return; }
     if (el.classList?.contains('mk-n') || el.tagName === 'svg') return;
     el.childNodes.forEach(walk);
+    if (el.tagName === 'P') out += ' ';
   };
   root.childNodes.forEach(walk);
   return out.replace(/\s+/g, ' ').trim();
